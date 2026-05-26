@@ -1154,7 +1154,10 @@
       Grenda's Space
       <span>🪐 Saturn Planer</span>
     </div>
-    <div class="greeting-badge" id="greeting">Hallo! 🌸</div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="greeting-badge" id="greeting">Hallo! 🌸</div>
+      <button onclick="logout()" style="background:none;border:2px solid #F7C5C5;border-radius:20px;padding:8px 14px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;color:#C87090;cursor:pointer;">↩ Ausloggen</button>
+    </div>
   </div>
   <div class="nav-tabs">
     <button class="tab-btn active" onclick="showTab('routine')">
@@ -2006,6 +2009,22 @@ function renderTagesstart() {
 renderTagesstart();
 renderRoutine();
 renderHabits();
+
+// ===== LOGOUT =====
+async function logout() {
+  try {
+    const { createClient } = window.supabase || {};
+    if (createClient) {
+      const sb = createClient(
+        'https://buowsgggbkpsssspewtk.supabase.co',
+        'sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO'
+      );
+      await sb.auth.signOut();
+    }
+  } catch(e) {}
+  window.location.href = 'login.html';
+}
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </body>
 </html>
