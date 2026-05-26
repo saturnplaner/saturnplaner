@@ -1111,34 +1111,9 @@
   <h2 class="section-title">Inspiration & Tipps</h2>
   <p class="section-sub">Lifestyle, Selbstfindung, App-Updates — für alle die sich selbst besser kennenlernen wollen.</p>
 
-  <div class="blog-grid">
-    <div class="blog-card" onclick="openArticle(0)" style="cursor:pointer">
-      <div class="blog-card-img">🌸</div>
-      <div class="blog-card-body">
-        <span class="blog-tag">Selfcare</span>
-        <div class="blog-title">5 sanfte Tipps wenn alles zu viel wird</div>
-        <p class="blog-excerpt">Manchmal ist der Tag einfach zu gross. Diese kleinen Rituale helfen dir, wieder bei dir anzukommen...</p>
-        <div class="blog-read">Weiterlesen →</div>
-      </div>
-    </div>
-    <div class="blog-card" onclick="openArticle(1)" style="cursor:pointer">
-      <div class="blog-card-img">🪐</div>
-      <div class="blog-card-body">
-        <span class="blog-tag">Planung</span>
-        <div class="blog-title">Wie ich meine Monatsroutine aufgebaut habe</div>
-        <p class="blog-excerpt">Von chaotisch zu strukturiert — mein Weg zu einer Routine die sich nicht wie Zwang anfühlt...</p>
-        <div class="blog-read">Weiterlesen →</div>
-      </div>
-    </div>
-    <div class="blog-card" onclick="openArticle(2)" style="cursor:pointer">
-      <div class="blog-card-img">🧠</div>
-      <div class="blog-card-body">
-        <span class="blog-tag">Mental Health</span>
-        <div class="blog-title">ADHS im Alltag — kleine Helfer die wirklich wirken</div>
-        <p class="blog-excerpt">Leben mit ADHS bedeutet nicht, immer hinterherzuhinken. Diese Strategien machen den Unterschied...</p>
-        <div class="blog-read">Weiterlesen →</div>
-      </div>
-    </div>
+  <div class="blog-grid" id="blog-grid">
+    <!-- Loaded from Supabase -->
+    <div style="grid-column:1/-1;text-align:center;padding:40px;color:#C87090;font-size:24px;">🪐</div>
   </div>
 </section>
 
@@ -1496,6 +1471,70 @@ function closeBlogModal(e) {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArticle(); });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const { createClient } = supabase;
+const sb = createClient(
+  'https://buowsgggbkpsssspewtk.supabase.co',
+  'sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO'
+);
+
+const bgColors = [
+  'linear-gradient(135deg, #FFE0EC, #FFD0C0)',
+  'linear-gradient(135deg, #E0D0FF, #C0D8FF)',
+  'linear-gradient(135deg, #C0F0D8, #C0E8FF)',
+  'linear-gradient(135deg, #FFE8C0, #FFD0C0)',
+  'linear-gradient(135deg, #D0C0FF, #C0D8FF)',
+  'linear-gradient(135deg, #C0F0D8, #D0F0C0)',
+];
+
+async function loadBlog() {
+  const grid = document.getElementById('blog-grid');
+  const { data, error } = await sb
+    .from('blog_posts')
+    .select('*')
+    .eq('published', true)
+    .order('created_at', { ascending: false });
+
+  if (error || !data || data.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#C87090;font-weight:700;">Bald gibt es hier Artikel! 🌸</div>`;
+    return;
+  }
+
+  grid.innerHTML = data.map((post, i) => `
+    <div class="blog-card" onclick="openSupabaseArticle(${post.id})" style="cursor:pointer">
+      <div class="blog-card-img" style="background:${bgColors[i % bgColors.length]}">${post.emoji || '🌸'}</div>
+      <div class="blog-card-body">
+        <span class="blog-tag">${post.tag || ''}</span>
+        <div class="blog-title">${post.title}</div>
+        <p class="blog-excerpt">${(post.content || '').substring(0, 100)}...</p>
+        <div class="blog-read">Weiterlesen →</div>
+      </div>
+    </div>
+  `).join('');
+
+  window._supabasePosts = data;
+}
+
+async function openSupabaseArticle(id) {
+  const post = window._supabasePosts?.find(p => p.id === id);
+  if (!post) return;
+
+  document.getElementById('modalImg').style.background = bgColors[0];
+  document.getElementById('modalImg').textContent = post.emoji || '🌸';
+  document.getElementById('modalTag').textContent = post.tag || '';
+  document.getElementById('modalTitle').textContent = post.title;
+  document.getElementById('modalMeta').textContent = `🪐 Saturn Planer · ${post.tag || ''} · ${new Date(post.created_at).toLocaleDateString('de-CH')}`;
+  document.getElementById('modalContent').innerHTML = (post.content || '').replace(/\n/g, '<br>');
+
+  const modal = document.getElementById('blogModal');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+loadBlog();
 </script>
 
 </body>
