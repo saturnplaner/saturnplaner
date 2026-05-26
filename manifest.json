@@ -2,7 +2,7 @@
   "name": "Saturn Planer",
   "short_name": "Saturn Planer",
   "description": "Zwischen den Sternen — zu dir selbst.",
-  "start_url": "/index.html",
+  "start_url": "/login.html",
   "display": "standalone",
   "background_color": "#FFF0F8",
   "theme_color": "#C87090",

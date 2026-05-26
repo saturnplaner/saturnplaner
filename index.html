@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Saturn Planer — Zwischen den Sternen, zu dir selbst.</title>
+<title>Saturnplaner — Zwischen den Sternen, zu dir selbst.</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
 <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png">
@@ -11,7 +11,7 @@
 <meta name="theme-color" content="#C87090">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Saturn Planer">
+<meta name="apple-mobile-web-app-title" content="Saturnplaner">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -32,6 +32,11 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   html { scroll-behavior: smooth; }
+
+  /* Offset for sticky nav */
+  section[id], div[id] {
+    scroll-margin-top: 80px;
+  }
 
   body {
     font-family: 'Nunito', sans-serif;
@@ -960,9 +965,9 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">
+  <a href="javascript:void(0)" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="nav-logo">
     <span class="nav-logo-icon">🪐</span>
-    <div class="nav-logo-text">Saturn Planer</div>
+    <div class="nav-logo-text">Saturnplaner</div>
   </a>
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
@@ -1005,7 +1010,7 @@
 <section class="features" id="features">
   <div class="section-label">✦ Was dich erwartet ✦</div>
   <h2 class="section-title">Alles was du brauchst</h2>
-  <p class="section-sub">Saturn Planer vereint Planung, Selfcare und Selbstfindung in einem — für alle Menschen.</p>
+  <p class="section-sub">Saturnplaner vereint Planung, Selfcare und Selbstfindung in einem — für alle Menschen.</p>
 
   <div class="features-grid">
     <div class="feature-card">
@@ -1062,7 +1067,7 @@
         <div class="phone-notch"></div>
         <div class="phone-screen">
           <div class="phone-header">Grenda's Space</div>
-          <div class="phone-sub">🪐 Saturn Planer</div>
+          <div class="phone-sub">🪐 Saturnplaner</div>
           <div class="phone-tabs">
             <div class="phone-tab active">📅 Routine</div>
             <div class="phone-tab">🔄 Habits</div>
@@ -1134,10 +1139,10 @@
     <a href="https://instagram.com/saturnplaner" target="_blank" class="insta-handle">
       📸 @saturnplaner
     </a>
-    <a href="#" class="insta-handle" style="background:linear-gradient(135deg,#1a1a1a,#333);opacity:0.5;cursor:default;" title="Bald verfügbar!">
+    <a href="javascript:void(0)" class="insta-handle" style="background:linear-gradient(135deg,#1a1a1a,#333);opacity:0.5;cursor:default;" title="Bald verfügbar!">
       🎵 TikTok — bald
     </a>
-    <a href="#" class="insta-handle" style="background:linear-gradient(135deg,#1877F2,#0d6ae0);opacity:0.5;cursor:default;" title="Bald verfügbar!">
+    <a href="javascript:void(0)" class="insta-handle" style="background:linear-gradient(135deg,#1877F2,#0d6ae0);opacity:0.5;cursor:default;" title="Bald verfügbar!">
       👤 Facebook — bald
     </a>
   </div>
@@ -1160,7 +1165,7 @@
 <section style="padding:80px 40px;background:linear-gradient(145deg,#FFF0F8,#F8F0FF);text-align:center;" id="installieren">
   <div style="max-width:600px;margin:0 auto;">
     <div class="section-label">✦ App installieren ✦</div>
-    <h2 class="section-title">Nimm Saturn Planer überall mit 🪐</h2>
+    <h2 class="section-title">Nimm Saturnplaner überall mit 🪐</h2>
     <p class="section-sub" style="margin-bottom:36px;">Kostenlos auf deinem iPhone installieren — kein App Store nötig!</p>
 
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:32px;text-align:left;">
@@ -1197,7 +1202,7 @@
     <div style="background:rgba(255,255,255,0.7);border-radius:20px;padding:16px 24px;display:inline-flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(180,100,140,0.1);">
       <span style="font-size:32px;">🪐</span>
       <div style="text-align:left;">
-        <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:900;color:#3D2C2C;">Saturn Planer erscheint als App!</div>
+        <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:900;color:#3D2C2C;">Saturnplaner erscheint als App!</div>
         <div style="font-size:12px;color:#C87090;font-weight:700;">Kein App Store • Kostenlos • Immer aktuell</div>
       </div>
     </div>
@@ -1209,13 +1214,13 @@
   <div class="about-inner">
     <div class="about-visual">
       <span class="about-planet">🪐</span>
-      <div class="about-name">Saturn Planer</div>
+      <div class="about-name">Saturnplaner</div>
       <div class="about-role">✦ Zwischen den Sternen ✦</div>
     </div>
     <div class="about-text">
       <div class="section-label">✦ Über uns ✦</div>
-      <h2 class="section-title">Was ist Saturn Planer?</h2>
-      <p class="about-desc">Saturn Planer ist eine persönliche Planungs- und Selfcare-Plattform für alle Menschen die sich selbst besser kennenlernen wollen — egal ob mit ADHS, sozialer Angst, Depression oder einfach dem Wunsch nach mehr Struktur und Positivity im Alltag.</p>
+      <h2 class="section-title">Was ist Saturnplaner?</h2>
+      <p class="about-desc">Saturnplaner ist eine persönliche Planungs- und Selfcare-Plattform für alle Menschen die sich selbst besser kennenlernen wollen — egal ob mit ADHS, sozialer Angst, Depression oder einfach dem Wunsch nach mehr Struktur und Positivity im Alltag.</p>
       <p class="about-desc">Unsere Mission: Planung soll sich nicht wie Zwang anfühlen. Selfcare soll zugänglich sein. Selbstfindung soll Spass machen.</p>
       <div class="about-tags">
         <span class="about-tag">🪐 Planung</span>
@@ -1246,14 +1251,14 @@
       <div class="footer-brand">
         <div class="footer-logo">
           <span class="footer-logo-icon">🪐</span>
-          <span class="footer-logo-text">Saturn Planer</span>
+          <span class="footer-logo-text">Saturnplaner</span>
         </div>
         <div class="footer-motto">Zwischen den Sternen — zu dir selbst.</div>
         <div class="footer-social">
           <a href="https://instagram.com/saturnplaner" target="_blank" title="Instagram">📸</a>
           <a href="mailto:saturnplaner1@gmail.com" title="E-Mail">💌</a>
-          <a href="#" title="TikTok — bald">🎵</a>
-          <a href="#" title="Facebook — bald">👤</a>
+          <a href="javascript:void(0)" title="TikTok — bald">🎵</a>
+          <a href="javascript:void(0)" title="Facebook — bald">👤</a>
         </div>
       </div>
       <div class="footer-col">
@@ -1268,19 +1273,19 @@
       <div class="footer-col">
         <h4>Rechtliches</h4>
         <ul>
-          <li><a href="#" onclick="openLegal('datenschutz')">Datenschutz</a></li>
-          <li><a href="#" onclick="openLegal('impressum')">Impressum</a></li>
-          <li><a href="#" onclick="openLegal('agb')">AGB</a></li>
+          <li><a href="javascript:void(0)" onclick="openLegal('datenschutz')">Datenschutz</a></li>
+          <li><a href="javascript:void(0)" onclick="openLegal('impressum')">Impressum</a></li>
+          <li><a href="javascript:void(0)" onclick="openLegal('agb')">AGB</a></li>
           <li><a href="mailto:saturnplaner1@gmail.com">✉️ Kontakt</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-copy">© 2026 Saturn Planer — saturnplaner.ch</div>
+      <div class="footer-copy">© 2026 Saturnplaner — saturnplaner.ch</div>
       <div class="footer-bottom-links">
-        <a href="#" onclick="openLegal('datenschutz')">Datenschutz</a>
-        <a href="#" onclick="openLegal('impressum')">Impressum</a>
-        <a href="#" onclick="openLegal('agb')">AGB</a>
+        <a href="javascript:void(0)" onclick="openLegal('datenschutz')">Datenschutz</a>
+        <a href="javascript:void(0)" onclick="openLegal('impressum')">Impressum</a>
+        <a href="javascript:void(0)" onclick="openLegal('agb')">AGB</a>
       </div>
     </div>
   </div>
@@ -1433,7 +1438,7 @@ const articles = [
     emoji: '🌸',
     tag: 'Selfcare',
     title: '5 sanfte Tipps wenn alles zu viel wird',
-    meta: '🪐 Saturn Planer · Selfcare · Mai 2026 · 4 Min. lesen',
+    meta: '🪐 Saturnplaner · Selfcare · Mai 2026 · 4 Min. lesen',
     bg: 'linear-gradient(135deg, #FFE0EC, #FFD0C0)',
     content: `
       <p>Manchmal ist der Tag einfach zu gross. Alles stapelt sich, der Kopf dreht sich, und irgendwie fühlt sich selbst die kleinste Aufgabe wie ein Berg an. Das kennen wir alle — und du bist damit nicht allein.</p>
@@ -1464,7 +1469,7 @@ const articles = [
     emoji: '🪐',
     tag: 'Planung',
     title: 'Wie ich meine Monatsroutine aufgebaut habe',
-    meta: '🪐 Saturn Planer · Planung · Mai 2026 · 5 Min. lesen',
+    meta: '🪐 Saturnplaner · Planung · Mai 2026 · 5 Min. lesen',
     bg: 'linear-gradient(135deg, #E0D0FF, #C0D8FF)',
     content: `
       <p>Routine klingt für viele nach Zwang, Langeweile oder zu viel Disziplin. Aber was wenn Routine das Gegenteil sein kann — Freiheit, Sicherheit, Leichtigkeit?</p>
@@ -1485,7 +1490,7 @@ const articles = [
         <li>Flexibilität ist Teil der Routine — nicht ihr Feind</li>
         <li>Kleine Rituale wirken mehr als grosse Pläne</li>
         <li>Routine ist Selbstfürsorge, keine Selbstdisziplin</li>
-        <li>Die Saturn Planer App hilft mir täglich den Überblick zu behalten</li>
+        <li>Die Saturnplaner App hilft mir täglich den Überblick zu behalten</li>
       </ul>
 
       <p>Fang klein an. Und sei sanft mit dir wenn ein Tag anders läuft als geplant. Das gehört dazu. 🪐</p>
@@ -1495,7 +1500,7 @@ const articles = [
     emoji: '🧠',
     tag: 'Mental Health',
     title: 'ADHS im Alltag — kleine Helfer die wirklich wirken',
-    meta: '🪐 Saturn Planer · Mental Health · Mai 2026 · 6 Min. lesen',
+    meta: '🪐 Saturnplaner · Mental Health · Mai 2026 · 6 Min. lesen',
     bg: 'linear-gradient(135deg, #C0F0D8, #C0E8FF)',
     content: `
       <p>Leben mit ADHS bedeutet nicht, immer hinterherzuhinken. Es bedeutet, dass dein Gehirn anders funktioniert — und das ist weder gut noch schlecht, es ist einfach so.</p>
@@ -1519,7 +1524,7 @@ const articles = [
         <li>Farben und visuelle Strukturen nutzen</li>
       </ul>
 
-      <h3>📱 Die Saturn Planer App als Helfer</h3>
+      <h3>📱 Die Saturnplaner App als Helfer</h3>
       <p>Die App wurde mit Menschen im Hinterkopf entwickelt, die Struktur brauchen aber keine starre Liste wollen. Tägliche Routinen, Habit Tracker und positive Sprüche — alles an einem Ort.</p>
 
       <div class="tip">"ADHS ist kein Defizit. Es ist ein anderer Modus. Finde deine Bedienungsanleitung."</div>
@@ -1629,7 +1634,7 @@ async function openSupabaseArticle(id) {
   document.getElementById('modalImg').textContent = post.emoji || '🌸';
   document.getElementById('modalTag').textContent = post.tag || '';
   document.getElementById('modalTitle').textContent = post.title;
-  document.getElementById('modalMeta').textContent = `🪐 Saturn Planer · ${post.tag || ''} · ${new Date(post.created_at).toLocaleDateString('de-CH')}`;
+  document.getElementById('modalMeta').textContent = `🪐 Saturnplaner · ${post.tag || ''} · ${new Date(post.created_at).toLocaleDateString('de-CH')}`;
   document.getElementById('modalContent').innerHTML = (post.content || '').replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
 
   const modal = document.getElementById('blogModal');
@@ -1659,7 +1664,7 @@ const legalContent = {
       <p style="color:#9B7E7E;font-size:13px;margin-bottom:20px;">Zuletzt aktualisiert: Mai 2026</p>
 
       <h3>1. Verantwortliche Stelle</h3>
-      <p>Saturn Planer, betrieben von Grenda Kanaci, Dübendorf, Schweiz.<br>
+      <p>Saturnplaner, betrieben von Grenda Kanaci, Dübendorf, Schweiz.<br>
       E-Mail: <a href="mailto:saturnplaner1@gmail.com" style="color:#C87090;">saturnplaner1@gmail.com</a></p>
 
       <h3>2. Welche Daten wir sammeln</h3>
@@ -1683,7 +1688,7 @@ const legalContent = {
     content: `
       <h3>Angaben gemäss Schweizer Recht</h3>
 
-      <p><strong>Betreiberin:</strong><br>Saturn Planer<br>Zürich, Schweiz</p>
+      <p><strong>Betreiberin:</strong><br>Saturnplaner<br>Zürich, Schweiz</p>
 
       <p><strong>Kontakt:</strong><br>
       E-Mail: <a href="mailto:saturnplaner1@gmail.com" style="color:#C87090;">saturnplaner1@gmail.com</a><br>
@@ -1703,10 +1708,10 @@ const legalContent = {
       <p style="color:#9B7E7E;font-size:13px;margin-bottom:20px;">Zuletzt aktualisiert: Mai 2026</p>
 
       <h3>1. Geltungsbereich</h3>
-      <p>Diese AGB gelten für die Nutzung der Plattform Saturn Planer (saturnplaner.ch) und der zugehörigen App.</p>
+      <p>Diese AGB gelten für die Nutzung der Plattform Saturnplaner (saturnplaner.ch) und der zugehörigen App.</p>
 
       <h3>2. Leistungen</h3>
-      <p>Saturn Planer bietet eine kostenlose persönliche Planungs- und Selfcare-App. Die Nutzung ist kostenlos. Wir behalten uns vor, in Zukunft Premium-Funktionen einzuführen.</p>
+      <p>Saturnplaner bietet eine kostenlose persönliche Planungs- und Selfcare-App. Die Nutzung ist kostenlos. Wir behalten uns vor, in Zukunft Premium-Funktionen einzuführen.</p>
 
       <h3>3. Registrierung</h3>
       <p>Für die Nutzung der App ist eine Registrierung mit E-Mail-Adresse erforderlich. Du bist für die Sicherheit deines Kontos selbst verantwortlich.</p>
@@ -1715,7 +1720,7 @@ const legalContent = {
       <p>Die Plattform darf nicht für rechtswidrige Zwecke genutzt werden. Inhalte die andere Nutzer verletzen oder beleidigen sind nicht erlaubt.</p>
 
       <h3>5. Haftung</h3>
-      <p>Saturn Planer übernimmt keine Haftung für Datenverlust oder Schäden durch die Nutzung der Plattform. Die Nutzung erfolgt auf eigene Verantwortung.</p>
+      <p>Saturnplaner übernimmt keine Haftung für Datenverlust oder Schäden durch die Nutzung der Plattform. Die Nutzung erfolgt auf eigene Verantwortung.</p>
 
       <h3>6. Änderungen</h3>
       <p>Wir behalten uns vor, diese AGB jederzeit zu ändern. Änderungen werden auf der Website bekannt gegeben.</p>
