@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newsletter — Saturnplaner</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+<meta name="theme-color" content="#C87090">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root {
+    --rose:#F7C5C5;--peach:#FFD9B7;--lavender:#D9C5F0;
+    --mint:#C5E8D5;--sky:#C5DCF0;--cream:#FFF8F0;
+    --sand:#F5EDE0;--text:#3D2C2C;--text-light:#9B7E7E;
+    --white:#FFFFFF;--shadow:rgba(180,130,130,0.15);--accent:#C87090;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden;}
+  .banner{position:fixed;top:0;left:0;right:0;z-index:1100;background:linear-gradient(135deg,#C87090,#9070C8);padding:8px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;}
+  .banner span{font-size:13px;font-weight:800;color:white;}
+  .banner a{background:rgba(255,255,255,0.25);color:white;font-size:12px;font-weight:800;padding:4px 14px;border-radius:20px;text-decoration:none;}
+  nav{position:fixed;top:36px;left:0;right:0;z-index:1000;background:rgba(255,248,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(247,197,197,0.3);padding:0 40px;height:70px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .nav-logo-icon{font-size:28px;}
+  .nav-logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--text);}
+  .nav-links{display:flex;align-items:center;gap:32px;list-style:none;}
+  .nav-links a{text-decoration:none;font-size:14px;font-weight:700;color:var(--text-light);transition:color 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--accent);}
+  .nav-cta{background:linear-gradient(135deg,var(--rose),var(--peach));color:#7A3030!important;padding:10px 22px;border-radius:50px;box-shadow:0 4px 14px rgba(232,144,144,0.3);}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  footer{background:#1a1a2e;padding:40px;text-align:center;color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;}
+  footer a{color:rgba(255,255,255,0.7);text-decoration:none;margin:0 12px;}
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <span>🪐</span>
+  <span>Saturnplaner App — <em>Coming Soon!</em></span>
+  <a href="newsletter.html">Jetzt eintragen →</a>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-icon">🪐</span>
+    <div class="nav-logo-text">Saturnplaner</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="planeten.html">🌌 Planeten</a></li>
+    <li><a href="community.html">Community</a></li>
+    <li><a href="about.html">Über uns</a></li>
+    <li><a href="newsletter.html" class="active">Newsletter</a></li>
+    <li><a href="login.html" class="nav-cta">Einloggen ✨</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:116px 40px 60px;background:linear-gradient(145deg,#FFF0F8,#F8F0FF,#F0F8FF);position:relative;overflow:hidden;">
+  <div style="position:absolute;width:500px;height:500px;background:#F7C5C5;border-radius:50%;filter:blur(80px);opacity:0.35;top:-100px;right:-100px;pointer-events:none;"></div>
+  <div style="position:absolute;width:400px;height:400px;background:#D9C5F0;border-radius:50%;filter:blur(80px);opacity:0.35;bottom:-80px;left:-80px;pointer-events:none;"></div>
+
+  <div style="max-width:560px;text-align:center;position:relative;z-index:2;animation:fadeUp 0.7s ease both;">
+    <div style="font-size:72px;margin-bottom:20px;animation:float 5s ease-in-out infinite;">🪐</div>
+    <div style="font-size:11px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">✦ Newsletter ✦</div>
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);font-weight:900;color:var(--text);margin-bottom:14px;line-height:1.2;">Bleib in der<br>Umlaufbahn 🌙</h1>
+    <p style="font-size:15px;color:var(--text-light);font-weight:600;line-height:1.7;margin-bottom:36px;">Neue Blog-Artikel, monatliche Selfcare-Tipps & als Erste die App-News — direkt in dein Postfach. Kein Spam, jederzeit abmeldbar. 🌸</p>
+
+    <!-- Form -->
+    <div style="background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border:1.5px solid rgba(247,197,197,0.4);border-radius:28px;padding:36px;box-shadow:0 8px 40px var(--shadow);">
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:20px;">
+        <input id="nl-name" type="text" placeholder="Dein Vorname" style="padding:14px 18px;border-radius:14px;border:2px solid var(--rose);background:white;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
+        <input id="nl-email" type="email" placeholder="deine@email.com" style="padding:14px 18px;border-radius:14px;border:2px solid var(--rose);background:white;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
+        <button onclick="subscribe()" id="nl-btn" style="padding:15px;border-radius:14px;border:none;background:linear-gradient(135deg,#C87090,#9070C8);color:white;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(200,112,144,0.35);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">Jetzt anmelden ✨</button>
+      </div>
+      <div id="nl-success" style="display:none;background:linear-gradient(135deg,rgba(197,232,213,0.4),rgba(197,220,240,0.4));border:1.5px solid var(--mint);border-radius:14px;padding:16px;text-align:center;">
+        <div style="font-size:28px;margin-bottom:6px;">🌸</div>
+        <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);margin-bottom:4px;">Super! Du bist dabei!</div>
+        <div style="font-size:13px;color:var(--text-light);font-weight:600;">Schau in dein Postfach — wir melden uns bald. 🪐</div>
+      </div>
+      <p style="font-size:12px;color:var(--text-light);font-weight:600;margin-top:14px;">🔒 Kein Spam · Jederzeit abmeldbar · Schweizer Datenschutz</p>
+    </div>
+
+    <!-- Was dich erwartet -->
+    <div style="margin-top:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+      <div style="background:rgba(255,255,255,0.7);border-radius:18px;padding:18px 12px;text-align:center;border:1.5px solid rgba(247,197,197,0.3);">
+        <div style="font-size:28px;margin-bottom:8px;">📖</div>
+        <div style="font-size:12px;font-weight:800;color:var(--text);">Neue Artikel</div>
+        <div style="font-size:11px;color:var(--text-light);font-weight:600;margin-top:4px;">Als Erste informiert</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.7);border-radius:18px;padding:18px 12px;text-align:center;border:1.5px solid rgba(247,197,197,0.3);">
+        <div style="font-size:28px;margin-bottom:8px;">🌸</div>
+        <div style="font-size:12px;font-weight:800;color:var(--text);">Selfcare Tipps</div>
+        <div style="font-size:11px;color:var(--text-light);font-weight:600;margin-top:4px;">Monatlich kuratiert</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.7);border-radius:18px;padding:18px 12px;text-align:center;border:1.5px solid rgba(247,197,197,0.3);">
+        <div style="font-size:28px;margin-bottom:8px;">🚀</div>
+        <div style="font-size:12px;font-weight:800;color:var(--text);">App-Launch</div>
+        <div style="font-size:11px;color:var(--text-light);font-weight:600;margin-top:4px;">Früher Zugang</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:12px;">🪐 Saturnplaner — Zwischen den Sternen, zu dir selbst.</div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="community.html">Community</a>
+    <a href="about.html">Über uns</a>
+    <a href="login.html">Einloggen</a>
+  </div>
+  <div style="margin-top:16px;font-size:11px;opacity:0.4;">© 2026 Saturnplaner</div>
+</footer>
+
+<script>
+const { createClient } = supabase;
+const sb = createClient('https://buowsgggbkpsssspewtk.supabase.co','sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO');
+
+async function subscribe() {
+  const name = document.getElementById('nl-name').value.trim();
+  const email = document.getElementById('nl-email').value.trim();
+  if (!name || !email) {
+    alert('Bitte Vorname und E-Mail ausfüllen 🌸');
+    return;
+  }
+  const btn = document.getElementById('nl-btn');
+  btn.textContent = 'Wird gespeichert...';
+  btn.disabled = true;
+  try {
+    await sb.from('newsletter_subscribers').upsert({ email, name, source: 'newsletter_page' });
+  } catch(e) {}
+  document.getElementById('nl-name').style.display = 'none';
+  document.getElementById('nl-email').style.display = 'none';
+  btn.style.display = 'none';
+  document.getElementById('nl-success').style.display = 'block';
+}
+document.querySelectorAll('input').forEach(i => {
+  i.addEventListener('keydown', e => { if(e.key==='Enter') subscribe(); });
+});
+</script>
+</body>
+</html>

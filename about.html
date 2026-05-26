@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Über uns — Saturnplaner</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+<meta name="theme-color" content="#C87090">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose:#F7C5C5;--peach:#FFD9B7;--lavender:#D9C5F0;
+    --mint:#C5E8D5;--sky:#C5DCF0;--cream:#FFF8F0;
+    --sand:#F5EDE0;--text:#3D2C2C;--text-light:#9B7E7E;
+    --white:#FFFFFF;--shadow:rgba(180,130,130,0.15);--accent:#C87090;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Nunito',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden;}
+  .banner{position:fixed;top:0;left:0;right:0;z-index:1100;background:linear-gradient(135deg,#C87090,#9070C8);padding:8px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;}
+  .banner span{font-size:13px;font-weight:800;color:white;}
+  .banner a{background:rgba(255,255,255,0.25);color:white;font-size:12px;font-weight:800;padding:4px 14px;border-radius:20px;text-decoration:none;}
+  nav{position:fixed;top:36px;left:0;right:0;z-index:1000;background:rgba(255,248,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(247,197,197,0.3);padding:0 40px;height:70px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .nav-logo-icon{font-size:28px;}
+  .nav-logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--text);}
+  .nav-links{display:flex;align-items:center;gap:32px;list-style:none;}
+  .nav-links a{text-decoration:none;font-size:14px;font-weight:700;color:var(--text-light);transition:color 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--accent);}
+  .nav-cta{background:linear-gradient(135deg,var(--rose),var(--peach));color:#7A3030!important;padding:10px 22px;border-radius:50px;box-shadow:0 4px 14px rgba(232,144,144,0.3);}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-14px) rotate(4deg)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  footer{background:#1a1a2e;padding:40px;text-align:center;color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;}
+  footer a{color:rgba(255,255,255,0.7);text-decoration:none;margin:0 12px;}
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <span>🪐</span>
+  <span>Saturnplaner App — <em>Coming Soon!</em></span>
+  <a href="newsletter.html">Jetzt eintragen →</a>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-icon">🪐</span>
+    <div class="nav-logo-text">Saturnplaner</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="planeten.html">🌌 Planeten</a></li>
+    <li><a href="community.html">Community</a></li>
+    <li><a href="about.html" class="active">Über uns</a></li>
+    <li><a href="newsletter.html">Newsletter</a></li>
+    <li><a href="login.html" class="nav-cta">Einloggen ✨</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div style="padding:140px 40px 80px;background:linear-gradient(145deg,#FFF0F8,#F8F0FF);text-align:center;position:relative;overflow:hidden;">
+  <div style="position:absolute;width:400px;height:400px;background:#F7C5C5;border-radius:50%;filter:blur(80px);opacity:0.3;top:-80px;right:-80px;pointer-events:none;"></div>
+  <div style="position:absolute;width:350px;height:350px;background:#D9C5F0;border-radius:50%;filter:blur(80px);opacity:0.3;bottom:-60px;left:-60px;pointer-events:none;"></div>
+  <div style="position:relative;z-index:2;animation:fadeUp 0.7s ease;">
+    <span style="font-size:80px;display:block;margin-bottom:20px;animation:float 6s ease-in-out infinite;">🪐</span>
+    <div style="font-size:11px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;">✦ Über uns ✦</div>
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,60px);font-weight:900;color:var(--text);margin-bottom:14px;line-height:1.1;">Was ist<br><span style="background:linear-gradient(135deg,#C87090,#9070C8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Saturnplaner?</span></h1>
+    <p style="font-size:16px;color:var(--text-light);font-weight:600;max-width:500px;margin:0 auto;line-height:1.7;">Ein Ort für Selfcare, Planung & Selbstfindung — auf Deutsch, für alle, ohne Druck.</p>
+  </div>
+</div>
+
+<!-- MISSION -->
+<div style="padding:80px 40px;background:white;">
+  <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;">
+    <div style="background:linear-gradient(145deg,#FFF0F8,#F8F0FF);border-radius:32px;padding:48px;text-align:center;box-shadow:0 8px 40px var(--shadow);">
+      <span style="font-size:100px;display:block;margin-bottom:16px;">🪐</span>
+      <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--text);margin-bottom:8px;">Saturnplaner</div>
+      <div style="font-size:13px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;">✦ ich bin euer Saturn XoXo ✦</div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">✦ Unsere Mission ✦</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:var(--text);margin-bottom:20px;line-height:1.2;">Planung die sich gut anfühlt</h2>
+      <p style="font-size:15px;color:var(--text-light);font-weight:600;line-height:1.8;margin-bottom:16px;">Saturnplaner entstand aus dem Wunsch, Selfcare und Planung endlich zusammenzubringen — auf Deutsch, für alle Menschen, ohne Druck.</p>
+      <p style="font-size:15px;color:var(--text-light);font-weight:600;line-height:1.8;margin-bottom:16px;">Wir glauben: Planung soll sich nicht wie Zwang anfühlen. Selfcare soll zugänglich sein. Selbstfindung soll Spass machen — egal ob du mit ADHS lebst, soziale Angst kennst oder einfach mehr Struktur willst.</p>
+      <p style="font-size:15px;color:var(--text-light);font-weight:600;line-height:1.8;">Saturnplaner ist ein Ort wo du dich verstanden fühlst. 🌸</p>
+    </div>
+  </div>
+</div>
+
+<!-- WERTE -->
+<div style="padding:80px 40px;background:linear-gradient(145deg,#FFF0F8,#F8F0FF);">
+  <div style="max-width:1000px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div style="font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">✦ Werte ✦</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,42px);font-weight:900;color:var(--text);">Wofür wir stehen</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;">
+      <div style="background:white;border-radius:24px;padding:28px 22px;box-shadow:0 4px 20px var(--shadow);border-top:4px solid var(--rose);">
+        <div style="font-size:36px;margin-bottom:12px;">🌸</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;">Kein Druck</div>
+        <p style="font-size:13px;color:var(--text-light);font-weight:600;line-height:1.6;">Planung soll sich leicht anfühlen, nicht wie ein weiterer Stress-Faktor.</p>
+      </div>
+      <div style="background:white;border-radius:24px;padding:28px 22px;box-shadow:0 4px 20px var(--shadow);border-top:4px solid var(--lavender);">
+        <div style="font-size:36px;margin-bottom:12px;">🧠</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;">Mental Health First</div>
+        <p style="font-size:13px;color:var(--text-light);font-weight:600;line-height:1.6;">Sanfte Unterstützung für schwere Tage, ADHS, Angst & alles dazwischen.</p>
+      </div>
+      <div style="background:white;border-radius:24px;padding:28px 22px;box-shadow:0 4px 20px var(--shadow);border-top:4px solid var(--mint);">
+        <div style="font-size:36px;margin-bottom:12px;">💕</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;">Für alle</div>
+        <p style="font-size:13px;color:var(--text-light);font-weight:600;line-height:1.6;">Egal wer du bist — Saturnplaner ist ein Ort für dich, ohne Urteil.</p>
+      </div>
+      <div style="background:white;border-radius:24px;padding:28px 22px;box-shadow:0 4px 20px var(--shadow);border-top:4px solid var(--peach);">
+        <div style="font-size:36px;margin-bottom:12px;">🇨🇭</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;">Auf Deutsch</div>
+        <p style="font-size:13px;color:var(--text-light);font-weight:600;line-height:1.6;">Selfcare-Content auf Deutsch — für die DACH-Community.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAGS -->
+<div style="padding:60px 40px;background:white;text-align:center;">
+  <div style="max-width:700px;margin:0 auto;">
+    <h2 style="font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--text);margin-bottom:24px;">Das sind wir 🌸</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:36px;">
+      <span style="background:var(--cream);border:1.5px solid var(--rose);color:var(--accent);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:800;">🪐 Planung</span>
+      <span style="background:var(--cream);border:1.5px solid var(--rose);color:var(--accent);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:800;">🌸 Selfcare</span>
+      <span style="background:var(--cream);border:1.5px solid var(--rose);color:var(--accent);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:800;">🧠 Mental Health</span>
+      <span style="background:var(--cream);border:1.5px solid var(--rose);color:var(--accent);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:800;">💫 Motivation</span>
+      <span style="background:var(--cream);border:1.5px solid var(--rose);color:var(--accent);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:800;">🦋 Selbstfindung</span>
+      <span style="background:var(--cream);border:1.5px solid var(--rose);color:var(--accent);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:800;">🌿 Lifestyle</span>
+      <span style="background:var(--cream);border:1.5px solid var(--rose);color:var(--accent);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:800;">🇨🇭 Auf Deutsch</span>
+      <span style="background:var(--cream);border:1.5px solid var(--rose);color:var(--accent);padding:8px 16px;border-radius:20px;font-size:13px;font-weight:800;">💕 Community</span>
+    </div>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="blog.html" style="background:linear-gradient(135deg,#C87090,#9070C8);color:white;padding:14px 32px;border-radius:50px;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(200,112,144,0.35);">✨ Blog entdecken</a>
+      <a href="newsletter.html" style="background:rgba(255,255,255,0.8);color:var(--text);padding:14px 32px;border-radius:50px;font-size:14px;font-weight:800;text-decoration:none;border:2px solid var(--rose);">💌 Newsletter</a>
+    </div>
+  </div>
+</div>
+
+<!-- KONTAKT -->
+<div style="padding:60px 40px;background:linear-gradient(135deg,#C87090,#9070C8);text-align:center;">
+  <div style="max-width:500px;margin:0 auto;">
+    <h2 style="font-family:'Playfair Display',serif;font-size:32px;font-weight:900;color:white;margin-bottom:12px;">Schreib uns 💌</h2>
+    <p style="font-size:15px;color:rgba(255,255,255,0.85);font-weight:600;margin-bottom:24px;">Hast du Fragen, Ideen oder einfach Lust zu schreiben? Wir freuen uns!</p>
+    <a href="mailto:saturnplaner1@gmail.com" style="display:inline-block;background:rgba(255,255,255,0.2);border:2px solid rgba(255,255,255,0.5);color:white;padding:14px 32px;border-radius:50px;font-size:14px;font-weight:800;text-decoration:none;">saturnplaner1@gmail.com →</a>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:12px;">🪐 Saturnplaner — Zwischen den Sternen, zu dir selbst.</div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="community.html">Community</a>
+    <a href="about.html">Über uns</a>
+    <a href="login.html">Einloggen</a>
+  </div>
+  <div style="margin-top:16px;font-size:11px;opacity:0.4;">© 2026 Saturnplaner</div>
+</footer>
+</body>
+</html>

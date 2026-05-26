@@ -1021,74 +1021,44 @@
   </div>
 </section>
 
-<!-- TÄGLICHE PLANETENBOTSCHAFTEN -->
-<section style="padding:80px 40px;background:linear-gradient(145deg,#FFF0F8,#F8F0FF);position:relative;overflow:hidden;" id="planetenbotschaften">
-  <div style="position:absolute;top:-80px;right:-80px;width:350px;height:350px;background:radial-gradient(circle,rgba(247,197,197,0.3),transparent);border-radius:50%;pointer-events:none;"></div>
-  <div style="position:absolute;bottom:-60px;left:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(217,197,240,0.3),transparent);border-radius:50%;pointer-events:none;"></div>
-
-  <div class="section-label">✦ Täglich ✦</div>
-  <h2 class="section-title">Tägliche Planetenbotschaften</h2>
-  <p class="section-sub" id="indexPlanetsDate">Lade Botschaften...</p>
-
-  <!-- Personal Planet Banner (sichtbar wenn Geburtstag gespeichert) -->
-  <div id="indexPersonalPlanet" style="display:none;max-width:600px;margin:0 auto 40px;background:rgba(255,255,255,0.85);backdrop-filter:blur(10px);border:1.5px solid rgba(247,197,197,0.4);border-radius:24px;padding:20px 28px;text-align:center;box-shadow:0 6px 24px rgba(180,100,140,0.1);animation:fadeUp 0.6s ease;">
-    <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">✦ Dein Schutzplanet heute ✦</div>
-    <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;">
-      <span id="indexPersonalEmoji" style="font-size:40px;"></span>
-      <div style="text-align:left;">
-        <div id="indexPersonalName" style="font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:var(--text);"></div>
-        <div id="indexPersonalKeyword" style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);"></div>
-        <div id="indexPersonalMsg" style="font-size:12px;color:var(--text-light);font-weight:600;line-height:1.5;margin-top:4px;max-width:320px;font-style:italic;"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Planet Grid Preview (4 Planeten) -->
-  <div id="indexPlanetsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;max-width:1100px;margin:0 auto 32px;"></div>
-
-  <div style="text-align:center;">
-    <a href="planeten.html" class="btn-primary">🌌 Alle Planeten ansehen →</a>
-  </div>
-</section>
-
-<!-- FEATURES --><br>
+<!-- FEATURES -->
 <section class="features" id="features">
   <div class="section-label">✦ Themen ✦</div>
   <h2 class="section-title">Was dich erwartet</h2>
   <p class="section-sub">Klicke auf ein Thema und entdecke passende Artikel im Blog.</p>
 
   <div class="features-grid">
-    <div class="feature-card" onclick="window.location.href='#blog'" style="cursor:pointer;">
+    <div class="feature-card" onclick="window.location.href='blog.html?cat=Selfcare'" style="cursor:pointer;">
       <span class="feature-icon">🌸</span>
       <div class="feature-title">Selfcare & Wohlbefinden</div>
       <p class="feature-text">Rituale, Körperpflege & kleine Momente nur für dich.</p>
       <div style="margin-top:12px;font-size:12px;font-weight:800;color:var(--accent);">Artikel lesen →</div>
     </div>
-    <div class="feature-card" onclick="window.location.href='#blog'" style="cursor:pointer;">
+    <div class="feature-card" onclick="window.location.href='blog.html?cat=Planung'" style="cursor:pointer;">
       <span class="feature-icon">📅</span>
       <div class="feature-title">Planung & Produktivität</div>
       <p class="feature-text">Routinen, Ziele & Strukturen die sich gut anfühlen.</p>
       <div style="margin-top:12px;font-size:12px;font-weight:800;color:var(--accent);">Artikel lesen →</div>
     </div>
-    <div class="feature-card" onclick="window.location.href='#blog'" style="cursor:pointer;">
+    <div class="feature-card" onclick="window.location.href='blog.html?cat=Mental+Health'" style="cursor:pointer;">
       <span class="feature-icon">🧠</span>
       <div class="feature-title">Mental Health</div>
       <p class="feature-text">Sanfte Tipps für ADHS, Angst & schwere Tage.</p>
       <div style="margin-top:12px;font-size:12px;font-weight:800;color:var(--accent);">Artikel lesen →</div>
     </div>
-    <div class="feature-card" onclick="window.location.href='#blog'" style="cursor:pointer;">
+    <div class="feature-card" onclick="window.location.href='blog.html?cat=Lifestyle'" style="cursor:pointer;">
       <span class="feature-icon">🌿</span>
       <div class="feature-title">Lifestyle & Alltag</div>
       <p class="feature-text">Solo Dates, Jahreszeiten & kleine Freuden.</p>
       <div style="margin-top:12px;font-size:12px;font-weight:800;color:var(--accent);">Artikel lesen →</div>
     </div>
-    <div class="feature-card" onclick="window.location.href='#blog'" style="cursor:pointer;">
+    <div class="feature-card" onclick="window.location.href='blog.html?cat=Selbstfindung'" style="cursor:pointer;">
       <span class="feature-icon">🦋</span>
       <div class="feature-title">Selbstfindung & Wachstum</div>
       <p class="feature-text">Werte, Identität & der Weg zu dir selbst.</p>
       <div style="margin-top:12px;font-size:12px;font-weight:800;color:var(--accent);">Artikel lesen →</div>
     </div>
-    <div class="feature-card" onclick="window.location.href='#blog'" style="cursor:pointer;">
+    <div class="feature-card" onclick="window.location.href='blog.html?cat=Motivation'" style="cursor:pointer;">
       <span class="feature-icon">💫</span>
       <div class="feature-title">Motivation & Mindset</div>
       <p class="feature-text">Sprüche, Perspektivwechsel & tägliche Energie.</p>
@@ -1681,58 +1651,6 @@ async function openSupabaseArticle(id) {
 
 loadBlog();
 
-// === TÄGLICHE PLANETENBOTSCHAFTEN (Hauptseite) ===
-(function(){
-  const now=new Date();
-  const days=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
-  const months=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
-  const dateStr=`${days[now.getDay()]}, ${now.getDate()}. ${months[now.getMonth()]} ${now.getFullYear()}`;
-  const el=document.getElementById('indexPlanetsDate');
-  if(el) el.textContent='Botschaften für '+dateStr;
-  const dayOfYear=Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);
-  const planets=[
-    {emoji:'☀️',name:'Sonne',keyword:'Energie & Kraft',color:'#C87090',messages:['Heute leuchtet deine innere Kraft besonders hell. Trau dich, sichtbar zu sein. 🌟','Ein guter Tag um Energie zu tanken und dir etwas Schönes zu gönnen.','Die Sonne erinnert dich: Du verdienst das Beste.'],birthMonths:[7,8]},
-    {emoji:'🌙',name:'Mond',keyword:'Gefühle & Intuition',color:'#9090D0',messages:['Höre heute auf dein Bauchgefühl — es hat recht. 🌙','Deine Gefühle sind heute nah. Das ist okay und erlaubt.','Gönn dir heute Ruhe. Pausen sind kein Versagen.'],birthMonths:[6]},
-    {emoji:'🪐',name:'Saturn',keyword:'Struktur & Weisheit',color:'#9070C8',messages:['Saturn erinnert dich: Kleinen Schritten vertrauen. Du kommst ans Ziel. 🪐','Ein guter Tag für Planung und Struktur.','Geduld ist heute deine grösste Kraft.'],birthMonths:[12,1]},
-    {emoji:'♀️',name:'Venus',keyword:'Liebe & Schönheit',color:'#D080A0',messages:['Liebe dich heute selbst so wie du andere liebst. 💕','Tu heute etwas das sich schön anfühlt — nur für dich.','Ein guter Tag für Gespräche von Herz zu Herz.'],birthMonths:[4,5]},
-    {emoji:'♂️',name:'Mars',keyword:'Antrieb & Mut',color:'#C87060',messages:['Mars gibt dir heute extra Energie. Nutze sie für das was dir wichtig ist. 🔥','Der beste Moment war gestern — der zweitbeste ist jetzt. Leg los!','Trau dich heute mutig zu sein.'],birthMonths:[3]},
-    {emoji:'♃',name:'Jupiter',keyword:'Glück & Wachstum',color:'#B08040',messages:['Jupiter bringt heute Glücksmomente. Bleib offen dafür! ✨','Ein guter Tag um gross zu denken.','Dankbarkeit zieht mehr Gutes an.'],birthMonths:[11,2]},
-    {emoji:'♅',name:'Uranus',keyword:'Freiheit & Wandel',color:'#40A080',messages:['Was würdest du tun wenn du keine Angst hättest? 🌿','Probiere heute etwas Neues.','Deine Andersartigkeit ist deine Stärke.'],birthMonths:[10]},
-    {emoji:'♆',name:'Neptun',keyword:'Träume & Tiefe',color:'#4080C0',messages:['Deine Träume sagen dir etwas. Hör hin. 🌊','Ein guter Tag für Kreativität und Träumerei.','Deine Sensibilität ist ein Geschenk.'],birthMonths:[9]}
-  ];
-  // Render 4 planet cards
-  const grid=document.getElementById('indexPlanetsGrid');
-  if(grid){
-    grid.innerHTML=planets.slice(0,4).map((p,i)=>{
-      const msg=p.messages[(dayOfYear+i)%p.messages.length];
-      const energy=((dayOfYear+i*3)%5)+1;
-      return`<div style="background:white;border-radius:20px;padding:20px 16px;text-align:center;box-shadow:0 4px 20px rgba(180,130,130,0.12);border:1.5px solid rgba(247,197,197,0.2);position:relative;overflow:hidden;">
-        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:${p.color};border-radius:20px 20px 0 0;"></div>
-        <div style="font-size:40px;margin-bottom:8px;">${p.emoji}</div>
-        <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:#3D2C2C;margin-bottom:3px;">${p.name}</div>
-        <div style="font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:${p.color};margin-bottom:10px;">${p.keyword}</div>
-        <div style="font-size:12px;color:#9B7E7E;font-weight:600;line-height:1.5;">${msg}</div>
-        <div style="display:inline-block;margin-top:10px;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;background:${p.color}22;color:${p.color};">${'⭐'.repeat(energy)} Energie</div>
-      </div>`;
-    }).join('');
-  }
-  // Show personal planet if birthday saved
-  const saved=localStorage.getItem('sp_birthday');
-  if(saved){
-    const birth=new Date(saved);
-    const month=birth.getMonth()+1;
-    const found=planets.find(p=>p.birthMonths.includes(month))||planets[birth.getDate()%planets.length];
-    const banner=document.getElementById('indexPersonalPlanet');
-    if(banner){
-      document.getElementById('indexPersonalEmoji').textContent=found.emoji;
-      document.getElementById('indexPersonalName').textContent=found.name;
-      document.getElementById('indexPersonalKeyword').textContent=found.keyword;
-      document.getElementById('indexPersonalMsg').textContent=found.messages[dayOfYear%found.messages.length];
-      banner.style.display='block';
-    }
-  }
-})();
-
 // Register Service Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
@@ -1886,6 +1804,61 @@ function closeLegal() {
 }
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLegal(); });
+</script>
+
+<!-- ANMELDE-POPUP -->
+<div id="signupPopup" style="display:none;position:fixed;inset:0;background:rgba(60,30,30,0.45);backdrop-filter:blur(8px);z-index:9000;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:var(--cream);border-radius:32px;max-width:480px;width:100%;box-shadow:0 30px 80px rgba(100,40,60,0.25);animation:slideUp 0.4s ease;position:relative;overflow:hidden;">
+    <!-- Top gradient bar -->
+    <div style="height:6px;background:linear-gradient(135deg,#C87090,#9070C8);"></div>
+    <!-- Close button -->
+    <button onclick="closePopup()" style="position:absolute;top:16px;right:16px;background:rgba(247,197,197,0.3);border:none;width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;color:var(--text-light);transition:all 0.2s;z-index:1;" onmouseover="this.style.background='var(--rose)'" onmouseout="this.style.background='rgba(247,197,197,0.3)'">✕</button>
+    <div style="padding:36px 40px 40px;text-align:center;">
+      <div style="font-size:56px;margin-bottom:12px;animation:float 4s ease-in-out infinite;">🪐</div>
+      <div style="font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;">✦ Willkommen ✦</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--text);margin-bottom:10px;line-height:1.3;">Sei unter den Ersten! 🌸</h2>
+      <p style="font-size:14px;color:var(--text-light);font-weight:600;line-height:1.6;margin-bottom:28px;">Trag dich jetzt ein und erhalte neue Blog-Artikel, Tipps & die App-News direkt in dein Postfach.</p>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px;">
+        <input id="popupName" type="text" placeholder="Dein Vorname" style="padding:13px 18px;border-radius:14px;border:2px solid var(--rose);background:white;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
+        <input id="popupEmail" type="email" placeholder="deine@email.com" style="padding:13px 18px;border-radius:14px;border:2px solid var(--rose);background:white;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
+        <button onclick="submitPopup()" style="padding:14px;border-radius:14px;border:none;background:linear-gradient(135deg,#C87090,#9070C8);color:white;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(200,112,144,0.35);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">Jetzt anmelden ✨</button>
+      </div>
+      <div id="popupSuccess" style="display:none;font-size:14px;font-weight:700;color:var(--accent);margin-bottom:12px;">✓ Super! Du bist dabei 🌸</div>
+      <button onclick="closePopup()" style="background:none;border:none;font-size:13px;font-weight:700;color:var(--text-light);cursor:pointer;text-decoration:underline;">Nein danke, später</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Popup: nur zeigen wenn noch nicht geschlossen/angemeldet in dieser Session
+if (!sessionStorage.getItem('sp_popup_closed')) {
+  setTimeout(() => {
+    const popup = document.getElementById('signupPopup');
+    popup.style.display = 'flex';
+  }, 1800);
+}
+function closePopup() {
+  document.getElementById('signupPopup').style.display = 'none';
+  sessionStorage.setItem('sp_popup_closed', '1');
+}
+async function submitPopup() {
+  const name = document.getElementById('popupName').value.trim();
+  const email = document.getElementById('popupEmail').value.trim();
+  if (!name || !email) return;
+  // Supabase speichern (gleiche Verbindung wie Newsletter)
+  try {
+    await sb.from('newsletter_subscribers').upsert({ email, name, source: 'popup' });
+  } catch(e) {}
+  document.getElementById('popupSuccess').style.display = 'block';
+  document.getElementById('popupName').style.display = 'none';
+  document.getElementById('popupEmail').style.display = 'none';
+  document.querySelector('#signupPopup button[onclick="submitPopup()"]').style.display = 'none';
+  sessionStorage.setItem('sp_popup_closed', '1');
+  setTimeout(closePopup, 2000);
+}
+document.getElementById('signupPopup').addEventListener('click', function(e) {
+  if (e.target === this) closePopup();
+});
 </script>
 
 </body>

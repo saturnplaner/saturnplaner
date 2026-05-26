@@ -265,7 +265,20 @@ function closeArticleIfBg(e) {
 
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArticle(); });
 
-loadBlog();
+// Auto-Filter aus URL-Parameter (?cat=Selfcare)
+async function loadBlogWithFilter() {
+  await loadBlog();
+  const params = new URLSearchParams(window.location.search);
+  const cat = params.get('cat');
+  if (cat) {
+    const pill = document.querySelector(`.cat-pill[data-cat="${cat}"]`);
+    if (pill) {
+      filterBlog(cat, pill);
+      pill.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+}
+loadBlogWithFilter();
 
 // Auto-Planet aus localStorage (kein Re-Enter nötig)
 (function(){
