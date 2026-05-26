@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30 Tage Juni Challenge — Saturnplaner</title>
+<meta name="description" content="30 Tage positive Habits Challenge von Saturnplaner — kleine Schritte, grosse Wirkung. Mach im Juni mit!">
+<meta property="og:title" content="30 Tage Juni Challenge — Saturnplaner">
+<meta property="og:description" content="30 Tage positive Habits für mehr Energie & mentale Stärke. Mach mit!">
+<meta property="og:url" content="https://www.saturnplaner.ch/juni-challenge.html">
+<link rel="canonical" href="https://www.saturnplaner.ch/juni-challenge.html">
+<meta name="theme-color" content="#C87090">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--rose:#F7C5C5;--peach:#FFD9B7;--lavender:#D9C5F0;--mint:#C5E8D5;--sky:#C5DCF0;--cream:#FFF8F0;--text:#3D2C2C;--text-light:#9B7E7E;--accent:#C87090;--shadow:rgba(180,130,130,0.15);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Nunito',sans-serif;color:var(--text);background:var(--cream);}
+  .banner{position:fixed;top:0;left:0;right:0;z-index:1100;background:linear-gradient(135deg,#C87090,#9070C8);padding:8px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;}
+  .banner span{font-size:13px;font-weight:800;color:white;}
+  .banner a{background:rgba(255,255,255,0.25);color:white;font-size:12px;font-weight:800;padding:4px 14px;border-radius:20px;text-decoration:none;}
+  nav{position:fixed;top:36px;left:0;right:0;z-index:1000;background:rgba(255,248,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(247,197,197,0.3);padding:0 40px;height:70px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .nav-logo-icon{font-size:28px;}
+  .nav-logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--text);}
+  .nav-links{display:flex;align-items:center;gap:20px;list-style:none;}
+  .nav-links a{text-decoration:none;font-size:13px;font-weight:700;color:var(--text-light);transition:color 0.2s;}
+  .nav-links a:hover{color:var(--accent);}
+  .nav-cta{background:linear-gradient(135deg,var(--rose),var(--peach));color:#7A3030!important;padding:10px 22px;border-radius:50px;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+  /* HERO */
+  .hero{padding:130px 40px 48px;background:linear-gradient(145deg,#FFF0F8,#F8F0FF);text-align:center;}
+  .hero-planet{font-size:56px;display:block;margin-bottom:12px;animation:float 5s ease-in-out infinite;}
+  .hero-badge{display:inline-block;background:rgba(200,112,144,0.1);border:1.5px solid rgba(200,112,144,0.25);color:var(--accent);font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:5px 16px;border-radius:50px;margin-bottom:14px;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,48px);font-weight:900;color:var(--text);margin-bottom:10px;line-height:1.2;}
+  .hero h1 span{background:linear-gradient(135deg,#C87090,#9070C8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .hero-sub{font-size:15px;color:var(--text-light);font-weight:600;margin-bottom:6px;}
+  .hero-quote{font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:var(--accent);margin-bottom:24px;}
+  .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-primary{background:linear-gradient(135deg,#C87090,#9070C8);color:white;padding:13px 28px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 16px rgba(200,112,144,0.3);}
+  .btn-secondary{background:white;color:var(--text);padding:13px 28px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;text-decoration:none;border:2px solid var(--rose);}
+
+  /* GRID */
+  .section{padding:48px 40px;max-width:1000px;margin:0 auto;}
+  .section-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--text);margin-bottom:6px;text-align:center;}
+  .section-sub{font-size:13px;color:var(--text-light);font-weight:600;text-align:center;margin-bottom:28px;}
+
+  .days-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;}
+  .day-card{background:white;border-radius:14px;padding:12px 8px;text-align:center;box-shadow:0 2px 12px var(--shadow);border:1.5px solid rgba(247,197,197,0.15);position:relative;}
+  .day-card:nth-child(6n+1){border-top:3px solid #F7C5C5;}
+  .day-card:nth-child(6n+2){border-top:3px solid #FFD9B7;}
+  .day-card:nth-child(6n+3){border-top:3px solid #D9C5F0;}
+  .day-card:nth-child(6n+4){border-top:3px solid #C5E8D5;}
+  .day-card:nth-child(6n+5){border-top:3px solid #C5DCF0;}
+  .day-card:nth-child(6n){border-top:3px solid #F7C5C5;}
+  .day-num{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
+  .day-emoji{font-size:22px;margin-bottom:4px;display:block;}
+  .day-text{font-size:10px;font-weight:700;color:var(--text);line-height:1.4;}
+
+  /* TAGESBERICHTE */
+  .berichte-section{padding:0 40px 48px;max-width:1000px;margin:0 auto;}
+  .bericht-card{background:white;border-radius:18px;padding:20px 24px;box-shadow:0 3px 16px var(--shadow);border:1.5px solid rgba(247,197,197,0.2);margin-bottom:14px;display:flex;align-items:center;gap:16px;}
+  .bericht-day{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);white-space:nowrap;}
+  .bericht-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text);}
+  .bericht-link{margin-left:auto;font-size:12px;font-weight:800;color:var(--accent);text-decoration:none;white-space:nowrap;}
+  .bericht-coming{font-size:12px;color:var(--text-light);font-weight:600;font-style:italic;}
+
+  /* MITMACHEN */
+  .mitmachen{background:linear-gradient(135deg,#C87090,#9070C8);border-radius:24px;padding:32px;text-align:center;margin:0 40px 48px;max-width:920px;margin-left:auto;margin-right:auto;}
+  .mitmachen h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:white;margin-bottom:8px;}
+  .mitmachen p{font-size:14px;color:rgba(255,255,255,0.85);font-weight:600;margin-bottom:16px;}
+  .mitmachen a{background:rgba(255,255,255,0.2);border:2px solid rgba(255,255,255,0.5);color:white;padding:11px 24px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;text-decoration:none;}
+
+  /* WATERMARK */
+  .watermark{text-align:center;padding:20px 40px 40px;font-size:12px;color:var(--text-light);font-weight:600;}
+  .watermark a{color:var(--accent);font-weight:800;text-decoration:none;}
+
+  footer{background:#1a1a2e;padding:40px;text-align:center;color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;}
+  footer a{color:rgba(255,255,255,0.7);text-decoration:none;margin:0 12px;}
+
+  @media(max-width:768px){
+    nav{padding:0 20px;}
+    .nav-links{display:none;}
+    .days-grid{grid-template-columns:repeat(3,1fr);}
+    .section,.berichte-section{padding-left:20px;padding-right:20px;}
+    .mitmachen{margin-left:20px;margin-right:20px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <span>🪐</span>
+  <span>Saturnplaner App — <em>Coming Soon!</em></span>
+  <a href="newsletter.html">Jetzt eintragen →</a>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-icon">🪐</span>
+    <div class="nav-logo-text">Saturnplaner</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="blog.html">📖 Blog</a></li>
+    <li><a href="tipps.html">⚡ Tipps & Tricks</a></li>
+    <li><a href="planeten.html">🌌 Planeten</a></li>
+    <li><a href="community.html">🌱 Community</a></li>
+    <li><a href="about.html">🪐 Über uns</a></li>
+    <li><a href="newsletter.html">💌 Newsletter</a></li>
+    <li><a href="login.html" class="nav-cta">Einloggen ✨</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-planet">🌸</span>
+  <div class="hero-badge">✦ Juni 2026 ✦</div>
+  <h1>30 Tage<br><span>positive Habits</span></h1>
+  <p class="hero-sub">Kleine Schritte, grosse Wirkung.</p>
+  <p class="hero-quote">Du musst nicht perfekt sein, nur beständig. 💜</p>
+  <div class="hero-btns">
+    <a href="blog.html" class="btn-primary">📖 Zum Blog</a>
+    <a href="newsletter.html" class="btn-secondary">💌 Mitmachen</a>
+  </div>
+</div>
+
+<!-- 30 TAGE GRID -->
+<div class="section">
+  <h2 class="section-title">Die 30 Aufgaben ✦</h2>
+  <p class="section-sub">Eine Aufgabe pro Tag — für mehr Energie, Wohlbefinden & mentale Stärke.</p>
+  <div class="days-grid">
+    <div class="day-card"><div class="day-num">Tag 1</div><span class="day-emoji">💧</span><div class="day-text">Trinke genug Wasser</div></div>
+    <div class="day-card"><div class="day-num">Tag 2</div><span class="day-emoji">🙏</span><div class="day-text">Schreibe 3 Dinge auf für die du dankbar bist</div></div>
+    <div class="day-card"><div class="day-num">Tag 3</div><span class="day-emoji">😴</span><div class="day-text">Gönn dir 7–8 Stunden Schlaf</div></div>
+    <div class="day-card"><div class="day-num">Tag 4</div><span class="day-emoji">🌿</span><div class="day-text">Verbringe Zeit in der Natur</div></div>
+    <div class="day-card"><div class="day-num">Tag 5</div><span class="day-emoji">📖</span><div class="day-text">Lies ein paar Seiten eines Buches</div></div>
+    <div class="day-card"><div class="day-num">Tag 6</div><span class="day-emoji">🎵</span><div class="day-text">Höre deine Lieblingsongs</div></div>
+    <div class="day-card"><div class="day-num">Tag 7</div><span class="day-emoji">🪞</span><div class="day-text">Sage dir etwas Liebes vor dem Spiegel</div></div>
+    <div class="day-card"><div class="day-num">Tag 8</div><span class="day-emoji">🏃</span><div class="day-text">Bewege deinen Körper 30 Minuten</div></div>
+    <div class="day-card"><div class="day-num">Tag 9</div><span class="day-emoji">🥗</span><div class="day-text">Iss etwas Gesundes & Nährendes</div></div>
+    <div class="day-card"><div class="day-num">Tag 10</div><span class="day-emoji">📅</span><div class="day-text">Plane deinen Tag mit Absicht</div></div>
+    <div class="day-card"><div class="day-num">Tag 11</div><span class="day-emoji">📵</span><div class="day-text">Mach eine Pause von Social Media</div></div>
+    <div class="day-card"><div class="day-num">Tag 12</div><span class="day-emoji">🕯️</span><div class="day-text">Mache etwas das dich entspannt</div></div>
+    <div class="day-card"><div class="day-num">Tag 13</div><span class="day-emoji">📸</span><div class="day-text">Halte einen schönen Moment fest</div></div>
+    <div class="day-card"><div class="day-num">Tag 14</div><span class="day-emoji">✍️</span><div class="day-text">Schreibe frei über deine Gedanken</div></div>
+    <div class="day-card"><div class="day-num">Tag 15</div><span class="day-emoji">🛁</span><div class="day-text">Mach dir einen cozy Selfcare Abend</div></div>
+    <div class="day-card"><div class="day-num">Tag 16</div><span class="day-emoji">💕</span><div class="day-text">Tu heute etwas nur für dich</div></div>
+    <div class="day-card"><div class="day-num">Tag 17</div><span class="day-emoji">🌟</span><div class="day-text">Feiere deine kleinen Erfolge</div></div>
+    <div class="day-card"><div class="day-num">Tag 18</div><span class="day-emoji">☀️</span><div class="day-text">Starte deinen Tag ohne Eile</div></div>
+    <div class="day-card"><div class="day-num">Tag 19</div><span class="day-emoji">💌</span><div class="day-text">Schreibe jemandem eine liebe Nachricht</div></div>
+    <div class="day-card"><div class="day-num">Tag 20</div><span class="day-emoji">🫁</span><div class="day-text">Atme tief ein & wieder aus</div></div>
+    <div class="day-card"><div class="day-num">Tag 21</div><span class="day-emoji">🌈</span><div class="day-text">Visualisiere deine Ziele</div></div>
+    <div class="day-card"><div class="day-num">Tag 22</div><span class="day-emoji">👫</span><div class="day-text">Verbringe Zeit mit Menschen die dir guttun</div></div>
+    <div class="day-card"><div class="day-num">Tag 23</div><span class="day-emoji">🎨</span><div class="day-text">Sei kreativ — malen, basteln oder doodeln</div></div>
+    <div class="day-card"><div class="day-num">Tag 24</div><span class="day-emoji">🌸</span><div class="day-text">Nimm dir eine Auszeit & entspanne</div></div>
+    <div class="day-card"><div class="day-num">Tag 25</div><span class="day-emoji">📓</span><div class="day-text">Reflektiere deine Woche</div></div>
+    <div class="day-card"><div class="day-num">Tag 26</div><span class="day-emoji">😊</span><div class="day-text">Lächle — auch wenn es dir schwerfällt</div></div>
+    <div class="day-card"><div class="day-num">Tag 27</div><span class="day-emoji">💡</span><div class="day-text">Lerne heute etwas Neues</div></div>
+    <div class="day-card"><div class="day-num">Tag 28</div><span class="day-emoji">🌤️</span><div class="day-text">Verbringe Zeit im Tageslicht</div></div>
+    <div class="day-card"><div class="day-num">Tag 29</div><span class="day-emoji">🪐</span><div class="day-text">Erinnere dich wie weit du gekommen bist</div></div>
+    <div class="day-card"><div class="day-num">Tag 30</div><span class="day-emoji">🏆</span><div class="day-text">Sei stolz auf dich & bleib dran!</div></div>
+  </div>
+</div>
+
+<!-- TAGESBERICHTE -->
+<div class="berichte-section">
+  <h2 class="section-title">Meine Tagesberichte 📓</h2>
+  <p class="section-sub">Jeden Tag teile ich hier wie es mir ergangen ist — ehrlich, persönlich, direkt.</p>
+
+  <!-- Hier fügst du später deine Tagesberichte ein -->
+  <div class="bericht-card">
+    <div>
+      <div class="bericht-day">Tag 1 · 1. Juni</div>
+      <div class="bericht-coming">Bericht folgt bald... 🌸</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MITMACHEN -->
+<div class="mitmachen">
+  <h3>Machst du mit? 🌸</h3>
+  <p>Starte einfach mit Tag 1 — kein Druck, kein Perfektionismus. Nur du und 30 kleine Schritte.</p>
+  <a href="newsletter.html">💌 Newsletter abonnieren & dabei bleiben</a>
+</div>
+
+<!-- WATERMARK -->
+<div class="watermark">
+  🪐 Eine Challenge von <a href="https://www.saturnplaner.ch">saturnplaner.ch</a> —
+  Teile deine Fortschritte: <a href="https://instagram.com/saturnplaner" target="_blank">@saturnplaner</a>
+</div>
+
+<footer>
+  <div style="margin-bottom:12px;">🪐 Saturnplaner — Zwischen den Sternen, zu dir selbst.</div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="tipps.html">Tipps & Tricks</a>
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+  </div>
+  <div style="margin-top:16px;font-size:11px;opacity:0.4;">© 2026 Saturnplaner</div>
+</footer>
+
+</body>
+</html>
