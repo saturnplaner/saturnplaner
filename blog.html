@@ -146,6 +146,22 @@
     <div class="cat-pill" data-cat="Mental Health" onclick="filterBlog('Mental Health',this)">🧠 Mental Health <span class="cat-count" id="count-Mental Health">0</span></div>
     <div class="cat-pill" data-cat="Lifestyle" onclick="filterBlog('Lifestyle',this)">🌿 Lifestyle <span class="cat-count" id="count-Lifestyle">0</span></div>
     <div class="cat-pill" data-cat="Motivation" onclick="filterBlog('Motivation',this)">💫 Motivation <span class="cat-count" id="count-Motivation">0</span></div>
+    <div class="cat-pill" data-cat="Challenge" onclick="filterBlog('Challenge',this)">🌸 Challenge <span class="cat-count" id="count-Challenge">0</span></div>
+  </div>
+</div>
+
+<!-- CHALLENGE BANNER -->
+<div id="challengeBanner" style="max-width:1100px;margin:0 auto 8px;padding:0 40px;">
+  <div id="challengeBannerInner" style="border-radius:20px;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;background:linear-gradient(135deg,rgba(247,197,197,0.3),rgba(217,197,240,0.3));border:1.5px solid rgba(200,112,144,0.2);">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <span style="font-size:28px;" id="bannerEmoji">🌸</span>
+      <div>
+        <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);" id="bannerLabel">✦ Challenge ✦</div>
+        <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--text);" id="bannerTitle">Bald kommt etwas Neues...</div>
+        <div style="font-size:12px;color:var(--text-light);font-weight:600;" id="bannerSub">Lass dich überraschen ✨</div>
+      </div>
+    </div>
+    <a id="bannerLink" href="juni-challenge.html" style="background:linear-gradient(135deg,#C87090,#9070C8);color:white;padding:10px 22px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;text-decoration:none;white-space:nowrap;box-shadow:0 4px 14px rgba(200,112,144,0.3);">Mehr erfahren →</a>
   </div>
 </div>
 
@@ -212,11 +228,40 @@ async function loadBlog() {
 
 function updateCounts() {
   document.getElementById('count-alle').textContent = allPosts.length;
-  ['Selfcare','Planung','Mental Health','Lifestyle','Motivation'].forEach(cat => {
+  ['Selfcare','Planung','Mental Health','Lifestyle','Motivation','Challenge'].forEach(cat => {
     const el = document.getElementById('count-' + cat);
     if (el) el.textContent = allPosts.filter(p => p.tag === cat).length;
   });
 }
+
+// Challenge Banner Logic
+async function loadChallengeBanner() {
+  const now = new Date();
+  const juniStart = new Date('2026-06-01');
+  const { data } = await sb.from('blog_posts').select('*').eq('tag','Challenge').eq('published',true).order('created_at',{ascending:false}).limit(1);
+
+  const banner = document.getElementById('challengeBannerInner');
+  const link = document.getElementById('bannerLink');
+
+  if (now < juniStart || !data || data.length === 0) {
+    // Teaser — noch nicht gestartet
+    document.getElementById('bannerEmoji').textContent = '✨';
+    document.getElementById('bannerLabel').textContent = '✦ Kommt bald ✦';
+    document.getElementById('bannerTitle').textContent = 'Bald kommt etwas Neues...';
+    document.getElementById('bannerSub').textContent = 'Lass dich überraschen 🌸';
+    link.textContent = 'Neugierig? →';
+  } else {
+    // Challenge läuft — zeige neuesten Tagesbericht
+    const p = data[0];
+    document.getElementById('bannerEmoji').textContent = p.emoji || '🌸';
+    document.getElementById('bannerLabel').textContent = '✦ Juni Challenge läuft ✦';
+    document.getElementById('bannerTitle').textContent = p.title;
+    document.getElementById('bannerSub').textContent = '🌸 Lies meinen neuesten Tagesbericht';
+    link.textContent = 'Weiterlesen →';
+    link.href = 'juni-challenge.html';
+  }
+}
+loadChallengeBanner();
 
 function filterBlog(cat, el) {
   activeFilter = cat;
