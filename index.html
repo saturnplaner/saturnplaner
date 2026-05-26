@@ -222,7 +222,10 @@
     display: flex;
     gap: 16px;
     justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
+    width: 100%;
+    text-align: center;
   }
 
   .btn-primary {
@@ -1073,11 +1076,10 @@
     <div class="hero-btns">
       <a href="#blog" class="btn-primary">✨ Blog entdecken</a>
       <a href="#newsletter" class="btn-secondary">💌 Newsletter</a>
-    
-      <!-- SOCIAL PROOF -->
-      <div id="socialProof" style="margin-top:20px;font-size:13px;font-weight:700;color:var(--text-light);opacity:0;transition:opacity 0.6s;">
-        🌸 Bereits <span id="proofCount" style="color:var(--accent);font-weight:900;">...</span> Personen auf der Warteliste
-      </div>
+    </div>
+    <!-- Social Proof -->
+    <div id="socialProof" style="margin-top:16px;font-size:13px;font-weight:700;color:var(--text-light);opacity:0;transition:opacity 0.6s;text-align:center;">
+      🌸 Bereits <span id="proofCount" style="color:var(--accent);font-weight:900;">...</span> Personen auf der Warteliste
     </div>
     <!-- Space decoration -->
     <div style="display:flex;gap:20px;justify-content:center;margin-top:32px;font-size:22px;opacity:0.5;">
