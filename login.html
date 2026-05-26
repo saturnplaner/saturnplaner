@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Saturn Planer — Login</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+<meta name="theme-color" content="#C87090">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Saturn Planer">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
@@ -392,8 +398,16 @@
     <!-- Register Form -->
     <div id="registerForm" style="display:none">
       <div class="form-group">
-        <label>Dein Name</label>
-        <input type="text" id="registerName" placeholder="z.B. Grenda" />
+        <label>Vorname</label>
+        <input type="text" id="registerFirstName" placeholder="z.B. Lara" />
+      </div>
+      <div class="form-group">
+        <label>Nachname</label>
+        <input type="text" id="registerLastName" placeholder="z.B. Müller" />
+      </div>
+      <div class="form-group">
+        <label>Alter</label>
+        <input type="number" id="registerAge" placeholder="z.B. 25" min="13" max="120" />
       </div>
       <div class="form-group">
         <label>E-Mail</label>
@@ -495,13 +509,15 @@
 
   // ===== REGISTER =====
   async function register() {
-    const name = document.getElementById('registerName').value.trim();
+    const firstName = document.getElementById('registerFirstName').value.trim();
+    const lastName = document.getElementById('registerLastName').value.trim();
+    const age = document.getElementById('registerAge').value.trim();
     const email = document.getElementById('registerEmail').value.trim();
     const password = document.getElementById('registerPassword').value;
     const password2 = document.getElementById('registerPassword2').value;
     const btn = document.getElementById('registerBtn');
 
-    if (!name || !email || !password) {
+    if (!firstName || !lastName || !age || !email || !password) {
       showMessage('Bitte alle Felder ausfüllen.');
       return;
     }
@@ -522,7 +538,14 @@
     const { data, error } = await sb.auth.signUp({
       email,
       password,
-      options: { data: { full_name: name } }
+      options: {
+        data: {
+          first_name: firstName,
+          last_name: lastName,
+          full_name: firstName + ' ' + lastName,
+          age: age
+        }
+      }
     });
 
     if (error) {

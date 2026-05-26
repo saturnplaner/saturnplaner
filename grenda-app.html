@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grenda's App ✿</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+<meta name="theme-color" content="#C87090">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Saturn Planer">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -1151,7 +1157,7 @@
 <div class="app-header">
   <div class="header-top">
     <div class="app-title">
-      Grenda's Space
+      <span id="app-user-title">Mein Space</span>
       <span>🪐 Saturn Planer</span>
     </div>
     <div style="display:flex;align-items:center;gap:8px;">
@@ -1962,9 +1968,11 @@ const tagesMotivation = [
   "Sei stolz auf das, was du bereits erreicht hast! 🏆",
 ];
 
-function renderTagesstart() {
+function renderTagesstart(userName) {
   const hero = document.getElementById('tagesstart-hero');
   if (!hero) return;
+  const name = userName || window._currentUserName || '';
+  const nameDisplay = name ? ', ' + name : '';
 
   const now = new Date();
   const h = now.getHours();
@@ -1972,7 +1980,7 @@ function renderTagesstart() {
   const monthNames = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
   const dateStr = `${dayNames[now.getDay()]}, ${now.getDate()}. ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
 
-  let greetingText = h < 12 ? 'Guten Morgen, Grenda! ☀️' : h < 17 ? 'Guten Tag, Grenda! 🌻' : 'Guten Abend, Grenda! 🌙';
+  let greetingText = h < 12 ? `Guten Morgen${nameDisplay}! ☀️` : h < 17 ? `Guten Tag${nameDisplay}! 🌻` : `Guten Abend${nameDisplay}! 🌙`;
 
   const quote = tagesMotivation[now.getDate() % tagesMotivation.length];
 
@@ -2009,6 +2017,35 @@ function renderTagesstart() {
 renderTagesstart();
 renderRoutine();
 renderHabits();
+
+// ===== LOAD USER =====
+async function loadUser() {
+  try {
+    const { createClient } = window.supabase;
+    const sb = createClient(
+      'https://buowsgggbkpsssspewtk.supabase.co',
+      'sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO'
+    );
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) {
+      const firstName = session.user.user_metadata?.first_name ||
+                        session.user.user_metadata?.full_name?.split(' ')[0] ||
+                        session.user.email.split('@')[0];
+      window._currentUserName = firstName;
+      // Set title
+      document.getElementById('app-user-title').textContent = firstName + "'s Space";
+      // Update greeting with real name
+      const h = new Date().getHours();
+      const g = document.getElementById('greeting');
+      if (h < 12) g.textContent = 'Guten Morgen, ' + firstName + '! ☀️';
+      else if (h < 17) g.textContent = 'Guten Tag, ' + firstName + '! 🌻';
+      else g.textContent = 'Guten Abend, ' + firstName + '! 🌙';
+      // Update tagesstart
+      renderTagesstart(firstName);
+    }
+  } catch(e) {}
+}
+loadUser();
 
 // ===== LOGOUT =====
 async function logout() {
