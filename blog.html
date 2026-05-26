@@ -130,7 +130,6 @@
     <div class="cat-pill" data-cat="Planung" onclick="filterBlog('Planung',this)">📅 Planung <span class="cat-count" id="count-Planung">0</span></div>
     <div class="cat-pill" data-cat="Mental Health" onclick="filterBlog('Mental Health',this)">🧠 Mental Health <span class="cat-count" id="count-Mental Health">0</span></div>
     <div class="cat-pill" data-cat="Lifestyle" onclick="filterBlog('Lifestyle',this)">🌿 Lifestyle <span class="cat-count" id="count-Lifestyle">0</span></div>
-    <div class="cat-pill" data-cat="Selbstfindung" onclick="filterBlog('Selbstfindung',this)">🦋 Selbstfindung <span class="cat-count" id="count-Selbstfindung">0</span></div>
     <div class="cat-pill" data-cat="Motivation" onclick="filterBlog('Motivation',this)">💫 Motivation <span class="cat-count" id="count-Motivation">0</span></div>
   </div>
 </div>
@@ -198,7 +197,7 @@ async function loadBlog() {
 
 function updateCounts() {
   document.getElementById('count-alle').textContent = allPosts.length;
-  ['Selfcare','Planung','Mental Health','Lifestyle','Selbstfindung','Motivation'].forEach(cat => {
+  ['Selfcare','Planung','Mental Health','Lifestyle','Motivation'].forEach(cat => {
     const el = document.getElementById('count-' + cat);
     if (el) el.textContent = allPosts.filter(p => p.tag === cat).length;
   });
