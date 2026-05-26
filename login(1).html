@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saturn Planer — Login</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root {
+    --rose: #F7C5C5;
+    --peach: #FFD9B7;
+    --lavender: #D9C5F0;
+    --mint: #C5E8D5;
+    --cream: #FFF8F0;
+    --text: #3D2C2C;
+    --text-light: #9B7E7E;
+    --accent: #C87090;
+    --shadow: rgba(180,130,130,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(145deg, #FFF0F8 0%, #F8F0FF 40%, #F0F8FF 70%, #F0FFF8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Background orbs */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .orb-1 { width: 500px; height: 500px; background: #F7C5C5; top: -100px; right: -100px; }
+  .orb-2 { width: 400px; height: 400px; background: #D9C5F0; bottom: -80px; left: -80px; }
+
+  /* Stars */
+  .star {
+    position: fixed;
+    color: #C8A0C8;
+    opacity: 0.25;
+    pointer-events: none;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 0.6; }
+  }
+
+  /* Card */
+  .card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    border-radius: 32px;
+    padding: 48px 44px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 20px 60px rgba(180,100,140,0.15), 0 0 0 1.5px rgba(247,197,197,0.4);
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Logo */
+  .logo {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .logo-planet {
+    font-size: 56px;
+    display: block;
+    margin-bottom: 8px;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .logo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .logo-motto {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text-light);
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    background: #F5EDE0;
+    border-radius: 16px;
+    padding: 4px;
+    margin-bottom: 28px;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: transparent;
+    color: var(--text-light);
+  }
+
+  .tab.active {
+    background: white;
+    color: var(--text);
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+
+  /* Form */
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text-light);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 2px solid rgba(247,197,197,0.4);
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    background: rgba(255,255,255,0.8);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(200,112,144,0.1);
+  }
+
+  /* Button */
+  .btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+    background: linear-gradient(135deg, #C87090, #9070C8);
+    color: white;
+    box-shadow: 0 6px 20px rgba(200,112,144,0.35);
+  }
+
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(200,112,144,0.45); }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* Divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(247,197,197,0.4);
+  }
+
+  .divider-text {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+  }
+
+  /* Google button */
+  .btn-google {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid rgba(247,197,197,0.5);
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .btn-google:hover { background: #FFF0F8; border-color: var(--rose); transform: translateY(-1px); }
+
+  /* Message */
+  .message {
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: none;
+  }
+
+  .message.error { background: #FFE0E0; color: #C03040; display: block; }
+  .message.success { background: #E0FFE8; color: #206040; display: block; }
+  .message.info { background: rgba(217,197,240,0.3); color: #6040A0; display: block; }
+
+  /* Footer */
+  .card-footer {
+    text-align: center;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(247,197,197,0.3);
+  }
+
+  .card-footer a {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .card-footer a:hover { text-decoration: underline; }
+
+  /* Loading spinner */
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Forgot password link */
+  .forgot {
+    text-align: right;
+    margin-top: -8px;
+    margin-bottom: 16px;
+  }
+
+  .forgot a {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .forgot a:hover { color: var(--accent); }
+
+  /* Success screen */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .success-screen .big-check {
+    font-size: 64px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .success-screen h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .success-screen p {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="star" style="top:10%;left:8%;font-size:20px;animation-delay:0s">✦</div>
+<div class="star" style="top:20%;right:10%;font-size:16px;animation-delay:1s">✧</div>
+<div class="star" style="bottom:25%;left:6%;font-size:18px;animation-delay:2s">✦</div>
+<div class="star" style="bottom:15%;right:8%;font-size:14px;animation-delay:0.5s">✧</div>
+<div class="star" style="top:50%;right:4%;font-size:22px;animation-delay:1.5s">✦</div>
+
+<div class="card">
+  <!-- Logo -->
+  <div class="logo">
+    <span class="logo-planet">🪐</span>
+    <div class="logo-name">Saturn Planer</div>
+    <div class="logo-motto">Zwischen den Sternen — zu dir selbst.</div>
+  </div>
+
+  <!-- Message -->
+  <div class="message" id="message"></div>
+
+  <!-- Success Screen -->
+  <div class="success-screen" id="successScreen">
+    <span class="big-check">✉️</span>
+    <h2>Fast geschafft!</h2>
+    <p>Wir haben dir eine Bestätigungs-E-Mail geschickt.<br>Bitte prüfe dein Postfach und bestätige deine E-Mail-Adresse.</p>
+    <button class="btn" onclick="showLogin()">Zum Login →</button>
+  </div>
+
+  <!-- Auth Form -->
+  <div id="authForm">
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" id="loginTab" onclick="switchTab('login')">Einloggen</button>
+      <button class="tab" id="registerTab" onclick="switchTab('register')">Registrieren</button>
+    </div>
+
+    <!-- Login Form -->
+    <div id="loginForm">
+      <div class="form-group">
+        <label>E-Mail</label>
+        <input type="email" id="loginEmail" placeholder="deine@email.com" />
+      </div>
+      <div class="form-group">
+        <label>Passwort</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" />
+      </div>
+      <div class="forgot">
+        <a href="#" onclick="forgotPassword()">Passwort vergessen?</a>
+      </div>
+      <button class="btn" id="loginBtn" onclick="login()">🪐 Einloggen</button>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-text">oder</div>
+        <div class="divider-line"></div>
+      </div>
+
+      <button class="btn-google" onclick="loginWithGoogle()">
+        <span>🌐</span> Mit Google einloggen
+      </button>
+    </div>
+
+    <!-- Register Form -->
+    <div id="registerForm" style="display:none">
+      <div class="form-group">
+        <label>Dein Name</label>
+        <input type="text" id="registerName" placeholder="z.B. Grenda" />
+      </div>
+      <div class="form-group">
+        <label>E-Mail</label>
+        <input type="email" id="registerEmail" placeholder="deine@email.com" />
+      </div>
+      <div class="form-group">
+        <label>Passwort</label>
+        <input type="password" id="registerPassword" placeholder="Mindestens 6 Zeichen" />
+      </div>
+      <div class="form-group">
+        <label>Passwort bestätigen</label>
+        <input type="password" id="registerPassword2" placeholder="Passwort wiederholen" />
+      </div>
+      <button class="btn" id="registerBtn" onclick="register()">🌸 Konto erstellen</button>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-text">oder</div>
+        <div class="divider-line"></div>
+      </div>
+
+      <button class="btn-google" onclick="loginWithGoogle()">
+        <span>🌐</span> Mit Google registrieren
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="card-footer">
+    <a href="index.html">← Zurück zur Website</a>
+  </div>
+</div>
+
+<script>
+  // ===== SUPABASE SETUP =====
+  const SUPABASE_URL = 'https://buowsgggbkpsssspewtk.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO';
+  const { createClient } = supabase;
+  const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // Check if already logged in
+  sb.auth.getSession().then(({ data: { session } }) => {
+    if (session) {
+      window.location.href = 'app.html';
+    }
+  });
+
+  // ===== TAB SWITCH =====
+  function switchTab(tab) {
+    document.getElementById('loginTab').classList.toggle('active', tab === 'login');
+    document.getElementById('registerTab').classList.toggle('active', tab === 'register');
+    document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+    hideMessage();
+  }
+
+  // ===== MESSAGE =====
+  function showMessage(text, type = 'error') {
+    const m = document.getElementById('message');
+    m.textContent = text;
+    m.className = 'message ' + type;
+  }
+
+  function hideMessage() {
+    document.getElementById('message').className = 'message';
+  }
+
+  function showLogin() {
+    document.getElementById('successScreen').style.display = 'none';
+    document.getElementById('authForm').style.display = 'block';
+    switchTab('login');
+  }
+
+  // ===== LOGIN =====
+  async function login() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const btn = document.getElementById('loginBtn');
+
+    if (!email || !password) {
+      showMessage('Bitte E-Mail und Passwort eingeben.');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Einloggen...';
+
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+    if (error) {
+      showMessage('Fehler: ' + (error.message === 'Invalid login credentials' ? 'E-Mail oder Passwort falsch.' : error.message));
+      btn.disabled = false;
+      btn.innerHTML = '🪐 Einloggen';
+    } else {
+      showMessage('Willkommen zurück! 🌸', 'success');
+      setTimeout(() => { window.location.href = 'app.html'; }, 1000);
+    }
+  }
+
+  // ===== REGISTER =====
+  async function register() {
+    const name = document.getElementById('registerName').value.trim();
+    const email = document.getElementById('registerEmail').value.trim();
+    const password = document.getElementById('registerPassword').value;
+    const password2 = document.getElementById('registerPassword2').value;
+    const btn = document.getElementById('registerBtn');
+
+    if (!name || !email || !password) {
+      showMessage('Bitte alle Felder ausfüllen.');
+      return;
+    }
+
+    if (password !== password2) {
+      showMessage('Die Passwörter stimmen nicht überein.');
+      return;
+    }
+
+    if (password.length < 6) {
+      showMessage('Das Passwort muss mindestens 6 Zeichen lang sein.');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Konto erstellen...';
+
+    const { data, error } = await sb.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: name } }
+    });
+
+    if (error) {
+      showMessage('Fehler: ' + error.message);
+      btn.disabled = false;
+      btn.innerHTML = '🌸 Konto erstellen';
+    } else {
+      document.getElementById('authForm').style.display = 'none';
+      document.getElementById('successScreen').style.display = 'block';
+    }
+  }
+
+  // ===== GOOGLE LOGIN =====
+  async function loginWithGoogle() {
+    await sb.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: window.location.origin + '/app.html' }
+    });
+  }
+
+  // ===== FORGOT PASSWORD =====
+  async function forgotPassword() {
+    const email = document.getElementById('loginEmail').value.trim();
+    if (!email) {
+      showMessage('Bitte zuerst deine E-Mail eingeben.', 'info');
+      return;
+    }
+    const { error } = await sb.auth.resetPasswordForEmail(email);
+    if (error) {
+      showMessage('Fehler: ' + error.message);
+    } else {
+      showMessage('Wir haben dir einen Link zum Zurücksetzen geschickt! 🌸', 'success');
+    }
+  }
+
+  // Enter key support
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const loginVisible = document.getElementById('loginForm').style.display !== 'none';
+      if (loginVisible) login();
+      else register();
+    }
+  });
+</script>
+
+</body>
+</html>

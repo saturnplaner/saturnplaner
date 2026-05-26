@@ -1,0 +1,2011 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grenda's App ✿</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #F7C5C5;
+    --peach: #FFD9B7;
+    --mint: #C5E8D5;
+    --lavender: #D9C5F0;
+    --sky: #C5DCF0;
+    --cream: #FFF8F0;
+    --sand: #F5EDE0;
+    --text: #3D2C2C;
+    --text-light: #9B7E7E;
+    --white: #FFFFFF;
+    --shadow: rgba(180,130,130,0.15);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: linear-gradient(135deg, #FFE8E8 0%, #FFF0E8 30%, #F0E8FF 60%, #E8F5EE 100%);
+    min-height: 100vh;
+    font-family: 'Nunito', sans-serif;
+    color: var(--text);
+    position: relative;
+  }
+
+  /* HEADER */
+  .app-header {
+    background: var(--white);
+    padding: 20px 24px 0;
+    box-shadow: 0 2px 20px var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .app-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .app-title span {
+    color: #E8909090;
+    font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    display: block;
+    margin-top: 2px;
+    letter-spacing: 1px;
+  }
+
+  .greeting-badge {
+    background: linear-gradient(135deg, var(--rose), var(--peach));
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #7A3030;
+  }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+  }
+
+  .tab-btn {
+    flex: 1;
+    padding: 12px 8px;
+    border: none;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .tab-btn .tab-icon { font-size: 20px; }
+
+  .tab-btn.active {
+    color: var(--text);
+    border-bottom-color: #E89090;
+  }
+
+  /* MAIN CONTENT */
+  .content {
+    padding: 20px 16px 100px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SECTION TITLE */
+  .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    margin-top: 8px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* ADD BUTTON */
+  .btn-add {
+    background: linear-gradient(135deg, var(--rose), var(--peach));
+    border: none;
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: #7A3030;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 12px rgba(232,144,144,0.3);
+  }
+
+  .btn-add:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(232,144,144,0.4); }
+
+  /* MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(60,30,30,0.3);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--cream);
+    border-radius: 24px 24px 0 0;
+    padding: 24px;
+    width: 100%;
+    max-width: 600px;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .modal input, .modal select, .modal textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--rose);
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    background: var(--white);
+    color: var(--text);
+    margin-bottom: 12px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .modal input:focus, .modal select:focus, .modal textarea:focus {
+    border-color: #E89090;
+  }
+
+  .modal-btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .btn-cancel {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid var(--rose);
+    border-radius: 14px;
+    background: transparent;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-light);
+    cursor: pointer;
+  }
+
+  .btn-save {
+    flex: 2;
+    padding: 12px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #F0A0A0, #E8909090);
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(232,144,144,0.4);
+  }
+
+  /* ===== BUCKET LIST ===== */
+  .category-filter {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .filter-chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--white);
+    color: var(--text-light);
+  }
+
+  .filter-chip.active { color: var(--text); border-color: currentColor; }
+  .filter-chip[data-cat="alle"].active { background: var(--sand); border-color: #C9A0A0; color: #7A3030; }
+  .filter-chip[data-cat="karriere"].active { background: var(--sky); border-color: #7AAAC9; color: #2A4A6A; }
+  .filter-chip[data-cat="sozial"].active { background: var(--mint); border-color: #7AC9A0; color: #2A6A4A; }
+  .filter-chip[data-cat="hobby"].active { background: var(--peach); border-color: #C9A07A; color: #6A3A0A; }
+  .filter-chip[data-cat="selfcare"].active { background: var(--lavender); border-color: #A07AC9; color: #4A2A6A; }
+
+  .goal-card {
+    background: var(--white);
+    border-radius: 18px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 12px var(--shadow);
+    transition: transform 0.2s, opacity 0.2s;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .goal-card:hover { transform: translateY(-2px); }
+
+  .goal-check {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2.5px solid var(--rose);
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.2s;
+    background: transparent;
+  }
+
+  .goal-check.checked {
+    background: linear-gradient(135deg, #F0A0A0, #E89090);
+    border-color: transparent;
+    color: white;
+  }
+
+  .goal-info { flex: 1; }
+
+  .goal-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+    transition: all 0.2s;
+  }
+
+  .goal-text.done {
+    text-decoration: line-through;
+    color: var(--text-light);
+  }
+
+  .goal-cat {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .cat-karriere { color: #5A9ABD; }
+  .cat-sozial { color: #5ABD8A; }
+  .cat-hobby { color: #BD8A5A; }
+  .cat-selfcare { color: #8A5ABD; }
+
+  .goal-del {
+    background: none;
+    border: none;
+    color: var(--rose);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+  .goal-del:hover { opacity: 1; }
+
+  /* Progress summary */
+  .progress-summary {
+    background: linear-gradient(135deg, var(--rose), var(--peach));
+    border-radius: 20px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .progress-big {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: #7A3030;
+    line-height: 1;
+  }
+
+  .progress-info { flex: 1; }
+
+  .progress-info p {
+    font-size: 13px;
+    font-weight: 700;
+    color: #9A5050;
+    margin-bottom: 8px;
+  }
+
+  .prog-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .prog-fill {
+    height: 100%;
+    background: white;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+
+  /* ===== HABITS ===== */
+  .week-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 10px 16px;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+
+  .week-label {
+    font-weight: 800;
+    font-size: 14px;
+    color: var(--text);
+  }
+
+  .week-arrow {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--text-light);
+    padding: 4px 8px;
+  }
+
+  .days-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .day-pill {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .day-name {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .day-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text-light);
+    background: var(--sand);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .day-num.today {
+    background: linear-gradient(135deg, var(--rose), var(--peach));
+    color: #7A3030;
+  }
+
+  .habit-row {
+    background: var(--white);
+    border-radius: 18px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 12px var(--shadow);
+    animation: fadeIn 0.3s ease;
+  }
+
+  .habit-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .habit-icon { font-size: 22px; }
+
+  .habit-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text);
+  }
+
+  .habit-streak {
+    font-size: 12px;
+    font-weight: 700;
+    color: #E89090;
+    background: var(--rose);
+    padding: 3px 10px;
+    border-radius: 10px;
+  }
+
+  .habit-del {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: var(--rose);
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  .habit-del:hover { opacity: 1; }
+
+  .habit-days {
+    display: flex;
+    gap: 6px;
+  }
+
+  .habit-day-dot {
+    flex: 1;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--sand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+
+  .habit-day-dot.done {
+    background: linear-gradient(135deg, var(--mint), #A0D9B5);
+    color: #2A6A4A;
+  }
+
+  .habit-day-dot.today-dot {
+    border: 2px solid #E89090;
+  }
+
+  /* ===== NÄH PLANER ===== */
+  .naeh-card {
+    background: var(--white);
+    border-radius: 18px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 12px var(--shadow);
+    animation: fadeIn 0.3s ease;
+  }
+
+  .naeh-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .naeh-icon { font-size: 28px; flex-shrink: 0; }
+
+  .naeh-info { flex: 1; }
+
+  .naeh-title {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .naeh-meta {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 600;
+  }
+
+  .naeh-del {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--rose);
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  .naeh-del:hover { opacity: 1; }
+
+  .status-badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+
+  .status-idee { background: var(--lavender); color: #6A3A9A; }
+  .status-laufend { background: var(--peach); color: #8A4A10; }
+  .status-fertig { background: var(--mint); color: #1A6A4A; }
+  .status-pause { background: var(--sky); color: #1A4A7A; }
+
+  .naeh-progress-bar {
+    height: 8px;
+    background: var(--sand);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+
+  .naeh-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--lavender), var(--rose));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+
+  .naeh-progress-label {
+    font-size: 11px;
+    color: var(--text-light);
+    font-weight: 600;
+    text-align: right;
+  }
+
+  .naeh-steps {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .naeh-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+  }
+
+  .step-check {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    border: 2px solid var(--lavender);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.2s;
+  }
+
+  .step-check.done {
+    background: var(--lavender);
+    border-color: transparent;
+    color: #6A3A9A;
+  }
+
+  .step-text.done {
+    text-decoration: line-through;
+    color: var(--text-light);
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-light);
+  }
+
+  .empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state p { font-size: 14px; font-weight: 600; }
+
+  /* ===== SPRÜCHE ===== */
+  .spruch-of-day {
+    background: linear-gradient(135deg, #F7C5C5, #FFD9B7, #D9C5F0);
+    border-radius: 24px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(200,150,150,0.2);
+  }
+
+  .spruch-of-day::before {
+    content: '✦';
+    position: absolute;
+    top: 10px; left: 16px;
+    font-size: 20px;
+    opacity: 0.3;
+    color: #7A3030;
+  }
+
+  .spruch-of-day::after {
+    content: '✦';
+    position: absolute;
+    bottom: 10px; right: 16px;
+    font-size: 20px;
+    opacity: 0.3;
+    color: #7A3030;
+  }
+
+  .sod-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #A06060;
+    margin-bottom: 14px;
+  }
+
+  .sod-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #4A2A2A;
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  .sod-author {
+    font-size: 12px;
+    font-weight: 600;
+    color: #9A6060;
+    font-style: italic;
+  }
+
+  .sod-refresh {
+    margin-top: 16px;
+    background: rgba(255,255,255,0.6);
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: #7A3030;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .sod-refresh:hover { background: rgba(255,255,255,0.9); transform: scale(1.04); }
+
+  .spruch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .spruch-card {
+    background: var(--white);
+    border-radius: 18px;
+    padding: 18px 14px;
+    text-align: center;
+    box-shadow: 0 2px 12px var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .spruch-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px var(--shadow); }
+
+  .spruch-card.fav {
+    background: linear-gradient(135deg, #FFF0F0, #FFF8F0);
+    border: 2px solid var(--rose);
+  }
+
+  .spruch-emoji { font-size: 26px; margin-bottom: 8px; }
+
+  .spruch-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.5;
+    margin-bottom: 6px;
+  }
+
+  .spruch-sub {
+    font-size: 10px;
+    color: var(--text-light);
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  .spruch-fav-btn {
+    position: absolute;
+    top: 8px; right: 10px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .spruch-fav-btn:hover, .spruch-card.fav .spruch-fav-btn { opacity: 1; transform: scale(1.2); }
+
+  .spruch-del-btn {
+    position: absolute;
+    bottom: 8px; right: 10px;
+    background: none;
+    border: none;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--rose);
+    opacity: 0.5;
+  }
+  .spruch-del-btn:hover { opacity: 1; }
+
+  .cat-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .cat-tab {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    border: 2px solid var(--rose);
+    background: var(--white);
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .cat-tab.active {
+    background: linear-gradient(135deg, var(--rose), var(--peach));
+    color: #7A3030;
+    border-color: transparent;
+  }
+
+  /* ===== ROUTINE ===== */
+  .routine-period-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 18px;
+    background: var(--sand);
+    border-radius: 16px;
+    padding: 5px;
+  }
+
+  .period-tab {
+    flex: 1;
+    padding: 8px 4px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-light);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+
+  .period-tab.active {
+    background: var(--white);
+    color: var(--text);
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+
+  .routine-quote {
+    background: linear-gradient(135deg, var(--mint), var(--sky));
+    border-radius: 18px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+    text-align: center;
+    position: relative;
+  }
+
+  .routine-quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #2A4A3A;
+    line-height: 1.5;
+  }
+
+  .routine-quote-btn {
+    position: absolute;
+    top: 10px; right: 12px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.5;
+  }
+  .routine-quote-btn:hover { opacity: 1; }
+
+  .routine-section {
+    margin-bottom: 16px;
+  }
+
+  .routine-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    padding: 0 4px;
+  }
+
+  .routine-section-title span { font-size: 16px; }
+
+  .routine-item {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 13px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 10px var(--shadow);
+    transition: all 0.2s;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .routine-item:hover { transform: translateX(3px); }
+
+  .routine-item.done-item {
+    opacity: 0.6;
+    background: var(--sand);
+  }
+
+  .routine-cb {
+    width: 24px; height: 24px;
+    border-radius: 8px;
+    border: 2.5px solid var(--rose);
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: all 0.2s;
+    background: transparent;
+  }
+
+  .routine-cb.checked {
+    background: linear-gradient(135deg, var(--mint), #A0D9B5);
+    border-color: transparent;
+    color: #2A6A4A;
+  }
+
+  .routine-item-info { flex: 1; }
+
+  .routine-item-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    transition: all 0.2s;
+  }
+
+  .routine-item-text.done { text-decoration: line-through; color: var(--text-light); }
+
+  .routine-item-cat {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-top: 2px;
+  }
+
+  .routine-del {
+    background: none;
+    border: none;
+    color: var(--rose);
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+  .routine-del:hover { opacity: 1; }
+
+  .routine-progress {
+    background: var(--white);
+    border-radius: 18px;
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 10px var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .rp-count {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: #5ABD8A;
+  }
+
+  .rp-info { flex: 1; }
+  .rp-label { font-size: 12px; font-weight: 700; color: var(--text-light); margin-bottom: 6px; }
+
+  .rp-bar {
+    height: 6px;
+    background: var(--sand);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .rp-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--mint), #7AC9A0);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  .reset-btn {
+    background: var(--sand);
+    border: none;
+    border-radius: 10px;
+    padding: 6px 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-light);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .reset-btn:hover { background: var(--rose); color: #7A3030; }
+
+  /* ===== TAGESSTART HERO ===== */
+  .tagesstart {
+    background: linear-gradient(135deg, #FFDDE8, #FFE8D0, #D8EEFF);
+    border-radius: 24px;
+    padding: 22px 20px 18px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tagesstart::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 130px; height: 130px;
+    background: rgba(255,255,255,0.35);
+    border-radius: 50%;
+  }
+
+  .ts-date {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #A07080;
+    margin-bottom: 6px;
+  }
+
+  .ts-greeting {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: #3D2030;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .ts-motivation {
+    background: rgba(255,255,255,0.55);
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #5A2040;
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .ts-stats {
+    display: flex;
+    gap: 8px;
+  }
+
+  .ts-stat {
+    flex: 1;
+    background: rgba(255,255,255,0.6);
+    border-radius: 12px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+
+  .ts-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: #3D2030;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  .ts-stat-label {
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #A07080;
+  }
+
+  /* FLOATING DECORATION */
+  .deco {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.18;
+    animation: float 7s ease-in-out infinite;
+    color: #C090B0;
+    z-index: 0;
+  }
+
+  .deco:nth-child(even) {
+    animation-name: float2;
+    animation-duration: 9s;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+    33% { transform: translateY(-10px) rotate(8deg) scale(1.05); }
+    66% { transform: translateY(-5px) rotate(-5deg) scale(0.97); }
+  }
+
+  @keyframes float2 {
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+    40% { transform: translateY(-12px) rotate(-8deg) scale(1.04); }
+    70% { transform: translateY(-4px) rotate(5deg) scale(0.98); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Decorations -->
+<div class="deco" style="top:5%;right:2%;animation-delay:0s;font-size:22px">✿</div>
+<div class="deco" style="top:18%;right:4%;animation-delay:1.2s;font-size:18px">✿</div>
+<div class="deco" style="top:32%;right:2%;animation-delay:2.4s;font-size:24px">✿</div>
+<div class="deco" style="top:47%;right:5%;animation-delay:0.8s;font-size:16px">✿</div>
+<div class="deco" style="top:62%;right:2%;animation-delay:3.2s;font-size:20px">✿</div>
+<div class="deco" style="top:76%;right:4%;animation-delay:1.6s;font-size:18px">✿</div>
+<div class="deco" style="top:90%;right:2%;animation-delay:2.8s;font-size:22px">✿</div>
+<div class="deco" style="top:5%;left:2%;animation-delay:0.5s;font-size:18px">✿</div>
+<div class="deco" style="top:18%;left:4%;animation-delay:1.8s;font-size:22px">✿</div>
+<div class="deco" style="top:32%;left:2%;animation-delay:3s;font-size:16px">✿</div>
+<div class="deco" style="top:47%;left:5%;animation-delay:1.4s;font-size:24px">✿</div>
+<div class="deco" style="top:62%;left:2%;animation-delay:0.6s;font-size:19px">✿</div>
+<div class="deco" style="top:76%;left:4%;animation-delay:2.2s;font-size:17px">✿</div>
+<div class="deco" style="top:90%;left:2%;animation-delay:3.6s;font-size:21px">✿</div>
+
+<!-- HEADER -->
+<div class="app-header">
+  <div class="header-top">
+    <div class="app-title">
+      Grenda's Space
+      <span>🪐 Saturn Planer</span>
+    </div>
+    <div class="greeting-badge" id="greeting">Hallo! 🌸</div>
+  </div>
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showTab('routine')">
+      <span class="tab-icon">📅</span>Routine
+    </button>
+    <button class="tab-btn" onclick="showTab('habits')">
+      <span class="tab-icon">🔄</span>Habits
+    </button>
+    <button class="tab-btn" onclick="showTab('naeh')">
+      <span class="tab-icon">🧵</span>Nähen
+    </button>
+    <button class="tab-btn" onclick="showTab('sprueche')">
+      <span class="tab-icon">💫</span>Sprüche
+    </button>
+    <button class="tab-btn" onclick="showTab('ziele')">
+      <span class="tab-icon">🎯</span>Ziele
+    </button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ===== ZIELE TAB ===== -->
+  <div class="tab-panel" id="tab-ziele">
+    <div class="progress-summary">
+      <div class="progress-big" id="prog-big">0%</div>
+      <div class="progress-info">
+        <p id="prog-text">Noch nichts erledigt – du schaffst das! 💪</p>
+        <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="section-title">Meine Ziele</div>
+      <button class="btn-add" onclick="openGoalModal()">+ Ziel</button>
+    </div>
+
+    <div class="category-filter">
+      <div class="filter-chip active" data-cat="alle" onclick="filterGoals('alle')">Alle</div>
+      <div class="filter-chip" data-cat="karriere" onclick="filterGoals('karriere')">💼 Karriere</div>
+      <div class="filter-chip" data-cat="sozial" onclick="filterGoals('sozial')">🤝 Sozial</div>
+      <div class="filter-chip" data-cat="hobby" onclick="filterGoals('hobby')">🎨 Hobby</div>
+      <div class="filter-chip" data-cat="selfcare" onclick="filterGoals('selfcare')">🌸 Selfcare</div>
+    </div>
+
+    <div id="goals-list"></div>
+  </div>
+
+  <!-- ===== HABITS TAB ===== -->
+  <div class="tab-panel" id="tab-habits">
+    <div class="section-head">
+      <div class="section-title">Meine Habits</div>
+      <button class="btn-add" onclick="openHabitModal()">+ Habit</button>
+    </div>
+
+    <div class="week-nav">
+      <button class="week-arrow" onclick="changeWeek(-1)">‹</button>
+      <div class="week-label" id="week-label">Diese Woche</div>
+      <button class="week-arrow" onclick="changeWeek(1)">›</button>
+    </div>
+
+    <div class="days-row" id="days-row"></div>
+    <div id="habits-list"></div>
+  </div>
+
+  <!-- ===== NÄH TAB ===== -->
+  <div class="tab-panel" id="tab-naeh">
+    <div class="section-head">
+      <div class="section-title">Näh-Projekte</div>
+      <button class="btn-add" onclick="openNaehModal()">+ Projekt</button>
+    </div>
+    <div id="naeh-list"></div>
+  </div>
+
+  <!-- ===== SPRÜCHE TAB ===== -->
+  <div class="tab-panel" id="tab-sprueche">
+    <div id="spruch-of-day-box"></div>
+
+    <div class="section-head">
+      <div class="section-title">Alle Sprüche</div>
+      <button class="btn-add" onclick="openSpruchModal()">+ Spruch</button>
+    </div>
+
+    <div class="cat-tabs">
+      <div class="cat-tab active" data-scat="alle" onclick="filterSprueche('alle')">Alle</div>
+      <div class="cat-tab" data-scat="motivation" onclick="filterSprueche('motivation')">💪 Motivation</div>
+      <div class="cat-tab" data-scat="liebe" onclick="filterSprueche('liebe')">💕 Liebe</div>
+      <div class="cat-tab" data-scat="erfolg" onclick="filterSprueche('erfolg')">🌟 Erfolg</div>
+      <div class="cat-tab" data-scat="mut" onclick="filterSprueche('mut')">🦋 Mut</div>
+      <div class="cat-tab" data-scat="eigene" onclick="filterSprueche('eigene')">✍️ Meine</div>
+    </div>
+
+    <div class="spruch-grid" id="spruch-grid"></div>
+  </div>
+
+  <!-- ===== ROUTINE TAB ===== -->
+  <div class="tab-panel active" id="tab-routine">
+
+    <!-- TAGESSTART HERO -->
+    <div id="tagesstart-hero"></div>
+
+    <div id="routine-quote-box"></div>
+
+    <div class="routine-period-tabs">
+      <button class="period-tab active" data-period="daily" onclick="switchPeriod('daily')">☀️ Täglich</button>
+      <button class="period-tab" data-period="weekly" onclick="switchPeriod('weekly')">📆 Wöchentlich</button>
+      <button class="period-tab" data-period="biweekly" onclick="switchPeriod('biweekly')">🗓 2-Wöchentlich</button>
+      <button class="period-tab" data-period="monthly" onclick="switchPeriod('monthly')">🌙 Monatlich</button>
+    </div>
+
+    <div class="routine-progress">
+      <div class="rp-count" id="rp-count">0%</div>
+      <div class="rp-info">
+        <div class="rp-label" id="rp-label">Noch nichts erledigt</div>
+        <div class="rp-bar"><div class="rp-fill" id="rp-fill" style="width:0%"></div></div>
+      </div>
+      <button class="reset-btn" onclick="resetRoutine()">↺ Reset</button>
+    </div>
+
+    <div class="section-head" style="margin-bottom:12px">
+      <div class="section-title" id="routine-period-title">Täglich</div>
+      <button class="btn-add" onclick="openRoutineModal()">+ Aufgabe</button>
+    </div>
+
+    <div id="routine-list"></div>
+  </div>
+
+</div>
+
+<!-- Routine Modal -->
+<div class="modal-overlay" id="routine-modal">
+  <div class="modal">
+    <h3>📅 Neue Aufgabe</h3>
+    <input type="text" id="routine-text-input" placeholder="Was möchtest du erledigen?" />
+    <select id="routine-cat-input">
+      <option value="haushalt">🏠 Haushalt & Reinigung</option>
+      <option value="beauty">💄 Körper & Schönheit</option>
+      <option value="gesundheit">💚 Gesundheit & Wohlbefinden</option>
+      <option value="karriere">💼 Job & Karriere</option>
+      <option value="finanzen">💰 Finanzen</option>
+      <option value="selfcare">🌸 Selfcare</option>
+    </select>
+    <select id="routine-period-input">
+      <option value="daily">☀️ Täglich</option>
+      <option value="weekly">📆 Wöchentlich</option>
+      <option value="biweekly">🗓 2-Wöchentlich</option>
+      <option value="monthly">🌙 Monatlich</option>
+    </select>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('routine-modal')">Abbrechen</button>
+      <button class="btn-save" onclick="addRoutineItem()">Speichern ✓</button>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="spruch-modal">
+  <div class="modal">
+    <h3>💫 Neuer Spruch</h3>
+    <textarea id="spruch-text-input" placeholder="Dein Spruch..." rows="3"></textarea>
+    <input type="text" id="spruch-author-input" placeholder="Autor / Quelle (optional)" />
+    <select id="spruch-cat-input">
+      <option value="eigene">✍️ Mein Spruch</option>
+      <option value="motivation">💪 Motivation</option>
+      <option value="liebe">💕 Liebe</option>
+      <option value="erfolg">🌟 Erfolg</option>
+      <option value="mut">🦋 Mut</option>
+    </select>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('spruch-modal')">Abbrechen</button>
+      <button class="btn-save" onclick="addSpruch()">Speichern ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- Goal Modal -->
+<div class="modal-overlay" id="goal-modal">
+  <div class="modal">
+    <h3>🎯 Neues Ziel</h3>
+    <input type="text" id="goal-input" placeholder="Was möchtest du erreichen?" />
+    <select id="goal-cat">
+      <option value="karriere">💼 Karriere</option>
+      <option value="sozial">🤝 Sozial</option>
+      <option value="hobby">🎨 Hobby</option>
+      <option value="selfcare">🌸 Selfcare</option>
+    </select>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('goal-modal')">Abbrechen</button>
+      <button class="btn-save" onclick="addGoal()">Speichern ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- Habit Modal -->
+<div class="modal-overlay" id="habit-modal">
+  <div class="modal">
+    <h3>🔄 Neuer Habit</h3>
+    <input type="text" id="habit-name-input" placeholder="z.B. Morgenroutine, Sport, ..." />
+    <select id="habit-icon-input">
+      <option value="☀️">☀️ Morgen</option>
+      <option value="🏃">🏃 Bewegung</option>
+      <option value="📖">📖 Lesen</option>
+      <option value="💧">💧 Wasser trinken</option>
+      <option value="🧘">🧘 Meditation</option>
+      <option value="✍️">✍️ Schreiben</option>
+      <option value="🍎">🍎 Gesund essen</option>
+      <option value="😴">😴 Früh schlafen</option>
+      <option value="🌿">🌿 Spazieren</option>
+      <option value="💄">💄 Selfcare</option>
+    </select>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('habit-modal')">Abbrechen</button>
+      <button class="btn-save" onclick="addHabit()">Speichern ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- Näh Modal -->
+<div class="modal-overlay" id="naeh-modal">
+  <div class="modal">
+    <h3>🧵 Neues Projekt</h3>
+    <input type="text" id="naeh-title-input" placeholder="Projektname (z.B. Sommerkleid)" />
+    <input type="text" id="naeh-material-input" placeholder="Material / Stoff" />
+    <select id="naeh-status-input">
+      <option value="idee">💡 Idee</option>
+      <option value="laufend">✂️ In Arbeit</option>
+      <option value="pause">⏸ Pause</option>
+      <option value="fertig">✅ Fertig</option>
+    </select>
+    <textarea id="naeh-steps-input" placeholder="Schritte (einer pro Zeile)&#10;z.B. Schnittmuster drucken&#10;Stoff zuschneiden&#10;Nähen" rows="4"></textarea>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('naeh-modal')">Abbrechen</button>
+      <button class="btn-save" onclick="addNaehProjekt()">Speichern ✓</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+let data = JSON.parse(localStorage.getItem('grenda_app') || 'null') || {
+  goals: [
+    { id: 1, text: "Weiterbildung recherchieren & anmelden", cat: "karriere", done: false },
+    { id: 2, text: "3 Bewerbungen rausschicken", cat: "karriere", done: false },
+    { id: 3, text: "LinkedIn Profil updaten", cat: "karriere", done: false },
+    { id: 4, text: "Brunch mit Freundinnen planen", cat: "sozial", done: false },
+    { id: 5, text: "Jemanden anrufen den du lange nicht gesprochen hast", cat: "sozial", done: false },
+    { id: 6, text: "Abend ohne Handy mit jemandem verbringen", cat: "sozial", done: false },
+    { id: 7, text: "Etwas Neues nähen", cat: "hobby", done: false },
+    { id: 8, text: "Foto-Walk in Zürich oder Dübendorf", cat: "hobby", done: false },
+    { id: 9, text: "Ein Buch zu Ende lesen", cat: "hobby", done: false },
+    { id: 10, text: "1 Stunde täglich nur für dich reservieren", cat: "selfcare", done: false },
+    { id: 11, text: "Spa-Tag oder Badeausflug machen", cat: "selfcare", done: false },
+    { id: 12, text: "Morgenroutine 2 Wochen lang durchziehen", cat: "selfcare", done: false }
+  ],
+  habits: [
+    { id: 1, name: "Morgenroutine", icon: "☀️", checks: {} },
+    { id: 2, name: "Wasser trinken", icon: "💧", checks: {} },
+    { id: 3, name: "Spazieren gehen", icon: "🌿", checks: {} }
+  ],
+  naeh: []
+};
+
+function save() {
+  localStorage.setItem('grenda_app', JSON.stringify(data));
+}
+
+// ===== TABS =====
+function showTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+  if (name === 'habits') renderHabits();
+  if (name === 'naeh') renderNaeh();
+  if (name === 'sprueche') renderSprueche();
+  if (name === 'routine') { renderTagesstart(); renderRoutine(); }
+}
+
+// ===== GREETING =====
+function setGreeting() {
+  const h = new Date().getHours();
+  const g = document.getElementById('greeting');
+  if (h < 12) g.textContent = 'Guten Morgen! ☀️';
+  else if (h < 17) g.textContent = 'Guten Tag! 🌻';
+  else g.textContent = 'Guten Abend! 🌙';
+}
+setGreeting();
+
+// ===== MODALS =====
+function openGoalModal() { document.getElementById('goal-modal').classList.add('open'); }
+function openHabitModal() { document.getElementById('habit-modal').classList.add('open'); }
+function openNaehModal() { document.getElementById('naeh-modal').classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+
+// ===== GOALS =====
+let activeFilter = 'alle';
+
+function filterGoals(cat) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.cat === cat);
+  });
+  renderGoals();
+}
+
+function renderGoals() {
+  const list = document.getElementById('goals-list');
+  const filtered = activeFilter === 'alle' ? data.goals : data.goals.filter(g => g.cat === activeFilter);
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">🌸</div><p>Noch keine Ziele in dieser Kategorie</p></div>`;
+  } else {
+    list.innerHTML = filtered.map(g => `
+      <div class="goal-card" id="gc-${g.id}">
+        <div class="goal-check ${g.done ? 'checked' : ''}" onclick="toggleGoal(${g.id})">${g.done ? '✓' : ''}</div>
+        <div class="goal-info">
+          <div class="goal-text ${g.done ? 'done' : ''}">${g.text}</div>
+          <div class="goal-cat cat-${g.cat}">${catLabel(g.cat)}</div>
+        </div>
+        <button class="goal-del" onclick="deleteGoal(${g.id})">×</button>
+      </div>
+    `).join('');
+  }
+  updateProgress();
+}
+
+function catLabel(cat) {
+  return { karriere: '💼 Karriere', sozial: '🤝 Sozial', hobby: '🎨 Hobby', selfcare: '🌸 Selfcare' }[cat];
+}
+
+function toggleGoal(id) {
+  const g = data.goals.find(g => g.id === id);
+  if (g) { g.done = !g.done; save(); renderGoals(); }
+}
+
+function deleteGoal(id) {
+  data.goals = data.goals.filter(g => g.id !== id);
+  save(); renderGoals();
+}
+
+function addGoal() {
+  const text = document.getElementById('goal-input').value.trim();
+  if (!text) return;
+  const cat = document.getElementById('goal-cat').value;
+  data.goals.push({ id: Date.now(), text, cat, done: false });
+  document.getElementById('goal-input').value = '';
+  save(); renderGoals();
+  closeModal('goal-modal');
+}
+
+function updateProgress() {
+  const total = data.goals.length;
+  const done = data.goals.filter(g => g.done).length;
+  const pct = total === 0 ? 0 : Math.round(done / total * 100);
+  document.getElementById('prog-big').textContent = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+  const msgs = ['Noch nichts erledigt – du schaffst das! 💪', 'Super Start! Weiter so 🌸', 'Du bist auf dem richtigen Weg! ✨', 'Halbzeit – fantastisch! 🎉', 'Fast da! Du rockst! 🔥', 'Alles erledigt! Wow! 🏆'];
+  document.getElementById('prog-text').textContent = msgs[Math.min(Math.floor(pct / 20), 5)];
+}
+
+// ===== HABITS =====
+let weekOffset = 0;
+
+function getWeekDates(offset = 0) {
+  const today = new Date();
+  const day = today.getDay();
+  const mon = new Date(today);
+  mon.setDate(today.getDate() - (day === 0 ? 6 : day - 1) + offset * 7);
+  return Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(mon);
+    d.setDate(mon.getDate() + i);
+    return d;
+  });
+}
+
+function dateKey(d) {
+  return d.toISOString().split('T')[0];
+}
+
+function changeWeek(dir) {
+  weekOffset += dir;
+  renderHabits();
+}
+
+const dayNames = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
+
+function renderHabits() {
+  const dates = getWeekDates(weekOffset);
+  const today = dateKey(new Date());
+  const todayIdx = dates.findIndex(d => dateKey(d) === today);
+
+  // Week label
+  const wl = document.getElementById('week-label');
+  if (weekOffset === 0) wl.textContent = 'Diese Woche';
+  else if (weekOffset === -1) wl.textContent = 'Letzte Woche';
+  else if (weekOffset === 1) wl.textContent = 'Nächste Woche';
+  else {
+    wl.textContent = `${dates[0].getDate()}.${dates[0].getMonth()+1} – ${dates[6].getDate()}.${dates[6].getMonth()+1}`;
+  }
+
+  // Days row
+  document.getElementById('days-row').innerHTML = dates.map((d, i) => `
+    <div class="day-pill">
+      <div class="day-name">${dayNames[i]}</div>
+      <div class="day-num ${i === todayIdx ? 'today' : ''}">${d.getDate()}</div>
+    </div>
+  `).join('');
+
+  // Habits
+  const list = document.getElementById('habits-list');
+  if (data.habits.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">🔄</div><p>Noch keine Habits – füge deinen ersten hinzu!</p></div>`;
+    return;
+  }
+
+  list.innerHTML = data.habits.map(h => {
+    const streak = calcStreak(h);
+    const dots = dates.map((d, i) => {
+      const k = dateKey(d);
+      const done = h.checks[k];
+      const isToday = i === todayIdx;
+      return `<button class="habit-day-dot ${done ? 'done' : ''} ${isToday ? 'today-dot' : ''}" onclick="toggleHabit(${h.id},'${k}')">${done ? '✓' : dayNames[i]}</button>`;
+    }).join('');
+
+    return `
+      <div class="habit-row">
+        <div class="habit-header">
+          <div class="habit-icon">${h.icon}</div>
+          <div class="habit-name">${h.name}</div>
+          ${streak > 0 ? `<div class="habit-streak">🔥 ${streak}</div>` : ''}
+          <button class="habit-del" onclick="deleteHabit(${h.id})">×</button>
+        </div>
+        <div class="habit-days">${dots}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function calcStreak(h) {
+  let streak = 0;
+  const d = new Date();
+  while (true) {
+    const k = dateKey(d);
+    if (!h.checks[k]) break;
+    streak++;
+    d.setDate(d.getDate() - 1);
+  }
+  return streak;
+}
+
+function toggleHabit(id, key) {
+  const h = data.habits.find(h => h.id === id);
+  if (h) {
+    h.checks[key] = !h.checks[key];
+    save(); renderHabits();
+  }
+}
+
+function deleteHabit(id) {
+  data.habits = data.habits.filter(h => h.id !== id);
+  save(); renderHabits();
+}
+
+function addHabit() {
+  const name = document.getElementById('habit-name-input').value.trim();
+  if (!name) return;
+  const icon = document.getElementById('habit-icon-input').value;
+  data.habits.push({ id: Date.now(), name, icon, checks: {} });
+  document.getElementById('habit-name-input').value = '';
+  save(); renderHabits();
+  closeModal('habit-modal');
+}
+
+// ===== NÄH PLANER =====
+function renderNaeh() {
+  const list = document.getElementById('naeh-list');
+  if (data.naeh.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">🧵</div><p>Noch kein Projekt – füge dein erstes hinzu!</p></div>`;
+    return;
+  }
+
+  list.innerHTML = data.naeh.map(p => {
+    const total = p.steps.length;
+    const done = p.steps.filter(s => s.done).length;
+    const pct = total === 0 ? 0 : Math.round(done / total * 100);
+    const statusLabels = { idee: '💡 Idee', laufend: '✂️ In Arbeit', pause: '⏸ Pause', fertig: '✅ Fertig' };
+    const steps = p.steps.map((s, si) => `
+      <div class="naeh-step" onclick="toggleStep(${p.id},${si})">
+        <div class="step-check ${s.done ? 'done' : ''}">${s.done ? '✓' : ''}</div>
+        <div class="step-text ${s.done ? 'done' : ''}">${s.text}</div>
+      </div>
+    `).join('');
+
+    return `
+      <div class="naeh-card">
+        <div class="naeh-header">
+          <div class="naeh-icon">🧵</div>
+          <div class="naeh-info">
+            <div class="naeh-title">${p.title}</div>
+            <div class="naeh-meta">${p.material || 'Kein Material angegeben'}</div>
+          </div>
+          <button class="naeh-del" onclick="deleteNaeh(${p.id})">×</button>
+        </div>
+        <span class="status-badge status-${p.status}" onclick="cycleStatus(${p.id})">${statusLabels[p.status]}</span>
+        ${total > 0 ? `
+          <div class="naeh-progress-bar"><div class="naeh-progress-fill" style="width:${pct}%"></div></div>
+          <div class="naeh-progress-label">${done} / ${total} Schritte</div>
+        ` : ''}
+        ${steps ? `<div class="naeh-steps">${steps}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function cycleStatus(id) {
+  const p = data.naeh.find(p => p.id === id);
+  const order = ['idee', 'laufend', 'pause', 'fertig'];
+  if (p) {
+    p.status = order[(order.indexOf(p.status) + 1) % order.length];
+    save(); renderNaeh();
+  }
+}
+
+function toggleStep(pid, si) {
+  const p = data.naeh.find(p => p.id === pid);
+  if (p) { p.steps[si].done = !p.steps[si].done; save(); renderNaeh(); }
+}
+
+function deleteNaeh(id) {
+  data.naeh = data.naeh.filter(p => p.id !== id);
+  save(); renderNaeh();
+}
+
+function addNaehProjekt() {
+  const title = document.getElementById('naeh-title-input').value.trim();
+  if (!title) return;
+  const material = document.getElementById('naeh-material-input').value.trim();
+  const status = document.getElementById('naeh-status-input').value;
+  const stepsRaw = document.getElementById('naeh-steps-input').value.trim();
+  const steps = stepsRaw ? stepsRaw.split('\n').filter(s => s.trim()).map(s => ({ text: s.trim(), done: false })) : [];
+  data.naeh.push({ id: Date.now(), title, material, status, steps });
+  document.getElementById('naeh-title-input').value = '';
+  document.getElementById('naeh-material-input').value = '';
+  document.getElementById('naeh-steps-input').value = '';
+  save(); renderNaeh();
+  closeModal('naeh-modal');
+}
+
+// ===== SPRÜCHE =====
+const defaultSprueche = [
+  { id: 1, text: "Du bist stärker als du denkst.", author: "", cat: "motivation", emoji: "💪", fav: false },
+  { id: 2, text: "Jeder Tag ist ein neuer Anfang.", author: "", cat: "motivation", emoji: "☀️", fav: false },
+  { id: 3, text: "Glaube an dich – du schaffst alles, was du dir vorstellst.", author: "", cat: "mut", emoji: "🦋", fav: false },
+  { id: 4, text: "Der einzige Weg ist vorwärts.", author: "", cat: "erfolg", emoji: "🌟", fav: false },
+  { id: 5, text: "Du verdienst das Beste – gib niemals weniger ab.", author: "", cat: "liebe", emoji: "💕", fav: false },
+  { id: 6, text: "Kleine Schritte führen zu grossen Zielen.", author: "", cat: "erfolg", emoji: "🏆", fav: false },
+  { id: 7, text: "Sei die Version von dir, die du dir immer gewünscht hast.", author: "", cat: "mut", emoji: "✨", fav: false },
+  { id: 8, text: "Deine Energie fliesst dorthin, wo deine Gedanken sind.", author: "", cat: "motivation", emoji: "🌸", fav: false },
+  { id: 9, text: "Es ist nie zu spät, die Person zu werden, die du sein möchtest.", author: "George Eliot", cat: "mut", emoji: "🌷", fav: false },
+  { id: 10, text: "Erfolg ist die Summe kleiner, täglich wiederholter Anstrengungen.", author: "Robert Collier", cat: "erfolg", emoji: "🎯", fav: false },
+  { id: 11, text: "Liebe dich selbst zuerst – alles andere folgt.", author: "", cat: "liebe", emoji: "💖", fav: false },
+  { id: 12, text: "Du hast jeden Sturm überstanden. Dieser ist keine Ausnahme.", author: "", cat: "motivation", emoji: "⛈️", fav: false },
+];
+
+if (!data.sprueche) {
+  data.sprueche = JSON.parse(JSON.stringify(defaultSprueche));
+  save();
+}
+
+let activeScat = 'alle';
+let todaysSpruchIdx = Math.floor(Math.random() * data.sprueche.length);
+
+function renderSpruchOfDay() {
+  const box = document.getElementById('spruch-of-day-box');
+  const s = data.sprueche[todaysSpruchIdx % data.sprueche.length];
+  if (!s) return;
+  box.innerHTML = `
+    <div class="spruch-of-day">
+      <div class="sod-label">✦ Spruch des Tages ✦</div>
+      <div class="sod-text">${s.emoji} "${s.text}"</div>
+      ${s.author ? `<div class="sod-author">— ${s.author}</div>` : ''}
+      <button class="sod-refresh" onclick="nextSpruch()">Neuer Spruch 🔀</button>
+    </div>
+  `;
+}
+
+function nextSpruch() {
+  todaysSpruchIdx = (todaysSpruchIdx + 1) % data.sprueche.length;
+  renderSpruchOfDay();
+}
+
+function filterSprueche(cat) {
+  activeScat = cat;
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.toggle('active', t.dataset.scat === cat));
+  renderSprueche();
+}
+
+function renderSprueche() {
+  const grid = document.getElementById('spruch-grid');
+  const list = activeScat === 'alle' ? data.sprueche : data.sprueche.filter(s => s.cat === activeScat);
+
+  if (list.length === 0) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">💫</div><p>Noch keine Sprüche hier</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(s => `
+    <div class="spruch-card ${s.fav ? 'fav' : ''}">
+      <button class="spruch-fav-btn" onclick="toggleFav(${s.id})">${s.fav ? '❤️' : '🤍'}</button>
+      <div class="spruch-emoji">${s.emoji}</div>
+      <div class="spruch-text">"${s.text}"</div>
+      ${s.author ? `<div class="spruch-sub">— ${s.author}</div>` : ''}
+      <button class="spruch-del-btn" onclick="deleteSpruch(${s.id})">×</button>
+    </div>
+  `).join('');
+
+  renderSpruchOfDay();
+}
+
+function toggleFav(id) {
+  const s = data.sprueche.find(s => s.id === id);
+  if (s) { s.fav = !s.fav; save(); renderSprueche(); }
+}
+
+function deleteSpruch(id) {
+  data.sprueche = data.sprueche.filter(s => s.id !== id);
+  save(); renderSprueche();
+}
+
+function openSpruchModal() { document.getElementById('spruch-modal').classList.add('open'); }
+
+function addSpruch() {
+  const text = document.getElementById('spruch-text-input').value.trim();
+  if (!text) return;
+  const author = document.getElementById('spruch-author-input').value.trim();
+  const cat = document.getElementById('spruch-cat-input').value;
+  const emojis = { eigene: '✍️', motivation: '💪', liebe: '💕', erfolg: '🌟', mut: '🦋' };
+  data.sprueche.push({ id: Date.now(), text, author, cat, emoji: emojis[cat], fav: false });
+  document.getElementById('spruch-text-input').value = '';
+  document.getElementById('spruch-author-input').value = '';
+  save(); renderSprueche();
+  closeModal('spruch-modal');
+}
+
+// ===== ROUTINE =====
+const routineQuotes = [
+  { text: "Eine aufgeräumte Umgebung schafft einen klaren Kopf. 🏠", period: "daily" },
+  { text: "Kleine Pflegerituale machen einen grossen Unterschied. 💄", period: "daily" },
+  { text: "Dein Körper ist dein Zuhause – pflege ihn täglich. 💚", period: "daily" },
+  { text: "Ordnung ist der Schlüssel zu innerer Ruhe. ✨", period: "weekly" },
+  { text: "Einmal pro Woche tief durchatmen und neu sortieren. 🌿", period: "weekly" },
+  { text: "Regelmässige Routinen schaffen Freiheit. 🦋", period: "biweekly" },
+  { text: "Jeden Monat eine neue Version von dir. 🌸", period: "monthly" },
+  { text: "Du verdienst eine Umgebung, in der du aufblühst. 🌷", period: "monthly" },
+];
+
+const defaultRoutine = [
+  // Täglich
+  { id: 101, text: "Gesicht waschen & eincremen", cat: "beauty", period: "daily", done: false },
+  { id: 102, text: "2L Wasser trinken", cat: "gesundheit", period: "daily", done: false },
+  { id: 103, text: "Bett machen", cat: "haushalt", period: "daily", done: false },
+  { id: 104, text: "10 Min. bewegen / spazieren", cat: "gesundheit", period: "daily", done: false },
+  { id: 105, text: "To-Do Liste für den Tag schreiben", cat: "karriere", period: "daily", done: false },
+  { id: 106, text: "Abends 10 Min. für dich (kein Handy)", cat: "selfcare", period: "daily", done: false },
+  // Wöchentlich
+  { id: 201, text: "Wohnung staubsaugen & wischen", cat: "haushalt", period: "weekly", done: false },
+  { id: 202, text: "Badezimmer reinigen", cat: "haushalt", period: "weekly", done: false },
+  { id: 203, text: "Haarmaske oder Pflegebehandlung", cat: "beauty", period: "weekly", done: false },
+  { id: 204, text: "Wochenziele setzen & reflektieren", cat: "karriere", period: "weekly", done: false },
+  { id: 205, text: "Ausgaben der Woche prüfen", cat: "finanzen", period: "weekly", done: false },
+  { id: 206, text: "Etwas Schönes für dich tun 🌸", cat: "selfcare", period: "weekly", done: false },
+  // 2-Wöchentlich
+  { id: 301, text: "Kühlschrank ausräumen & reinigen", cat: "haushalt", period: "biweekly", done: false },
+  { id: 302, text: "Nägel machen / Maniküre", cat: "beauty", period: "biweekly", done: false },
+  { id: 303, text: "Bewerbungen / Karriereziele prüfen", cat: "karriere", period: "biweekly", done: false },
+  { id: 304, text: "Budget-Überblick machen", cat: "finanzen", period: "biweekly", done: false },
+  // Monatlich
+  { id: 401, text: "Tiefenreinigung der Wohnung", cat: "haushalt", period: "monthly", done: false },
+  { id: 402, text: "Haare schneiden / Friseur", cat: "beauty", period: "monthly", done: false },
+  { id: 403, text: "Monatsbudget planen", cat: "finanzen", period: "monthly", done: false },
+  { id: 404, text: "Monatsziele setzen & Rückblick", cat: "karriere", period: "monthly", done: false },
+  { id: 405, text: "Arzttermine / Gesundheits-Check", cat: "gesundheit", period: "monthly", done: false },
+  { id: 406, text: "Wellness-Tag für dich planen 🛁", cat: "selfcare", period: "monthly", done: false },
+];
+
+if (!data.routine) {
+  data.routine = JSON.parse(JSON.stringify(defaultRoutine));
+  save();
+}
+
+let activePeriod = 'daily';
+
+const periodLabels = { daily: '☀️ Täglich', weekly: '📆 Wöchentlich', biweekly: '🗓 2-Wöchentlich', monthly: '🌙 Monatlich' };
+const catLabelsR = { haushalt: '🏠 Haushalt', beauty: '💄 Schönheit', gesundheit: '💚 Gesundheit', karriere: '💼 Karriere', finanzen: '💰 Finanzen', selfcare: '🌸 Selfcare' };
+const catOrder = ['haushalt', 'beauty', 'gesundheit', 'karriere', 'finanzen', 'selfcare'];
+
+function switchPeriod(period) {
+  activePeriod = period;
+  document.querySelectorAll('.period-tab').forEach(t => t.classList.toggle('active', t.dataset.period === period));
+  document.getElementById('routine-period-title').textContent = periodLabels[period];
+  renderRoutine();
+}
+
+function renderRoutineQuote() {
+  const matching = routineQuotes.filter(q => q.period === activePeriod);
+  const q = matching[Math.floor(Math.random() * matching.length)];
+  document.getElementById('routine-quote-box').innerHTML = `
+    <div class="routine-quote">
+      <div class="routine-quote-text">${q.text}</div>
+      <button class="routine-quote-btn" onclick="renderRoutineQuote()">🔀</button>
+    </div>
+  `;
+}
+
+function renderRoutine() {
+  const items = data.routine.filter(r => r.period === activePeriod);
+  const done = items.filter(r => r.done).length;
+  const total = items.length;
+  const pct = total === 0 ? 0 : Math.round(done / total * 100);
+
+  document.getElementById('rp-count').textContent = pct + '%';
+  document.getElementById('rp-fill').style.width = pct + '%';
+  const msgs = { 0: 'Los geht\'s! 💪', 1: 'Super Start! ✨', 2: 'Du rockst! 🌸', 3: 'Halbzeit! 🎉', 4: 'Fast fertig! 🔥', 5: 'Alles erledigt! 🏆' };
+  document.getElementById('rp-label').textContent = msgs[Math.min(Math.floor(pct / 20), 5)];
+
+  const list = document.getElementById('routine-list');
+  if (items.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📅</div><p>Noch keine Aufgaben – füge deine erste hinzu!</p></div>`;
+    renderRoutineQuote();
+    return;
+  }
+
+  // Group by category
+  let html = '';
+  catOrder.forEach(cat => {
+    const catItems = items.filter(r => r.cat === cat);
+    if (catItems.length === 0) return;
+    html += `<div class="routine-section">
+      <div class="routine-section-title"><span>${catLabelsR[cat]}</span></div>`;
+    catItems.forEach(r => {
+      html += `
+        <div class="routine-item ${r.done ? 'done-item' : ''}">
+          <div class="routine-cb ${r.done ? 'checked' : ''}" onclick="toggleRoutine(${r.id})">${r.done ? '✓' : ''}</div>
+          <div class="routine-item-info">
+            <div class="routine-item-text ${r.done ? 'done' : ''}">${r.text}</div>
+          </div>
+          <button class="routine-del" onclick="deleteRoutineItem(${r.id})">×</button>
+        </div>`;
+    });
+    html += `</div>`;
+  });
+  list.innerHTML = html;
+  renderRoutineQuote();
+}
+
+function toggleRoutine(id) {
+  const r = data.routine.find(r => r.id === id);
+  if (r) { r.done = !r.done; save(); renderRoutine(); renderTagesstart(); }
+}
+
+function deleteRoutineItem(id) {
+  data.routine = data.routine.filter(r => r.id !== id);
+  save(); renderRoutine();
+}
+
+function resetRoutine() {
+  data.routine.filter(r => r.period === activePeriod).forEach(r => r.done = false);
+  save(); renderRoutine();
+}
+
+function openRoutineModal() {
+  document.getElementById('routine-period-input').value = activePeriod;
+  document.getElementById('routine-modal').classList.add('open');
+}
+
+function addRoutineItem() {
+  const text = document.getElementById('routine-text-input').value.trim();
+  if (!text) return;
+  const cat = document.getElementById('routine-cat-input').value;
+  const period = document.getElementById('routine-period-input').value;
+  data.routine.push({ id: Date.now(), text, cat, period, done: false });
+  document.getElementById('routine-text-input').value = '';
+  save();
+  activePeriod = period;
+  document.querySelectorAll('.period-tab').forEach(t => t.classList.toggle('active', t.dataset.period === period));
+  document.getElementById('routine-period-title').textContent = periodLabels[period];
+  renderRoutine();
+  closeModal('routine-modal');
+}
+
+// ===== TAGESSTART =====
+const tagesMotivation = [
+  "Du bist stärker als du denkst – dieser Tag gehört dir! 💪",
+  "Jeder Morgen ist eine neue Chance. Nutze sie! ✨",
+  "Kleine Schritte führen zu grossen Zielen. Los geht's! 🌸",
+  "Du hast alles, was du brauchst. Glaube daran! 🦋",
+  "Heute ist ein guter Tag, um etwas Grossartiges zu tun! 🌟",
+  "Deine Energie bestimmt deinen Tag – mach ihn strahlend! ☀️",
+  "Du schaffst das – Schritt für Schritt, Tag für Tag. 🌷",
+  "Sei stolz auf das, was du bereits erreicht hast! 🏆",
+];
+
+function renderTagesstart() {
+  const hero = document.getElementById('tagesstart-hero');
+  if (!hero) return;
+
+  const now = new Date();
+  const h = now.getHours();
+  const dayNames = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+  const monthNames = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  const dateStr = `${dayNames[now.getDay()]}, ${now.getDate()}. ${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+
+  let greetingText = h < 12 ? 'Guten Morgen, Grenda! ☀️' : h < 17 ? 'Guten Tag, Grenda! 🌻' : 'Guten Abend, Grenda! 🌙';
+
+  const quote = tagesMotivation[now.getDate() % tagesMotivation.length];
+
+  // Stats
+  const dailyItems = data.routine.filter(r => r.period === 'daily');
+  const dailyDone = dailyItems.filter(r => r.done).length;
+  const goalsDone = data.goals.filter(g => g.done).length;
+  const habitsDoneToday = data.habits.filter(h => h.checks[dateKey(now)]).length;
+
+  hero.innerHTML = `
+    <div class="tagesstart">
+      <div class="ts-date">${dateStr}</div>
+      <div class="ts-greeting">${greetingText}</div>
+      <div class="ts-motivation">"${quote}"</div>
+      <div class="ts-stats">
+        <div class="ts-stat">
+          <div class="ts-stat-num">${dailyDone}/${dailyItems.length}</div>
+          <div class="ts-stat-label">Heute erledigt</div>
+        </div>
+        <div class="ts-stat">
+          <div class="ts-stat-num">${habitsDoneToday}</div>
+          <div class="ts-stat-label">Habits heute</div>
+        </div>
+        <div class="ts-stat">
+          <div class="ts-stat-num">${goalsDone}/${data.goals.length}</div>
+          <div class="ts-stat-label">Ziele gesamt</div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ===== INIT =====
+renderTagesstart();
+renderRoutine();
+renderHabits();
+</script>
+</body>
+</html>
