@@ -805,16 +805,15 @@
 
   .newsletter-form {
     display: flex;
+    flex-direction: column;
     gap: 12px;
-    justify-content: center;
-    max-width: 500px;
+    max-width: 420px;
     margin: 0 auto;
-    flex-wrap: wrap;
+    width: 100%;
   }
 
   .newsletter-input {
-    flex: 1;
-    min-width: 260px;
+    width: 100%;
     padding: 16px 24px;
     border-radius: 50px;
     border: none;
@@ -827,13 +826,14 @@
   }
 
   .newsletter-btn {
+    width: 100%;
     padding: 16px 28px;
     border-radius: 50px;
     border: 2px solid white;
     background: transparent;
     color: white;
     font-family: 'Nunito', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 800;
     cursor: pointer;
     transition: all 0.2s;
@@ -1362,9 +1362,9 @@
   <h2 class="newsletter-title">Bleib in der Umlaufbahn 🪐</h2>
   <p class="newsletter-sub">Neue Blog-Artikel, monatliche Tipps & als Erste die App-News — direkt in dein Postfach! 🌙</p>
   <div class="newsletter-form">
-    <input type="text" class="newsletter-input" id="nl-name" placeholder="Dein Vorname" style="max-width:160px;" />
+    <input type="text" class="newsletter-input" id="nl-name" placeholder="Dein Vorname" />
     <input type="email" class="newsletter-input" id="nl-email" placeholder="deine@email.com" />
-    <button class="newsletter-btn" onclick="subscribeNewsletter()">Anmelden ✨</button>
+    <button class="newsletter-btn" onclick="subscribeNewsletter()">Jetzt anmelden ✨</button>
   </div>
   <div id="nl-result" style="display:none;margin-top:16px;font-size:14px;font-weight:700;color:rgba(255,255,255,0.9);">✓ Super! Du bist dabei 🌸 Schau in dein Postfach!</div>
   <p style="margin-top:16px;font-size:12px;color:rgba(255,255,255,0.4);font-weight:600;">Kein Spam. Jederzeit abmeldbar. 🌙</p>
