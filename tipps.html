@@ -252,7 +252,6 @@ function renderGrid(posts) {
       <div class="tipp-card-img" style="background:${bgColors[p.tag]||defaultBg}">${p.emoji||'⚡'}</div>
       <div class="tipp-card-body">
         <span class="tipp-tag">${p.tag||''}</span>
-        <span class="tipp-dauer">⏱ ${p.dauer||'5 Min.'}</span>
         <div class="tipp-title">${p.title}</div>
         <p class="tipp-excerpt">${(p.content||'').substring(0,100)}...</p>
         <div class="tipp-read">Tipp lesen →</div>
@@ -269,7 +268,7 @@ function openTipp(id) {
   document.getElementById('articleTag').textContent = p.tag||'';
   document.getElementById('articleTitle').textContent = p.title;
   document.getElementById('articleMeta').textContent =
-    `⚡ Saturnplaner Tipps · ${p.tag||''} · ${p.dauer||'5 Min.'} · ${new Date(p.created_at).toLocaleDateString('de-CH')}`;
+    `⚡ Saturnplaner Tipps · ${p.tag||''} · ${new Date(p.created_at).toLocaleDateString('de-CH')}`;
   document.getElementById('articleContent').innerHTML =
     '<p>' + (p.content||'').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>') + '</p>';
   document.getElementById('articleOverlay').classList.add('open');
