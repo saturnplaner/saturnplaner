@@ -121,6 +121,19 @@
   <p>Inspiration, Tipps & Selbstfindung — für alle die sich selbst besser kennenlernen wollen.</p>
 </div>
 
+<!-- PERSÖNLICHER PLANET (auto aus localStorage, kein Formular) -->
+<div id="blogPlanetBanner" style="display:none;max-width:700px;margin:0 auto;padding:0 40px 0;animation:fadeIn 0.5s ease;">
+  <div style="background:linear-gradient(135deg,rgba(247,197,197,0.25),rgba(217,197,240,0.25));border:1.5px solid rgba(247,197,197,0.4);border-radius:20px;padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;">
+    <span id="blogPersonalEmoji" style="font-size:34px;"></span>
+    <div>
+      <div style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);">✦ Dein Schutzplanet heute ✦</div>
+      <div id="blogPersonalName" style="font-family:'Playfair Display',serif;font-size:17px;font-weight:900;color:var(--text);"></div>
+      <div id="blogPersonalMsg" style="font-size:12px;color:var(--text-light);font-weight:600;font-style:italic;"></div>
+    </div>
+    <a href="planeten.html" style="margin-left:auto;font-size:11px;font-weight:800;color:var(--accent);text-decoration:none;white-space:nowrap;">Alle Planeten →</a>
+  </div>
+</div>
+
 <!-- CATEGORIES -->
 <div class="categories">
   <div class="cat-title">Themen</div>
@@ -253,6 +266,34 @@ function closeArticleIfBg(e) {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArticle(); });
 
 loadBlog();
+
+// Auto-Planet aus localStorage (kein Re-Enter nötig)
+(function(){
+  const saved=localStorage.getItem('sp_birthday');
+  if(!saved)return;
+  const now=new Date();
+  const dayOfYear=Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);
+  const planets=[
+    {emoji:'☀️',name:'Sonne',keyword:'Energie & Kraft',color:'#C87090',messages:['Heute leuchtet deine innere Kraft besonders hell. Trau dich, sichtbar zu sein. 🌟','Ein guter Tag um Energie zu tanken.','Die Sonne erinnert dich: Du verdienst das Beste.'],birthMonths:[7,8]},
+    {emoji:'🌙',name:'Mond',keyword:'Gefühle & Intuition',color:'#9090D0',messages:['Höre heute auf dein Bauchgefühl — es hat recht. 🌙','Deine Gefühle sind heute nah. Das ist okay.','Gönn dir heute Ruhe.'],birthMonths:[6]},
+    {emoji:'🪐',name:'Saturn',keyword:'Struktur & Weisheit',color:'#9070C8',messages:['Saturn erinnert dich: Kleinen Schritten vertrauen. 🪐','Ein guter Tag für Planung.','Geduld ist heute deine grösste Kraft.'],birthMonths:[12,1]},
+    {emoji:'♀️',name:'Venus',keyword:'Liebe & Schönheit',color:'#D080A0',messages:['Liebe dich heute selbst so wie du andere liebst. 💕','Tu heute etwas das sich schön anfühlt.','Ein guter Tag für Gespräche von Herz zu Herz.'],birthMonths:[4,5]},
+    {emoji:'♂️',name:'Mars',keyword:'Antrieb & Mut',color:'#C87060',messages:['Mars gibt dir heute extra Energie. 🔥','Trau dich heute mutig zu sein.','Du bist stärker als du glaubst.'],birthMonths:[3]},
+    {emoji:'♃',name:'Jupiter',keyword:'Glück & Wachstum',color:'#B08040',messages:['Jupiter bringt heute Glücksmomente. ✨','Ein guter Tag um gross zu denken.','Dankbarkeit zieht mehr Gutes an.'],birthMonths:[11,2]},
+    {emoji:'♅',name:'Uranus',keyword:'Freiheit & Wandel',color:'#40A080',messages:['Was würdest du tun wenn du keine Angst hättest? 🌿','Deine Andersartigkeit ist deine Stärke.','Veränderung ist Raum für Neues.'],birthMonths:[10]},
+    {emoji:'♆',name:'Neptun',keyword:'Träume & Tiefe',color:'#4080C0',messages:['Deine Träume sagen dir etwas. Hör hin. 🌊','Deine Sensibilität ist ein Geschenk.','Lass heute los was du nicht kontrollieren kannst.'],birthMonths:[9]}
+  ];
+  const birth=new Date(saved);
+  const month=birth.getMonth()+1;
+  const found=planets.find(p=>p.birthMonths.includes(month))||planets[birth.getDate()%planets.length];
+  const banner=document.getElementById('blogPlanetBanner');
+  if(banner){
+    document.getElementById('blogPersonalEmoji').textContent=found.emoji;
+    document.getElementById('blogPersonalName').textContent=found.name+' · '+found.keyword;
+    document.getElementById('blogPersonalMsg').textContent=found.messages[dayOfYear%found.messages.length];
+    banner.style.display='block';
+  }
+})();
 </script>
 </body>
 </html>

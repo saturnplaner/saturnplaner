@@ -9,20 +9,32 @@
 <meta name="theme-color" content="#C87090">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root {
+  :root{
     --rose:#F7C5C5;--peach:#FFD9B7;--lavender:#D9C5F0;
     --mint:#C5E8D5;--sky:#C5DCF0;--cream:#FFF8F0;
-    --text:#3D2C2C;--text-light:#9B7E7E;--accent:#C87090;
-    --shadow:rgba(180,130,130,0.15);
+    --sand:#F5EDE0;--text:#3D2C2C;--text-light:#9B7E7E;
+    --white:#FFFFFF;--shadow:rgba(180,130,130,0.15);--accent:#C87090;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Nunito',sans-serif;color:var(--text);background:#0d0820;overflow-x:hidden;}
+  body{font-family:'Nunito',sans-serif;color:var(--text);background:var(--cream);min-height:100vh;overflow-x:hidden;position:relative;}
 
-  /* STARS BACKGROUND */
-  .stars-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
-  .star-dot{position:absolute;border-radius:50%;background:white;animation:twinkle 3s ease-in-out infinite;}
-  @keyframes twinkle{0%,100%{opacity:0.3;transform:scale(1)}50%{opacity:1;transform:scale(1.3)}}
+  /* FLOATING DECORATIONS */
+  .deco{position:fixed;pointer-events:none;opacity:0.22;animation:float 7s ease-in-out infinite;color:#C090B0;z-index:0;}
+  .deco:nth-child(even){animation-name:float2;animation-duration:9s;}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0deg) scale(1)}33%{transform:translateY(-10px) rotate(8deg) scale(1.05)}66%{transform:translateY(-5px) rotate(-5deg) scale(0.97)}}
+  @keyframes float2{0%,100%{transform:translateY(0) rotate(0deg) scale(1)}40%{transform:translateY(-12px) rotate(-8deg) scale(1.04)}70%{transform:translateY(-4px) rotate(5deg) scale(0.98)}}
+
+  /* HERO ORBS (like main page) */
+  .hero{position:relative;overflow:hidden;}
+  .hero-bg-orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.4;pointer-events:none;}
+  .hero-bg-orb-1{width:500px;height:500px;background:#F7C5C5;top:-120px;right:-100px;}
+  .hero-bg-orb-2{width:400px;height:400px;background:#D9C5F0;bottom:-100px;left:-80px;}
+  .hero-bg-orb-3{width:280px;height:280px;background:#C5E8D5;top:40%;left:30%;}
+
+  /* STAR TWINKLE */
+  .star-deco{position:absolute;color:#C8A0C8;opacity:0.35;pointer-events:none;font-size:20px;animation:twinkle 3s ease-in-out infinite;z-index:1;}
+  @keyframes twinkle{0%,100%{opacity:0.35;transform:scale(1)}50%{opacity:0.75;transform:scale(1.3)}}
 
   /* BANNER */
   .banner{position:fixed;top:0;left:0;right:0;z-index:1100;background:linear-gradient(135deg,#C87090,#9070C8);padding:8px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;}
@@ -30,62 +42,82 @@
   .banner a{background:rgba(255,255,255,0.25);color:white;font-size:12px;font-weight:800;padding:4px 14px;border-radius:20px;text-decoration:none;}
 
   /* NAV */
-  nav{position:fixed;top:36px;left:0;right:0;z-index:1000;background:rgba(13,8,32,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,112,144,0.2);padding:0 40px;height:70px;display:flex;align-items:center;justify-content:space-between;}
+  nav{position:fixed;top:36px;left:0;right:0;z-index:1000;background:rgba(255,248,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(247,197,197,0.3);padding:0 40px;height:70px;display:flex;align-items:center;justify-content:space-between;}
   .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
   .nav-logo-icon{font-size:28px;}
-  .nav-logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:white;}
+  .nav-logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--text);}
   .nav-links{display:flex;align-items:center;gap:32px;list-style:none;}
-  .nav-links a{text-decoration:none;font-size:14px;font-weight:700;color:rgba(255,255,255,0.6);transition:color 0.2s;}
-  .nav-links a:hover,.nav-links a.active{color:#F7C5C5;}
-  .nav-cta{background:linear-gradient(135deg,var(--rose),var(--peach));color:#7A3030!important;padding:10px 22px;border-radius:50px;}
+  .nav-links a{text-decoration:none;font-size:14px;font-weight:700;color:var(--text-light);transition:color 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--accent);}
+  .nav-cta{background:linear-gradient(135deg,var(--rose),var(--peach));color:#7A3030!important;padding:10px 22px;border-radius:50px;box-shadow:0 4px 14px rgba(232,144,144,0.3);}
 
   /* CONTENT */
-  .content{position:relative;z-index:1;padding-top:116px;}
+  .content{padding-top:116px;position:relative;z-index:1;}
 
   /* HERO */
   .hero{text-align:center;padding:60px 40px 40px;}
-  .hero-date{font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(200,112,144,0.8);margin-bottom:12px;}
-  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,64px);font-weight:900;color:white;margin-bottom:12px;line-height:1.1;}
-  .hero-sub{font-size:15px;color:rgba(255,255,255,0.6);font-weight:600;max-width:500px;margin:0 auto;}
+  .hero-date{font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .hero-planet{font-size:80px;display:block;animation:floatBig 6s ease-in-out infinite;margin-bottom:16px;}
+  @keyframes floatBig{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-14px) rotate(5deg)}}
+  .hero-title{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,60px);font-weight:900;color:var(--text);margin-bottom:12px;line-height:1.1;}
+  .hero-title .accent{background:linear-gradient(135deg,#C87090,#9070C8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .hero-sub{font-size:15px;color:var(--text-light);font-weight:600;max-width:500px;margin:0 auto 24px;}
 
-  /* PERSONAL PLANET */
-  .personal-section{max-width:600px;margin:40px auto;padding:0 20px;}
-  .personal-card{background:rgba(255,255,255,0.06);backdrop-filter:blur(10px);border:1px solid rgba(200,112,144,0.2);border-radius:28px;padding:32px;text-align:center;}
-  .personal-card h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:rgba(255,255,255,0.9);margin-bottom:20px;}
-  .birthday-input{background:rgba(255,255,255,0.1);border:1.5px solid rgba(200,112,144,0.3);border-radius:14px;padding:12px 18px;font-family:'Nunito',sans-serif;font-size:14px;color:white;outline:none;width:100%;margin-bottom:14px;box-sizing:border-box;}
-  .birthday-input::placeholder{color:rgba(255,255,255,0.4);}
-  .btn-find{background:linear-gradient(135deg,#C87090,#9070C8);border:none;border-radius:14px;padding:13px;width:100%;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;color:white;cursor:pointer;transition:all 0.2s;}
-  .btn-find:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(200,112,144,0.4);}
-  .personal-result{display:none;margin-top:20px;animation:fadeIn 0.5s ease;}
-  .personal-planet-emoji{font-size:64px;margin-bottom:12px;display:block;}
-  .personal-planet-name{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:white;margin-bottom:8px;}
-  .personal-planet-msg{font-size:14px;color:rgba(255,255,255,0.7);font-weight:600;line-height:1.7;}
+  /* PERSONAL PLANET CARD */
+  .personal-section{max-width:620px;margin:0 auto 48px;padding:0 20px;}
+  .personal-card{background:rgba(255,255,255,0.8);backdrop-filter:blur(10px);border:1.5px solid rgba(247,197,197,0.4);border-radius:28px;padding:32px;text-align:center;box-shadow:0 8px 32px var(--shadow);}
+  .personal-card h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:20px;}
+  .birthday-input{background:var(--cream);border:2px solid var(--rose);border-radius:14px;padding:12px 18px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;width:100%;margin-bottom:14px;box-sizing:border-box;transition:border-color 0.2s;}
+  .birthday-input:focus{border-color:var(--accent);}
+  .btn-find{background:linear-gradient(135deg,#C87090,#9070C8);border:none;border-radius:14px;padding:13px;width:100%;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;color:white;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 16px rgba(200,112,144,0.3);}
+  .btn-find:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,112,144,0.4);}
+  .personal-result{display:none;margin-top:24px;padding-top:24px;border-top:1.5px solid rgba(247,197,197,0.3);animation:fadeIn 0.5s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .personal-planet-emoji{font-size:56px;margin-bottom:12px;display:block;}
+  .personal-planet-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px;}
+  .personal-planet-keyword{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .personal-planet-msg{font-size:14px;color:var(--text-light);font-weight:600;line-height:1.7;font-style:italic;}
 
-  /* PLANETS GRID */
-  .planets-section{padding:20px 40px 80px;max-width:1100px;margin:0 auto;}
-  .planets-title{font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,28px);font-weight:900;color:white;margin-bottom:8px;text-align:center;}
-  .planets-sub{font-size:13px;color:rgba(255,255,255,0.5);font-weight:600;text-align:center;margin-bottom:32px;}
+  /* DAILY SECTION */
+  .daily-section{padding:0 40px 60px;max-width:1100px;margin:0 auto;}
+  .section-label{text-align:center;font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .section-title{text-align:center;font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,40px);font-weight:900;color:var(--text);margin-bottom:8px;}
+  .section-sub{text-align:center;font-size:14px;color:var(--text-light);font-weight:600;margin-bottom:36px;}
   .planets-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
 
-  .planet-card{background:rgba(255,255,255,0.05);backdrop-filter:blur(8px);border-radius:24px;padding:28px 20px;text-align:center;border:1px solid rgba(255,255,255,0.08);transition:transform 0.2s,border-color 0.2s;cursor:pointer;animation:fadeIn 0.4s ease;}
-  .planet-card:hover{transform:translateY(-4px);border-color:rgba(200,112,144,0.3);}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+  .planet-card{background:white;border-radius:24px;padding:24px 18px;text-align:center;box-shadow:0 4px 20px var(--shadow);transition:transform 0.2s,box-shadow 0.2s;border:1.5px solid rgba(247,197,197,0.25);position:relative;overflow:hidden;animation:fadeIn 0.4s ease;}
+  .planet-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:24px 24px 0 0;}
+  .planet-card:hover{transform:translateY(-4px);box-shadow:0 10px 32px var(--shadow);}
 
-  .planet-emoji{font-size:48px;margin-bottom:12px;display:block;filter:drop-shadow(0 4px 12px rgba(200,112,144,0.3));}
-  .planet-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:white;margin-bottom:4px;}
-  .planet-keyword{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
-  .planet-msg{font-size:13px;color:rgba(255,255,255,0.65);font-weight:600;line-height:1.6;}
-  .planet-energy{display:inline-block;margin-top:12px;font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;background:rgba(255,255,255,0.1);}
+  .planet-emoji{font-size:44px;margin-bottom:10px;display:block;filter:drop-shadow(0 4px 8px rgba(180,100,140,0.2));}
+  .planet-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:900;color:var(--text);margin-bottom:4px;}
+  .planet-keyword{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .planet-msg{font-size:13px;color:var(--text-light);font-weight:600;line-height:1.6;}
+  .planet-energy{display:inline-block;margin-top:12px;font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;background:rgba(247,197,197,0.2);color:var(--accent);}
 
   /* FOOTER */
-  footer{background:rgba(0,0,0,0.4);padding:40px;text-align:center;color:rgba(255,255,255,0.4);font-size:13px;font-weight:600;position:relative;z-index:1;}
-  footer a{color:rgba(255,255,255,0.6);text-decoration:none;margin:0 12px;}
+  footer{background:#1a1a2e;padding:40px;text-align:center;color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;position:relative;z-index:1;}
+  footer a{color:rgba(255,255,255,0.7);text-decoration:none;margin:0 12px;}
+  footer a:hover{color:var(--rose);}
 </style>
 </head>
 <body>
 
-<!-- STARS -->
-<div class="stars-bg" id="stars"></div>
+<!-- FLOATING DECORATIONS -->
+<div class="deco" style="top:5%;right:2%;animation-delay:0s;font-size:22px">🪐</div>
+<div class="deco" style="top:15%;right:5%;animation-delay:1.2s;font-size:18px">🌸</div>
+<div class="deco" style="top:28%;right:2%;animation-delay:2.4s;font-size:20px">✦</div>
+<div class="deco" style="top:42%;right:4%;animation-delay:0.8s;font-size:16px">⭐</div>
+<div class="deco" style="top:58%;right:2%;animation-delay:3.2s;font-size:22px">🌙</div>
+<div class="deco" style="top:72%;right:5%;animation-delay:1.6s;font-size:18px">✿</div>
+<div class="deco" style="top:85%;right:2%;animation-delay:2s;font-size:20px">☀️</div>
+<div class="deco" style="top:5%;left:2%;animation-delay:0.5s;font-size:18px">✦</div>
+<div class="deco" style="top:18%;left:4%;animation-delay:1.8s;font-size:22px">🌸</div>
+<div class="deco" style="top:32%;left:2%;animation-delay:3s;font-size:20px">🪐</div>
+<div class="deco" style="top:48%;left:5%;animation-delay:1.4s;font-size:16px">✿</div>
+<div class="deco" style="top:62%;left:2%;animation-delay:2.6s;font-size:22px">⭐</div>
+<div class="deco" style="top:78%;left:4%;animation-delay:0.9s;font-size:18px">🌙</div>
+<div class="deco" style="top:92%;left:2%;animation-delay:2.2s;font-size:20px">✦</div>
 
 <!-- BANNER -->
 <div class="banner">
@@ -102,7 +134,7 @@
   </a>
   <ul class="nav-links">
     <li><a href="blog.html">Blog</a></li>
-    <li><a href="planeten.html" class="active">Planeten</a></li>
+    <li><a href="planeten.html" class="active">🌌 Planeten</a></li>
     <li><a href="community.html">Community</a></li>
     <li><a href="about.html">Über uns</a></li>
     <li><a href="login.html" class="nav-cta">Einloggen ✨</a></li>
@@ -112,31 +144,50 @@
 <div class="content">
 
   <!-- HERO -->
-  <div class="hero">
-    <div class="hero-date" id="heroDate"></div>
-    <h1 class="hero-title">Was sagen die<br>Planeten heute? 🌌</h1>
-    <p class="hero-sub">Tägliche Botschaften & dein persönlicher Schutzplanet — Zwischen den Sternen, zu dir selbst.</p>
-  </div>
-
-  <!-- PERSONAL PLANET -->
-  <div class="personal-section">
-    <div class="personal-card">
-      <h3>🪐 Dein persönlicher Schutzplanet</h3>
-      <input class="birthday-input" type="date" id="birthdayInput" placeholder="Dein Geburtsdatum" />
-      <button class="btn-find" onclick="findPersonalPlanet()">Meinen Planeten finden ✨</button>
-      <div class="personal-result" id="personalResult">
-        <span class="personal-planet-emoji" id="personalEmoji"></span>
-        <div class="personal-planet-name" id="personalName"></div>
-        <div class="personal-planet-msg" id="personalMsg"></div>
+  <div class="hero" style="text-align:center;padding:60px 40px 40px;">
+    <div class="hero-bg-orb hero-bg-orb-1"></div>
+    <div class="hero-bg-orb hero-bg-orb-2"></div>
+    <div class="hero-bg-orb hero-bg-orb-3"></div>
+    <div class="star-deco" style="top:15%;left:8%;animation-delay:0s">✦</div>
+    <div class="star-deco" style="top:30%;right:10%;animation-delay:1s">✧</div>
+    <div class="star-deco" style="bottom:20%;left:12%;animation-delay:2s">✦</div>
+    <div class="star-deco" style="bottom:10%;right:8%;animation-delay:0.5s">✧</div>
+    <div style="position:relative;z-index:2;">
+      <div class="hero-date" id="heroDate"></div>
+      <span class="hero-planet">🌌</span>
+      <h1 class="hero-title">Was sagen die<br><span class="accent">Planeten heute?</span></h1>
+      <p class="hero-sub">Tägliche Botschaften & dein persönlicher Schutzplanet 🌸</p>
+      <div style="display:flex;gap:20px;justify-content:center;margin-top:20px;font-size:22px;opacity:0.5;">
+        <span style="animation:floatBig 5s ease-in-out infinite;">🌙</span>
+        <span style="animation:floatBig 7s ease-in-out infinite 1s;">⭐</span>
+        <span style="animation:floatBig 6s ease-in-out infinite 0.5s;">🌸</span>
+        <span style="animation:floatBig 8s ease-in-out infinite 1.5s;">✦</span>
+        <span style="animation:floatBig 5.5s ease-in-out infinite 2s;">🪐</span>
       </div>
     </div>
   </div>
 
-  <!-- PLANETS GRID -->
-  <div class="planets-section">
-    <div class="planets-title">Tägliche Planetenbotschaften ✦</div>
-    <div class="planets-sub" id="planetsDate"></div>
+  <!-- DAILY PLANETS (zuerst) -->
+  <div class="daily-section">
+    <div class="section-label">✦ Tägliche Botschaften ✦</div>
+    <h2 class="section-title">Was die Planeten dir sagen</h2>
+    <p class="section-sub" id="planetsDate"></p>
     <div class="planets-grid" id="planetsGrid"></div>
+  </div>
+
+  <!-- PERSONAL PLANET (danach) -->
+  <div class="personal-section">
+    <div class="personal-card">
+      <h3>🪐 Dein persönlicher Schutzplanet</h3>
+      <input class="birthday-input" type="date" id="birthdayInput" />
+      <button class="btn-find" onclick="findPersonalPlanet()">Meinen Planeten finden ✨</button>
+      <div class="personal-result" id="personalResult">
+        <span class="personal-planet-emoji" id="personalEmoji"></span>
+        <div class="personal-planet-name" id="personalName"></div>
+        <div class="personal-planet-keyword" id="personalKeyword"></div>
+        <div class="personal-planet-msg" id="personalMsg"></div>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -148,186 +199,100 @@
     <a href="blog.html">Blog</a>
     <a href="planeten.html">Planeten</a>
     <a href="community.html">Community</a>
+    <a href="login.html">Einloggen</a>
   </div>
   <div style="margin-top:16px;font-size:11px;opacity:0.4;">© 2026 Saturnplaner</div>
 </footer>
 
 <script>
-// ===== STARS =====
-const starsContainer = document.getElementById('stars');
-for (let i = 0; i < 120; i++) {
-  const star = document.createElement('div');
-  star.className = 'star-dot';
-  const size = Math.random() * 3 + 1;
-  star.style.cssText = `
-    width:${size}px;height:${size}px;
-    top:${Math.random()*100}%;left:${Math.random()*100}%;
-    animation-delay:${Math.random()*4}s;
-    animation-duration:${2+Math.random()*3}s;
-    opacity:${Math.random()*0.7+0.1};
-  `;
-  starsContainer.appendChild(star);
-}
-
-// ===== DATE =====
 const now = new Date();
-const days = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
-const months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
-const dateStr = `${days[now.getDay()]}, ${now.getDate()}. ${months[now.getMonth()]} ${now.getFullYear()}`;
-document.getElementById('heroDate').textContent = '✦ ' + dateStr + ' ✦';
-document.getElementById('planetsDate').textContent = 'Botschaften für ' + dateStr;
+const days=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+const months=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+const dateStr=`${days[now.getDay()]}, ${now.getDate()}. ${months[now.getMonth()]} ${now.getFullYear()}`;
+document.getElementById('heroDate').textContent='✦ '+dateStr+' ✦';
+document.getElementById('planetsDate').textContent='Botschaften für '+dateStr;
 
-// ===== PLANET DATA =====
-const planets = [
-  {
-    emoji: '☀️', name: 'Sonne', keyword: 'Energie & Kraft',
-    color: '#FFD700', light: 'rgba(255,215,0,0.15)',
-    personalMsg: 'Die Sonne ist dein Schutzplanet — du strahlst von innen heraus. Deine Energie ist ansteckend und du bringst Licht in jeden Raum.',
-    birthMonths: [7, 8],
-    messages: [
-      'Heute leuchtet deine innere Kraft besonders hell. Trau dich, sichtbar zu sein. 🌟',
-      'Ein guter Tag um Energie zu tanken und dir etwas Schönes zu gönnen.',
-      'Die Sonne erinnert dich: Du verdienst das Beste. Zweifle nicht daran.',
-      'Strahle heute raus was in dir steckt — jemand braucht genau das.',
-      'Gib dir heute Erlaubnis, einfach du selbst zu sein. Das reicht.',
-    ]
-  },
-  {
-    emoji: '🌙', name: 'Mond', keyword: 'Gefühle & Intuition',
-    color: '#C8D8FF', light: 'rgba(200,216,255,0.15)',
-    personalMsg: 'Der Mond ist dein Schutzplanet — du spürst tief und verstehst Menschen intuitiv. Deine Gefühlswelt ist deine Stärke.',
-    birthMonths: [6],
-    messages: [
-      'Höre heute auf dein Bauchgefühl — es hat recht. 🌙',
-      'Deine Gefühle sind heute besonders nah an der Oberfläche. Das ist okay.',
-      'Ein guter Moment um inne zu halten und zu fühlen was du wirklich brauchst.',
-      'Gönn dir heute Ruhe. Der Mond erinnert dich: Pausen sind kein Versagen.',
-      'Vertraue heute deiner Intuition mehr als dem Verstand.',
-    ]
-  },
-  {
-    emoji: '🪐', name: 'Saturn', keyword: 'Struktur & Weisheit',
-    color: '#D9C5F0', light: 'rgba(217,197,240,0.15)',
-    personalMsg: 'Saturn ist dein Schutzplanet — du bist weise, geduldig und verlässlich. Du weisst wie man Träume in die Realität umsetzt.',
-    birthMonths: [12, 1],
-    messages: [
-      'Saturn erinnert dich heute: Kleinen Schritten vertrauen. Du kommst ans Ziel. 🪐',
-      'Ein guter Tag für Planung und Struktur. Was willst du diese Woche erreichen?',
-      'Geduld ist heute deine grösste Kraft. Nicht alles muss sofort passieren.',
-      'Saturn fragt: Was baust du gerade auf? Es lohnt sich — bleib dabei.',
-      'Heute ist ein guter Tag um Grenzen zu setzen die dir gut tun.',
-    ]
-  },
-  {
-    emoji: '♀️', name: 'Venus', keyword: 'Liebe & Schönheit',
-    color: '#FFB7C5', light: 'rgba(255,183,197,0.15)',
-    personalMsg: 'Venus ist dein Schutzplanet — du hast ein natürliches Gespür für Schönheit, Harmonie und tiefe Verbindungen.',
-    birthMonths: [4, 5],
-    messages: [
-      'Liebe dich heute selbst so wie du andere liebst. 💕',
-      'Venus flüstert: Tu heute etwas das sich schön anfühlt — nur für dich.',
-      'Ein guter Tag für Gespräche von Herz zu Herz.',
-      'Schönheit liegt im Kleinen. Was findest du heute schön?',
-      'Venus erinnert dich: Du verdienst Liebe die sich leicht anfühlt.',
-    ]
-  },
-  {
-    emoji: '♂️', name: 'Mars', keyword: 'Antrieb & Mut',
-    color: '#FFB0A0', light: 'rgba(255,176,160,0.15)',
-    personalMsg: 'Mars ist dein Schutzplanet — du hast eine innere Feuerkraft und den Mut Dinge anzugehen die andere aufschieben.',
-    birthMonths: [3],
-    messages: [
-      'Mars gibt dir heute extra Energie. Nutze sie für das was dir wichtig ist. 🔥',
-      'Der beste Moment war gestern — der zweitbeste ist jetzt. Leg los!',
-      'Trau dich heute mutig zu sein. Mars hat deinen Rücken.',
-      'Deine Energie ist heute gross. Wohin willst du sie lenken?',
-      'Mars erinnert dich: Du bist stärker als du glaubst.',
-    ]
-  },
-  {
-    emoji: '♃', name: 'Jupiter', keyword: 'Glück & Wachstum',
-    color: '#FFD9B7', light: 'rgba(255,217,183,0.15)',
-    personalMsg: 'Jupiter ist dein Schutzplanet — Glück und Wachstum begleiten dich. Du siehst immer das grosse Bild.',
-    birthMonths: [11, 2],
-    messages: [
-      'Jupiter bringt heute Glücksmomente. Bleib offen dafür! ✨',
-      'Ein guter Tag um gross zu denken. Was wäre möglich wenn du nicht zweifelst?',
-      'Dankbarkeit zieht mehr Gutes an. Was schätzt du heute?',
-      'Jupiter erinnert: Wachstum passiert auch in stillen Phasen.',
-      'Heute ist ein guter Tag für neue Chancen — halte die Augen offen.',
-    ]
-  },
-  {
-    emoji: '♅', name: 'Uranus', keyword: 'Freiheit & Wandel',
-    color: '#C5E8D5', light: 'rgba(197,232,213,0.15)',
-    personalMsg: 'Uranus ist dein Schutzplanet — du bist einzigartig, denkst anders und hast den Mut neue Wege zu gehen.',
-    birthMonths: [10],
-    messages: [
-      'Uranus fragt: Was würdest du tun wenn du keine Angst hättest? 🌿',
-      'Ein guter Tag um etwas Neues auszuprobieren — auch wenn es ungewohnt ist.',
-      'Deine Andersartigkeit ist deine Stärke. Uranus liebt das an dir.',
-      'Veränderung ist nicht Verlust — sie ist Raum für Neues.',
-      'Uranus erinnert dich: Du musst nicht in eine Schublade passen.',
-    ]
-  },
-  {
-    emoji: '♆', name: 'Neptun', keyword: 'Träume & Tiefe',
-    color: '#C5DCF0', light: 'rgba(197,220,240,0.15)',
-    personalMsg: 'Neptun ist dein Schutzplanet — du bist sensibel, kreativ und hast einen tiefen Sinn für das Unsichtbare.',
-    birthMonths: [9],
-    messages: [
-      'Neptun flüstert: Deine Träume sagen dir etwas. Hör hin. 🌊',
-      'Ein guter Tag für Kreativität, Musik oder Träumerei.',
-      'Deine Sensibilität ist kein Fehler — sie ist ein Geschenk.',
-      'Neptun erinnert dich: Manchmal ist das Fühlen wichtiger als das Denken.',
-      'Lass heute los was du nicht kontrollieren kannst. Vertraue dem Fluss.',
-    ]
-  }
+const planetColors=['#C87090','#C8D8FF','#D9C5F0','#FFB7C5','#FFB0A0','#FFD9B7','#C5E8D5','#C5DCF0'];
+
+const planets=[
+  {emoji:'☀️',name:'Sonne',keyword:'Energie & Kraft',color:planetColors[0],
+   personalMsg:'Die Sonne ist dein Schutzplanet — du strahlst von innen heraus. Deine Energie ist ansteckend und du bringst Licht in jeden Raum.',
+   birthMonths:[7,8],
+   messages:['Heute leuchtet deine innere Kraft besonders hell. Trau dich, sichtbar zu sein. 🌟','Ein guter Tag um Energie zu tanken und dir etwas Schönes zu gönnen.','Die Sonne erinnert dich: Du verdienst das Beste. Zweifle nicht daran.','Strahle heute raus was in dir steckt — jemand braucht genau das.','Gib dir heute Erlaubnis, einfach du selbst zu sein. Das reicht.']},
+  {emoji:'🌙',name:'Mond',keyword:'Gefühle & Intuition',color:planetColors[1],
+   personalMsg:'Der Mond ist dein Schutzplanet — du spürst tief und verstehst Menschen intuitiv. Deine Gefühlswelt ist deine Stärke.',
+   birthMonths:[6],
+   messages:['Höre heute auf dein Bauchgefühl — es hat recht. 🌙','Deine Gefühle sind heute nah. Das ist okay und erlaubt.','Gönn dir heute Ruhe. Pausen sind kein Versagen.','Ein guter Moment um zu fühlen was du wirklich brauchst.','Vertraue heute deiner Intuition mehr als dem Verstand.']},
+  {emoji:'🪐',name:'Saturn',keyword:'Struktur & Weisheit',color:planetColors[2],
+   personalMsg:'Saturn ist dein Schutzplanet — du bist weise, geduldig und verlässlich. Du weisst wie man Träume in die Realität umsetzt.',
+   birthMonths:[12,1],
+   messages:['Saturn erinnert dich: Kleinen Schritten vertrauen. Du kommst ans Ziel. 🪐','Ein guter Tag für Planung und Struktur.','Geduld ist heute deine grösste Kraft.','Was baust du gerade auf? Es lohnt sich — bleib dabei.','Heute ist ein guter Tag um Grenzen zu setzen die dir gut tun.']},
+  {emoji:'♀️',name:'Venus',keyword:'Liebe & Schönheit',color:planetColors[3],
+   personalMsg:'Venus ist dein Schutzplanet — du hast ein natürliches Gespür für Schönheit, Harmonie und tiefe Verbindungen.',
+   birthMonths:[4,5],
+   messages:['Liebe dich heute selbst so wie du andere liebst. 💕','Tu heute etwas das sich schön anfühlt — nur für dich.','Ein guter Tag für Gespräche von Herz zu Herz.','Schönheit liegt im Kleinen. Was findest du heute schön?','Du verdienst Liebe die sich leicht anfühlt.']},
+  {emoji:'♂️',name:'Mars',keyword:'Antrieb & Mut',color:planetColors[4],
+   personalMsg:'Mars ist dein Schutzplanet — du hast eine innere Feuerkraft und den Mut Dinge anzugehen die andere aufschieben.',
+   birthMonths:[3],
+   messages:['Mars gibt dir heute extra Energie. Nutze sie für das was dir wichtig ist. 🔥','Der beste Moment war gestern — der zweitbeste ist jetzt. Leg los!','Trau dich heute mutig zu sein.','Deine Energie ist heute gross. Wohin willst du sie lenken?','Du bist stärker als du glaubst.']},
+  {emoji:'♃',name:'Jupiter',keyword:'Glück & Wachstum',color:planetColors[5],
+   personalMsg:'Jupiter ist dein Schutzplanet — Glück und Wachstum begleiten dich. Du siehst immer das grosse Bild.',
+   birthMonths:[11,2],
+   messages:['Jupiter bringt heute Glücksmomente. Bleib offen dafür! ✨','Ein guter Tag um gross zu denken.','Dankbarkeit zieht mehr Gutes an. Was schätzt du heute?','Wachstum passiert auch in stillen Phasen.','Heute ist ein guter Tag für neue Chancen.']},
+  {emoji:'♅',name:'Uranus',keyword:'Freiheit & Wandel',color:planetColors[6],
+   personalMsg:'Uranus ist dein Schutzplanet — du bist einzigartig, denkst anders und hast den Mut neue Wege zu gehen.',
+   birthMonths:[10],
+   messages:['Was würdest du tun wenn du keine Angst hättest? 🌿','Probiere heute etwas Neues — auch wenn es ungewohnt ist.','Deine Andersartigkeit ist deine Stärke.','Veränderung ist Raum für Neues.','Du musst nicht in eine Schublade passen.']},
+  {emoji:'♆',name:'Neptun',keyword:'Träume & Tiefe',color:planetColors[7],
+   personalMsg:'Neptun ist dein Schutzplanet — du bist sensibel, kreativ und hast einen tiefen Sinn für das Unsichtbare.',
+   birthMonths:[9],
+   messages:['Deine Träume sagen dir etwas. Hör hin. 🌊','Ein guter Tag für Kreativität und Träumerei.','Deine Sensibilität ist ein Geschenk.','Manchmal ist das Fühlen wichtiger als das Denken.','Lass heute los was du nicht kontrollieren kannst.']}
 ];
 
-// ===== DAILY MESSAGE (based on day of year) =====
-const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+const dayOfYear=Math.floor((now-new Date(now.getFullYear(),0,0))/86400000);
 
-function renderPlanets() {
-  const grid = document.getElementById('planetsGrid');
-  grid.innerHTML = planets.map((p, i) => {
-    const msgIdx = (dayOfYear + i) % p.messages.length;
-    const msg = p.messages[msgIdx];
-    const energyLevel = ((dayOfYear + i * 3) % 5) + 1;
-    const energyStars = '⭐'.repeat(energyLevel);
-
-    return `
-      <div class="planet-card" style="border-color:${p.light.replace('0.15','0.3')}">
-        <span class="planet-emoji">${p.emoji}</span>
-        <div class="planet-name" style="color:${p.color}">${p.name}</div>
-        <div class="planet-keyword" style="color:${p.color};opacity:0.8">${p.keyword}</div>
-        <div class="planet-msg">${msg}</div>
-        <div class="planet-energy" style="color:${p.color}">${energyStars} Energie heute</div>
-      </div>
-    `;
+function renderPlanets(){
+  document.getElementById('planetsGrid').innerHTML=planets.map((p,i)=>{
+    const msg=p.messages[(dayOfYear+i)%p.messages.length];
+    const energy=((dayOfYear+i*3)%5)+1;
+    return`<div class="planet-card" style="--pcolor:${p.color}">
+      <div style="position:absolute;top:0;left:0;right:0;height:5px;border-radius:24px 24px 0 0;background:${p.color};"></div>
+      <span class="planet-emoji">${p.emoji}</span>
+      <div class="planet-name">${p.name}</div>
+      <div class="planet-keyword" style="color:${p.color}">${p.keyword}</div>
+      <div class="planet-msg">${msg}</div>
+      <div class="planet-energy" style="background:${p.color}22;color:${p.color}">${'⭐'.repeat(energy)} Energie</div>
+    </div>`;
   }).join('');
 }
 
-// ===== PERSONAL PLANET =====
-function findPersonalPlanet() {
-  const val = document.getElementById('birthdayInput').value;
-  if (!val) return;
-  const birth = new Date(val);
-  const month = birth.getMonth() + 1;
-
-  let found = planets.find(p => p.birthMonths.includes(month));
-  if (!found) {
-    // Fallback based on day
-    found = planets[birth.getDate() % planets.length];
-  }
-
-  document.getElementById('personalEmoji').textContent = found.emoji;
-  document.getElementById('personalName').textContent = found.name + ' — ' + found.keyword;
-  document.getElementById('personalMsg').textContent = found.personalMsg;
-
-  const result = document.getElementById('personalResult');
-  result.style.display = 'block';
+function findPersonalPlanet(){
+  const val=document.getElementById('birthdayInput').value;
+  if(!val)return;
+  const birth=new Date(val);
+  const month=birth.getMonth()+1;
+  let found=planets.find(p=>p.birthMonths.includes(month))||planets[birth.getDate()%planets.length];
+  document.getElementById('personalEmoji').textContent=found.emoji;
+  document.getElementById('personalName').textContent=found.name;
+  document.getElementById('personalKeyword').textContent=found.keyword;
+  document.getElementById('personalMsg').textContent=found.personalMsg;
+  document.getElementById('personalResult').style.display='block';
 }
+
+// Auto-load if birthday saved in localStorage
+const savedBirthday=localStorage.getItem('sp_birthday');
+if(savedBirthday){
+  document.getElementById('birthdayInput').value=savedBirthday;
+  findPersonalPlanet();
+}
+
+// Save birthday on find
+const origFind=window.findPersonalPlanet;
+window.findPersonalPlanet=function(){
+  const val=document.getElementById('birthdayInput').value;
+  if(val)localStorage.setItem('sp_birthday',val);
+  origFind();
+};
 
 renderPlanets();
 </script>
