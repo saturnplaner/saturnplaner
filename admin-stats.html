@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Saturnplaner</title>
+<!-- Kein Link zu dieser Seite — nur du kennst die URL -->
+<meta name="robots" content="noindex,nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{--rose:#F7C5C5;--peach:#FFD9B7;--lavender:#D9C5F0;--mint:#C5E8D5;--cream:#FFF8F0;--text:#3D2C2C;--text-light:#9B7E7E;--accent:#C87090;--shadow:rgba(180,130,130,0.15);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Nunito',sans-serif;color:var(--text);background:var(--cream);min-height:100vh;padding:40px 20px;}
+  .header{text-align:center;margin-bottom:40px;}
+  .header h1{font-family:'Playfair Display',serif;font-size:36px;font-weight:900;color:var(--text);margin-bottom:8px;}
+  .header p{font-size:14px;color:var(--text-light);font-weight:600;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;max-width:900px;margin:0 auto 40px;}
+  .stat-card{background:white;border-radius:20px;padding:24px;box-shadow:0 4px 20px var(--shadow);text-align:center;}
+  .stat-num{font-family:'Playfair Display',serif;font-size:48px;font-weight:900;color:var(--text);margin-bottom:4px;}
+  .stat-label{font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);}
+  .stat-card.rose{border-top:4px solid var(--rose);}
+  .stat-card.lavender{border-top:4px solid var(--lavender);}
+  .stat-card.mint{border-top:4px solid var(--mint);}
+  .stat-card.peach{border-top:4px solid var(--peach);}
+  .table-wrap{max-width:900px;margin:0 auto;background:white;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px var(--shadow);}
+  .table-header{background:linear-gradient(135deg,#FFF0F8,#F8F0FF);padding:20px 24px;border-bottom:1px solid rgba(247,197,197,0.3);}
+  .table-header h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--text);}
+  table{width:100%;border-collapse:collapse;}
+  th{padding:12px 20px;text-align:left;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);border-bottom:1px solid rgba(247,197,197,0.3);}
+  td{padding:12px 20px;font-size:13px;font-weight:600;color:var(--text);border-bottom:1px solid rgba(247,197,197,0.15);}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:rgba(247,197,197,0.05);}
+  .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:800;}
+  .badge.app{background:rgba(200,112,144,0.15);color:var(--accent);}
+  .badge.nl{background:rgba(197,232,213,0.4);color:#3A8A5A;}
+  .badge.popup{background:rgba(217,197,240,0.4);color:#7050A8;}
+  .refresh-btn{display:block;margin:20px auto 0;background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;border-radius:50px;padding:12px 28px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;}
+  .loading{text-align:center;padding:40px;color:var(--text-light);font-size:14px;font-weight:600;}
+  .secret-note{text-align:center;margin-top:32px;font-size:12px;color:var(--text-light);font-weight:600;padding:12px;background:rgba(247,197,197,0.1);border-radius:10px;max-width:500px;margin-left:auto;margin-right:auto;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div style="font-size:48px;margin-bottom:12px;">🪐</div>
+  <h1>Admin Dashboard</h1>
+  <p>Nur für dich — teile diese URL mit niemandem</p>
+</div>
+
+<!-- STATS CARDS -->
+<div class="grid">
+  <div class="stat-card rose">
+    <div class="stat-num" id="statTotal">–</div>
+    <div class="stat-label">Anmeldungen Total</div>
+  </div>
+  <div class="stat-card lavender">
+    <div class="stat-num" id="statApp">–</div>
+    <div class="stat-label">Wollen die App</div>
+  </div>
+  <div class="stat-card mint">
+    <div class="stat-num" id="statNewsletter">–</div>
+    <div class="stat-label">Newsletter</div>
+  </div>
+  <div class="stat-card peach">
+    <div class="stat-num" id="statViews">–</div>
+    <div class="stat-label">Seitenaufrufe</div>
+  </div>
+</div>
+
+<!-- SUBSCRIBER TABLE -->
+<div class="table-wrap" style="margin-bottom:24px;">
+  <div class="table-header">
+    <h2>📋 Alle Anmeldungen</h2>
+  </div>
+  <div id="subscriberTable"><div class="loading">🌸 Lade Daten...</div></div>
+</div>
+
+<button class="refresh-btn" onclick="loadData()">🔄 Aktualisieren</button>
+
+<div class="secret-note">
+  🔒 Diese Seite ist nicht verlinkt — nur wer die URL kennt kann sie sehen.<br>
+  Für mehr Analytics: <a href="https://analytics.google.com" target="_blank" style="color:var(--accent);">Google Analytics</a> oder <a href="https://plausible.io" target="_blank" style="color:var(--accent);">Plausible.io</a> (Datenschutz-freundlich, kostenlos)
+</div>
+
+<script>
+const { createClient } = supabase;
+const sb = createClient('https://buowsgggbkpsssspewtk.supabase.co','sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO');
+
+async function loadData() {
+  // Subscribers
+  const { data: subs, error } = await sb
+    .from('newsletter_subscribers')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error || !subs) {
+    document.getElementById('subscriberTable').innerHTML = '<div class="loading">⚠️ Fehler beim Laden. Prüfe Supabase-Tabelle "newsletter_subscribers"</div>';
+    return;
+  }
+
+  document.getElementById('statTotal').textContent = subs.length;
+  document.getElementById('statApp').textContent = subs.filter(s => s.wants_app || s.source === 'banner').length;
+  document.getElementById('statNewsletter').textContent = subs.filter(s => s.source === 'newsletter_page' || s.source === 'popup').length;
+
+  // Page views
+  const { data: views } = await sb.from('page_views').select('views').eq('page','home').single();
+  document.getElementById('statViews').textContent = views?.views ?? '–';
+
+  // Table
+  if (subs.length === 0) {
+    document.getElementById('subscriberTable').innerHTML = '<div class="loading">Noch keine Anmeldungen 🌸</div>';
+    return;
+  }
+
+  const badgeMap = {
+    'banner': '<span class="badge app">🚀 App Banner</span>',
+    'newsletter_page': '<span class="badge nl">💌 Newsletter</span>',
+    'popup': '<span class="badge popup">✨ Popup</span>',
+  };
+
+  document.getElementById('subscriberTable').innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>E-Mail</th>
+          <th>Quelle</th>
+          <th>Datum</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${subs.map((s,i) => `
+          <tr>
+            <td>${i+1}</td>
+            <td>${s.name || '–'}</td>
+            <td>${s.email}</td>
+            <td>${badgeMap[s.source] || `<span class="badge nl">${s.source || '–'}</span>`}</td>
+            <td>${s.created_at ? new Date(s.created_at).toLocaleDateString('de-CH') : '–'}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+loadData();
+</script>
+</body>
+</html>

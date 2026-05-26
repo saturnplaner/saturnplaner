@@ -966,9 +966,29 @@
 <!-- COMING SOON BANNER -->
 <div style="position:fixed;top:0;left:0;right:0;z-index:1100;background:linear-gradient(135deg,#C87090,#9070C8);padding:8px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;">
   <span style="font-size:14px;">🪐</span>
-  <span style="font-size:13px;font-weight:800;color:white;letter-spacing:0.5px;">Saturnplaner App — <em>Coming Soon!</em> Trag dich jetzt ein und sei unter den Ersten.</span>
-  <a href="#newsletter" style="background:rgba(255,255,255,0.25);color:white;font-size:12px;font-weight:800;padding:4px 14px;border-radius:20px;text-decoration:none;margin-left:8px;white-space:nowrap;">Jetzt eintragen →</a>
+  <span style="font-size:13px;font-weight:800;color:white;letter-spacing:0.5px;">Saturnplaner App — <em>Coming Soon!</em> Sei unter den Ersten.</span>
+  <button onclick="toggleBannerPopup()" id="bannerBtn" style="background:rgba(255,255,255,0.25);color:white;font-size:12px;font-weight:800;padding:4px 14px;border-radius:20px;border:none;cursor:pointer;margin-left:8px;white-space:nowrap;">Jetzt eintragen →</button>
 </div>
+
+<!-- BANNER POST-IT POPUP -->
+<div id="bannerPopup" style="display:none;position:fixed;top:52px;left:50%;transform:translateX(-50%);z-index:1200;animation:slideDown 0.25s ease;">
+  <div style="background:white;border-radius:16px;padding:20px 24px;box-shadow:0 8px 40px rgba(100,40,60,0.25);border:1.5px solid rgba(247,197,197,0.5);min-width:300px;position:relative;">
+    <!-- kleine Spitze oben -->
+    <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:16px;height:16px;background:white;border-left:1.5px solid rgba(247,197,197,0.5);border-top:1.5px solid rgba(247,197,197,0.5);transform:translateX(-50%) rotate(45deg);"></div>
+    <button onclick="toggleBannerPopup()" style="position:absolute;top:10px;right:12px;background:rgba(247,197,197,0.3);border:none;width:26px;height:26px;border-radius:50%;font-size:13px;cursor:pointer;color:var(--text-light);">✕</button>
+    <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;">App Warteliste 🚀</div>
+    <div style="font-size:12px;color:var(--text-light);font-weight:600;margin-bottom:14px;">Nur deine E-Mail — kein Spam!</div>
+    <div style="display:flex;gap:8px;">
+      <input id="bannerEmail" type="email" placeholder="deine@email.com" style="flex:1;padding:10px 14px;border-radius:10px;border:2px solid var(--rose);background:var(--cream);font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
+      <button onclick="submitBannerEmail()" style="background:linear-gradient(135deg,#C87090,#9070C8);border:none;border-radius:10px;padding:10px 16px;color:white;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap;">✨ Rein!</button>
+    </div>
+    <div id="bannerSuccess" style="display:none;margin-top:10px;font-size:13px;font-weight:700;color:var(--accent);text-align:center;">✓ Super! Du bist auf der Liste 🌸</div>
+  </div>
+</div>
+
+<style>
+@keyframes slideDown{from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+</style>
 
 <!-- NAV -->
 <nav>
@@ -1021,7 +1041,42 @@
   </div>
 </section>
 
-<!-- FEATURES -->
+<!-- TÄGLICHE PLANETENBOTSCHAFTEN -->
+<section style="padding:80px 40px;background:linear-gradient(145deg,#FFF0F8,#F8F0FF);position:relative;overflow:hidden;" id="planetenbotschaften">
+  <div style="position:absolute;top:-80px;right:-80px;width:350px;height:350px;background:radial-gradient(circle,rgba(247,197,197,0.35),transparent);border-radius:50%;pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-60px;left:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(217,197,240,0.35),transparent);border-radius:50%;pointer-events:none;"></div>
+
+  <div class="section-label">✦ Täglich ✦</div>
+  <h2 class="section-title">Tägliche Planetenbotschaften</h2>
+  <p class="section-sub" id="indexPlanetsDate"></p>
+
+  <!-- Persönlicher Planet (auto wenn Geburtstag gespeichert) -->
+  <div id="indexPersonalPlanet" style="display:none;max-width:620px;margin:0 auto 36px;background:rgba(255,255,255,0.88);backdrop-filter:blur(10px);border:1.5px solid rgba(247,197,197,0.45);border-radius:24px;padding:20px 28px;text-align:center;box-shadow:0 6px 24px rgba(180,100,140,0.1);">
+    <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;">✦ Dein persönlicher Schutzplanet heute ✦</div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;">
+      <span id="indexPersonalEmoji" style="font-size:44px;"></span>
+      <div style="text-align:left;">
+        <div id="indexPersonalName" style="font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--text);"></div>
+        <div id="indexPersonalKeyword" style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin:2px 0;"></div>
+        <div id="indexPersonalMsg" style="font-size:13px;color:var(--text-light);font-weight:600;line-height:1.5;font-style:italic;max-width:300px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kein Geburtstag gespeichert → kleiner Hinweis -->
+  <div id="indexNoBirthday" style="max-width:480px;margin:0 auto 36px;background:rgba(255,255,255,0.7);border:1.5px dashed rgba(247,197,197,0.6);border-radius:18px;padding:16px 20px;text-align:center;">
+    <div style="font-size:13px;font-weight:700;color:var(--text-light);">🪐 <a href="planeten.html" style="color:var(--accent);font-weight:800;text-decoration:none;">Gib deinen Geburtstag ein</a> und sieh deinen Schutzplaneten hier!</div>
+  </div>
+
+  <!-- 4 Planeten Vorschau -->
+  <div id="indexPlanetsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;max-width:1100px;margin:0 auto 32px;"></div>
+
+  <div style="text-align:center;">
+    <a href="planeten.html" class="btn-primary">🌌 Alle Planeten ansehen →</a>
+  </div>
+</section>
+
+<!-- FEATURES --><br>
 <section class="features" id="features">
   <div class="section-label">✦ Themen ✦</div>
   <h2 class="section-title">Was dich erwartet</h2>
@@ -1651,10 +1706,120 @@ async function openSupabaseArticle(id) {
 
 loadBlog();
 
-// Register Service Worker
+// === BANNER POST-IT POPUP ===
+function toggleBannerPopup() {
+  const p = document.getElementById('bannerPopup');
+  p.style.display = p.style.display === 'none' ? 'block' : 'none';
+}
+async function submitBannerEmail() {
+  const email = document.getElementById('bannerEmail').value.trim();
+  if (!email || !email.includes('@')) return;
+  try {
+    await sb.from('newsletter_subscribers').upsert({ email, source: 'banner', wants_app: true });
+    // E-Mail Benachrichtigung an dich
+    await fetch('https://buowsgggbkpsssspewtk.supabase.co/functions/v1/notify', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO'},
+      body: JSON.stringify({ message: `Neue App-Anmeldung: ${email}` })
+    }).catch(()=>{});
+  } catch(e) {}
+  document.getElementById('bannerSuccess').style.display = 'block';
+  document.getElementById('bannerEmail').style.display = 'none';
+  document.querySelector('#bannerPopup button[onclick="submitBannerEmail()"]').style.display = 'none';
+  setTimeout(() => { toggleBannerPopup(); }, 2000);
+}
+document.getElementById('bannerEmail')?.addEventListener('keydown', e => { if(e.key==='Enter') submitBannerEmail(); });
+// Schliessen wenn ausserhalb geklickt
+document.addEventListener('click', function(e) {
+  const popup = document.getElementById('bannerPopup');
+  const btn = document.getElementById('bannerBtn');
+  if (popup && popup.style.display !== 'none' && !popup.contains(e.target) && e.target !== btn) {
+    popup.style.display = 'none';
+  }
+});
+
+// === TÄGLICHE PLANETENBOTSCHAFTEN (Hauptseite) ===
+(function(){
+  const now = new Date();
+  const days = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+  const months = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+  const dateStr = `${days[now.getDay()]}, ${now.getDate()}. ${months[now.getMonth()]} ${now.getFullYear()}`;
+  const el = document.getElementById('indexPlanetsDate');
+  if(el) el.textContent = 'Botschaften für ' + dateStr;
+  const dayOfYear = Math.floor((now - new Date(now.getFullYear(),0,0)) / 86400000);
+
+  const planets = [
+    {emoji:'☀️', name:'Sonne',    keyword:'Energie & Kraft',      color:'#C87090', birthMonths:[7,8],   messages:['Heute leuchtet deine innere Kraft besonders hell. Trau dich, sichtbar zu sein. 🌟','Ein guter Tag um Energie zu tanken und dir etwas Schönes zu gönnen.','Die Sonne erinnert dich: Du verdienst das Beste.']},
+    {emoji:'🌙', name:'Mond',     keyword:'Gefühle & Intuition',   color:'#9090D0', birthMonths:[6],     messages:['Höre heute auf dein Bauchgefühl — es hat recht. 🌙','Deine Gefühle sind heute nah. Das ist okay.','Gönn dir heute Ruhe. Pausen sind kein Versagen.']},
+    {emoji:'🪐', name:'Saturn',   keyword:'Struktur & Weisheit',   color:'#9070C8', birthMonths:[12,1],  messages:['Saturn erinnert dich: Kleinen Schritten vertrauen. 🪐','Ein guter Tag für Planung und Struktur.','Geduld ist heute deine grösste Kraft.']},
+    {emoji:'♀️', name:'Venus',    keyword:'Liebe & Schönheit',     color:'#D080A0', birthMonths:[4,5],   messages:['Liebe dich heute selbst so wie du andere liebst. 💕','Tu heute etwas das sich schön anfühlt.','Ein guter Tag für Gespräche von Herz zu Herz.']},
+    {emoji:'♂️', name:'Mars',     keyword:'Antrieb & Mut',         color:'#C87060', birthMonths:[3],     messages:['Mars gibt dir heute extra Energie. 🔥','Trau dich heute mutig zu sein.','Du bist stärker als du glaubst.']},
+    {emoji:'♃',  name:'Jupiter',  keyword:'Glück & Wachstum',      color:'#B08040', birthMonths:[11,2],  messages:['Jupiter bringt heute Glücksmomente. ✨','Ein guter Tag um gross zu denken.','Dankbarkeit zieht mehr Gutes an.']},
+    {emoji:'♅',  name:'Uranus',   keyword:'Freiheit & Wandel',     color:'#40A080', birthMonths:[10],    messages:['Was würdest du tun wenn du keine Angst hättest? 🌿','Deine Andersartigkeit ist deine Stärke.','Veränderung ist Raum für Neues.']},
+    {emoji:'♆',  name:'Neptun',   keyword:'Träume & Tiefe',        color:'#4080C0', birthMonths:[9],     messages:['Deine Träume sagen dir etwas. Hör hin. 🌊','Deine Sensibilität ist ein Geschenk.','Lass heute los was du nicht kontrollieren kannst.']}
+  ];
+
+  // Prüfe ob Geburtstag gespeichert
+  const saved = localStorage.getItem('sp_birthday');
+  const personalDiv = document.getElementById('indexPersonalPlanet');
+  const noBirthdayDiv = document.getElementById('indexNoBirthday');
+
+  if (saved) {
+    const birth = new Date(saved);
+    const month = birth.getMonth() + 1;
+    const found = planets.find(p => p.birthMonths.includes(month)) || planets[birth.getDate() % planets.length];
+    if (personalDiv) {
+      document.getElementById('indexPersonalEmoji').textContent = found.emoji;
+      document.getElementById('indexPersonalName').textContent = found.name;
+      document.getElementById('indexPersonalKeyword').textContent = found.keyword;
+      document.getElementById('indexPersonalMsg').textContent = found.messages[dayOfYear % found.messages.length];
+      personalDiv.style.display = 'block';
+    }
+    if (noBirthdayDiv) noBirthdayDiv.style.display = 'none';
+  } else {
+    if (personalDiv) personalDiv.style.display = 'none';
+    if (noBirthdayDiv) noBirthdayDiv.style.display = 'block';
+  }
+
+  // 4 Planet-Karten
+  const grid = document.getElementById('indexPlanetsGrid');
+  if (grid) {
+    grid.innerHTML = planets.slice(0,4).map((p,i) => {
+      const msg = p.messages[(dayOfYear + i) % p.messages.length];
+      const energy = ((dayOfYear + i*3) % 5) + 1;
+      return `<div style="background:white;border-radius:20px;padding:20px 16px;text-align:center;box-shadow:0 4px 20px rgba(180,130,130,0.12);border:1.5px solid rgba(247,197,197,0.2);position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:4px;background:${p.color};border-radius:20px 20px 0 0;"></div>
+        <div style="font-size:40px;margin-bottom:8px;">${p.emoji}</div>
+        <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:#3D2C2C;margin-bottom:3px;">${p.name}</div>
+        <div style="font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:${p.color};margin-bottom:10px;">${p.keyword}</div>
+        <div style="font-size:12px;color:#9B7E7E;font-weight:600;line-height:1.5;">${msg}</div>
+        <div style="display:inline-block;margin-top:10px;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;background:${p.color}22;color:${p.color};">${'⭐'.repeat(energy)} Energie</div>
+      </div>`;
+    }).join('');
+  }
+})();
+
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
 }
+
+// === SEITENAUFRUF TRACKEN ===
+(async function(){
+  try {
+    await sb.rpc('increment_page_view', { page_name: 'home' });
+  } catch(e) {
+    // Fallback: direkt upsert
+    try {
+      const { data } = await sb.from('page_views').select('views').eq('page','home').single();
+      if (data) {
+        await sb.from('page_views').update({ views: data.views + 1, last_visit: new Date().toISOString() }).eq('page','home');
+      } else {
+        await sb.from('page_views').insert({ page:'home', views:1 });
+      }
+    } catch(e2) {}
+  }
+})();
 
 // Community functions
 function vote(btn) {
