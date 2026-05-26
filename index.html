@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saturn Planer — Zwischen den Sternen, zu dir selbst.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #F7C5C5;
+    --peach: #FFD9B7;
+    --lavender: #D9C5F0;
+    --mint: #C5E8D5;
+    --sky: #C5DCF0;
+    --cream: #FFF8F0;
+    --sand: #F5EDE0;
+    --text: #3D2C2C;
+    --text-light: #9B7E7E;
+    --white: #FFFFFF;
+    --shadow: rgba(180,130,130,0.15);
+    --accent: #C87090;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    color: var(--text);
+    background: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    background: rgba(255,248,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(247,197,197,0.3);
+    padding: 0 40px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo-icon { font-size: 28px; }
+
+  .nav-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--text);
+  }
+
+  .nav-logo-text span {
+    display: block;
+    font-size: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 1px;
+    font-style: italic;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-light);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--rose), var(--peach));
+    color: #7A3030 !important;
+    padding: 10px 22px;
+    border-radius: 50px;
+    box-shadow: 0 4px 14px rgba(232,144,144,0.3);
+    transition: transform 0.2s, box-shadow 0.2s !important;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(232,144,144,0.4) !important;
+    color: #7A3030 !important;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 100px 40px 60px;
+    background: linear-gradient(145deg, #FFF0F8 0%, #F8F0FF 40%, #F0F8FF 70%, #F0FFF8 100%);
+  }
+
+  .hero-bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .hero-bg-orb-1 { width: 600px; height: 600px; background: #F7C5C5; top: -100px; right: -100px; }
+  .hero-bg-orb-2 { width: 500px; height: 500px; background: #D9C5F0; bottom: -100px; left: -100px; }
+  .hero-bg-orb-3 { width: 300px; height: 300px; background: #C5E8D5; top: 40%; left: 30%; }
+
+  .hero-content {
+    max-width: 700px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-planet {
+    font-size: 80px;
+    margin-bottom: 24px;
+    display: block;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+  }
+
+  .hero-tag {
+    display: inline-block;
+    background: rgba(247,197,197,0.4);
+    border: 1.5px solid var(--rose);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 50px;
+    margin-bottom: 24px;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 6vw, 72px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .hero-title .accent {
+    background: linear-gradient(135deg, #C87090, #9070C8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-motto {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--text-light);
+    margin-bottom: 40px;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #C87090, #9070C8);
+    color: white;
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 6px 24px rgba(200,112,144,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(200,112,144,0.5); }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.8);
+    color: var(--text);
+    padding: 16px 36px;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    text-decoration: none;
+    border: 2px solid var(--rose);
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover { background: var(--rose); color: #7A3030; transform: translateY(-3px); }
+
+  /* Stars decoration */
+  .star-deco {
+    position: absolute;
+    color: #C8A0C8;
+    opacity: 0.3;
+    pointer-events: none;
+    font-size: 20px;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.3); }
+  }
+
+  /* ===== FEATURES ===== */
+  .features {
+    padding: 100px 40px;
+    background: white;
+    position: relative;
+  }
+
+  .section-label {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .section-sub {
+    text-align: center;
+    font-size: 16px;
+    color: var(--text-light);
+    font-weight: 600;
+    max-width: 500px;
+    margin: 0 auto 60px;
+    line-height: 1.6;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .feature-card {
+    background: linear-gradient(145deg, var(--cream), white);
+    border-radius: 24px;
+    padding: 36px 28px;
+    border: 1.5px solid rgba(247,197,197,0.3);
+    box-shadow: 0 4px 24px var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .feature-card:nth-child(1)::before { background: linear-gradient(90deg, var(--rose), var(--peach)); }
+  .feature-card:nth-child(2)::before { background: linear-gradient(90deg, var(--lavender), var(--sky)); }
+  .feature-card:nth-child(3)::before { background: linear-gradient(90deg, var(--mint), var(--sky)); }
+  .feature-card:nth-child(4)::before { background: linear-gradient(90deg, var(--peach), var(--rose)); }
+  .feature-card:nth-child(5)::before { background: linear-gradient(90deg, var(--sky), var(--lavender)); }
+  .feature-card:nth-child(6)::before { background: linear-gradient(90deg, var(--rose), var(--lavender)); }
+
+  .feature-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px var(--shadow); }
+
+  .feature-icon { font-size: 44px; margin-bottom: 16px; display: block; }
+
+  .feature-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .feature-text {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  /* ===== APP PREVIEW ===== */
+  .app-section {
+    padding: 100px 40px;
+    background: linear-gradient(145deg, #FFF0F8, #F8F0FF);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .app-section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .app-text {}
+
+  .app-text .section-label { text-align: left; }
+  .app-text .section-title { text-align: left; }
+  .app-text .section-sub { text-align: left; margin: 0 0 32px; }
+
+  .app-features-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  .app-features-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .app-features-list li span {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .app-features-list li:nth-child(1) span { background: var(--rose); }
+  .app-features-list li:nth-child(2) span { background: var(--lavender); }
+  .app-features-list li:nth-child(3) span { background: var(--mint); }
+  .app-features-list li:nth-child(4) span { background: var(--peach); }
+  .app-features-list li:nth-child(5) span { background: var(--sky); }
+
+  .app-mockup {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  .phone-frame {
+    width: 280px;
+    background: linear-gradient(145deg, #FFF0F8, #F8F0FF);
+    border-radius: 40px;
+    padding: 20px 16px;
+    box-shadow: 0 30px 80px rgba(180,100,140,0.2), 0 0 0 2px rgba(247,197,197,0.5);
+    position: relative;
+  }
+
+  .phone-notch {
+    width: 80px; height: 8px;
+    background: rgba(180,130,180,0.2);
+    border-radius: 4px;
+    margin: 0 auto 16px;
+  }
+
+  .phone-screen {
+    background: white;
+    border-radius: 24px;
+    padding: 16px;
+    min-height: 400px;
+  }
+
+  .phone-header {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .phone-sub {
+    font-size: 9px;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .phone-hero-box {
+    background: linear-gradient(135deg, #FFE0EC, #EEE0FF);
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+
+  .phone-hero-greeting {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #4A2030;
+    margin-bottom: 6px;
+  }
+
+  .phone-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .phone-stat {
+    background: rgba(255,255,255,0.6);
+    border-radius: 8px;
+    padding: 6px 4px;
+    text-align: center;
+  }
+
+  .phone-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 900;
+    color: #4A2030;
+  }
+
+  .phone-stat-label {
+    font-size: 7px;
+    font-weight: 800;
+    color: #A06080;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .phone-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 10px;
+  }
+
+  .phone-tab {
+    flex: 1;
+    padding: 6px 4px;
+    border-radius: 8px;
+    font-size: 8px;
+    font-weight: 800;
+    text-align: center;
+    color: #A08090;
+    background: var(--sand);
+  }
+
+  .phone-tab.active {
+    background: linear-gradient(135deg, var(--rose), var(--peach));
+    color: #7A3030;
+  }
+
+  .phone-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: var(--cream);
+    border-radius: 10px;
+    margin-bottom: 6px;
+  }
+
+  .phone-item-dot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--rose);
+    flex-shrink: 0;
+  }
+
+  .phone-item-dot.done {
+    background: linear-gradient(135deg, var(--mint), #A0D9B5);
+    border-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: #2A6A4A;
+  }
+
+  .phone-item-text {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* ===== BLOG ===== */
+  .blog {
+    padding: 100px 40px;
+    background: white;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .blog-card {
+    background: var(--cream);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+    border: 1.5px solid rgba(247,197,197,0.2);
+  }
+
+  .blog-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px var(--shadow); }
+
+  .blog-card-img {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blog-card:nth-child(1) .blog-card-img { background: linear-gradient(135deg, #FFE0EC, #FFD0C0); }
+  .blog-card:nth-child(2) .blog-card-img { background: linear-gradient(135deg, #E0D0FF, #C0D8FF); }
+  .blog-card:nth-child(3) .blog-card-img { background: linear-gradient(135deg, #C0F0D8, #C0E8FF); }
+
+  .blog-card-body { padding: 24px; }
+
+  .blog-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(247,197,197,0.3);
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  .blog-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .blog-excerpt {
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .blog-read {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  /* ===== INSTAGRAM ===== */
+  .instagram {
+    padding: 100px 40px;
+    background: linear-gradient(145deg, #FFF0F8, #F8F0FF);
+    text-align: center;
+  }
+
+  .insta-handle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #C87090, #9070C8);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 800;
+    text-decoration: none;
+    margin-bottom: 48px;
+    box-shadow: 0 6px 24px rgba(200,112,144,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .insta-handle:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(200,112,144,0.4); }
+
+  .insta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-width: 700px;
+    margin: 0 auto 40px;
+  }
+
+  .insta-placeholder {
+    aspect-ratio: 1;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+    cursor: pointer;
+  }
+
+  .insta-placeholder:hover { transform: scale(1.05); }
+  .insta-placeholder:nth-child(1) { background: linear-gradient(135deg, #FFE0EC, #FFD0C0); }
+  .insta-placeholder:nth-child(2) { background: linear-gradient(135deg, #E0D0FF, #C0D8FF); }
+  .insta-placeholder:nth-child(3) { background: linear-gradient(135deg, #C0F0D8, #C0E8FF); }
+  .insta-placeholder:nth-child(4) { background: linear-gradient(135deg, #FFE8C0, #FFD0C0); }
+  .insta-placeholder:nth-child(5) { background: linear-gradient(135deg, #D0C0FF, #C0D8FF); }
+  .insta-placeholder:nth-child(6) { background: linear-gradient(135deg, #C0F0D8, #D0F0C0); }
+  .insta-placeholder:nth-child(7) { background: linear-gradient(135deg, #FFE0EC, #E0D0FF); }
+  .insta-placeholder:nth-child(8) { background: linear-gradient(135deg, #C0E8FF, #C0F0D8); }
+
+  /* ===== ÜBER MICH ===== */
+  .about {
+    padding: 100px 40px;
+    background: white;
+  }
+
+  .about-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .about-visual {
+    background: linear-gradient(145deg, #FFF0F8, #F8F0FF);
+    border-radius: 32px;
+    padding: 48px;
+    text-align: center;
+    box-shadow: 0 8px 40px var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-planet { font-size: 100px; display: block; margin-bottom: 16px; }
+
+  .about-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .about-role {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .about-text .section-label { text-align: left; }
+  .about-text .section-title { text-align: left; font-size: 32px; }
+
+  .about-desc {
+    font-size: 15px;
+    color: var(--text-light);
+    font-weight: 600;
+    line-height: 1.8;
+    margin: 16px 0 28px;
+  }
+
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .about-tag {
+    background: var(--cream);
+    border: 1.5px solid var(--rose);
+    color: var(--accent);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  /* ===== NEWSLETTER ===== */
+  .newsletter {
+    padding: 80px 40px;
+    background: linear-gradient(135deg, #C87090, #9070C8);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .newsletter::before {
+    content: '🪐';
+    position: absolute;
+    font-size: 300px;
+    opacity: 0.06;
+    top: -80px; right: -60px;
+    pointer-events: none;
+  }
+
+  .newsletter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 900;
+    color: white;
+    margin-bottom: 12px;
+  }
+
+  .newsletter-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 600;
+    margin-bottom: 36px;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    max-width: 500px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+  }
+
+  .newsletter-input {
+    flex: 1;
+    min-width: 260px;
+    padding: 16px 24px;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    outline: none;
+    background: rgba(255,255,255,0.95);
+    color: var(--text);
+  }
+
+  .newsletter-btn {
+    padding: 16px 28px;
+    border-radius: 50px;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .newsletter-btn:hover { background: white; color: var(--accent); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #1a1a2e;
+    padding: 60px 40px 30px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .footer-brand {}
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .footer-logo-icon { font-size: 28px; }
+
+  .footer-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: white;
+  }
+
+  .footer-motto {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 20px;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 12px;
+  }
+
+  .footer-social a {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .footer-social a:hover { background: rgba(247,197,197,0.3); }
+
+  .footer-col h4 {
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 16px;
+  }
+
+  .footer-col ul { list-style: none; }
+
+  .footer-col ul li {
+    margin-bottom: 10px;
+  }
+
+  .footer-col ul li a {
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    transition: color 0.2s;
+  }
+
+  .footer-col ul li a:hover { color: var(--rose); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    font-weight: 600;
+  }
+
+  .footer-bottom-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-bottom-links a {
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+
+  .footer-bottom-links a:hover { color: var(--rose); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    .features { padding: 60px 20px; }
+    .app-section-inner { grid-template-columns: 1fr; }
+    .about-inner { grid-template-columns: 1fr; }
+    .insta-grid { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .blog { padding: 60px 20px; }
+    .instagram { padding: 60px 20px; }
+    .about { padding: 60px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-icon">🪐</span>
+    <div class="nav-logo-text">
+      Saturn Planer
+      <span>Zwischen den Sternen — zu dir selbst.</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#app">Die App</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#about">Über uns</a></li>
+    <li><a href="#app" class="nav-cta">App starten ✨</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-orb hero-bg-orb-1"></div>
+  <div class="hero-bg-orb hero-bg-orb-2"></div>
+  <div class="hero-bg-orb hero-bg-orb-3"></div>
+
+  <div class="star-deco" style="top:15%;left:8%;animation-delay:0s">✦</div>
+  <div class="star-deco" style="top:25%;right:10%;animation-delay:1s">✧</div>
+  <div class="star-deco" style="bottom:30%;left:12%;animation-delay:2s">✦</div>
+  <div class="star-deco" style="bottom:20%;right:8%;animation-delay:0.5s">✧</div>
+  <div class="star-deco" style="top:60%;left:5%;animation-delay:1.5s">✦</div>
+
+  <div class="hero-content">
+    <span class="hero-planet">🪐</span>
+    <div class="hero-tag">✦ Dein persönlicher Planer ✦</div>
+    <h1 class="hero-title">
+      Plane dein Leben.<br>
+      <span class="accent">Finde dich selbst.</span>
+    </h1>
+    <p class="hero-motto">Zwischen den Sternen — zu dir selbst.</p>
+    <div class="hero-btns">
+      <a href="#app" class="btn-primary">🪐 App starten</a>
+      <a href="#features" class="btn-secondary">Mehr entdecken ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <div class="section-label">✦ Was dich erwartet ✦</div>
+  <h2 class="section-title">Alles was du brauchst</h2>
+  <p class="section-sub">Saturn Planer vereint Planung, Selfcare und Selbstfindung in einem — für alle Menschen.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">📅</span>
+      <div class="feature-title">Tägliche Routine</div>
+      <p class="feature-text">Täglich, wöchentlich, monatlich — deine Aufgaben strukturiert und übersichtlich. Mit Fortschrittsanzeige und Motivation.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🎯</span>
+      <div class="feature-title">Ziele & Bucket Lists</div>
+      <p class="feature-text">Setze dir Monatsziele, erstelle Bucket Lists und hake ab was du erreicht hast — visuell und motivierend.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🔄</span>
+      <div class="feature-title">Habit Tracker</div>
+      <p class="feature-text">Verfolge deine täglichen Gewohnheiten mit einem Wochenüberblick und Streak-Zähler. Kleine Schritte, grosse Wirkung.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">💫</span>
+      <div class="feature-title">Positive Sprüche</div>
+      <p class="feature-text">Tägliche Motivation die dich begleitet — eigene Sprüche speichern, Favoriten markieren und täglich neue Energie tanken.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🧵</span>
+      <div class="feature-title">Kreativ-Planer</div>
+      <p class="feature-text">Plane deine kreativen Projekte mit Schritt-für-Schritt Fortschritt — ob Nähen, Malen oder andere Hobbys.</p>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">🌸</span>
+      <div class="feature-title">Selfcare & Mental Health</div>
+      <p class="feature-text">Sanfte Tipps für ADHS, Angst und schwere Tage — für alle Menschen, die sich selbst besser kennenlernen wollen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- APP PREVIEW -->
+<section class="app-section" id="app">
+  <div class="app-section-inner">
+    <div class="app-text">
+      <div class="section-label">✦ Die App ✦</div>
+      <h2 class="section-title">Dein persönlicher Planer</h2>
+      <p class="section-sub">Kostenlos, persönlich, für dich gemacht. Jede Person hat ihr eigenes Konto — deine Daten, deine Ziele, dein Rhythmus.</p>
+      <ul class="app-features-list">
+        <li><span>☀️</span> Tagesstart mit Motivation & Überblick</li>
+        <li><span>📋</span> Routine für jeden Zeitraum</li>
+        <li><span>🎯</span> Persönliche Ziele & Bucket Lists</li>
+        <li><span>🔄</span> Habit Tracker mit Streak</li>
+        <li><span>💫</span> Sprüche die dich inspirieren</li>
+      </ul>
+      <a href="#" class="btn-primary">Jetzt kostenlos starten 🪐</a>
+    </div>
+    <div class="app-mockup">
+      <div class="phone-frame">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="phone-header">Grenda's Space</div>
+          <div class="phone-sub">🪐 Saturn Planer</div>
+          <div class="phone-tabs">
+            <div class="phone-tab active">📅 Routine</div>
+            <div class="phone-tab">🔄 Habits</div>
+            <div class="phone-tab">🎯 Ziele</div>
+          </div>
+          <div class="phone-hero-box">
+            <div class="phone-hero-greeting">Guten Morgen! ☀️</div>
+            <div class="phone-stats">
+              <div class="phone-stat">
+                <div class="phone-stat-num">3/6</div>
+                <div class="phone-stat-label">Heute</div>
+              </div>
+              <div class="phone-stat">
+                <div class="phone-stat-num">4</div>
+                <div class="phone-stat-label">Habits</div>
+              </div>
+              <div class="phone-stat">
+                <div class="phone-stat-num">8/12</div>
+                <div class="phone-stat-label">Ziele</div>
+              </div>
+            </div>
+          </div>
+          <div class="phone-item">
+            <div class="phone-item-dot done">✓</div>
+            <div class="phone-item-text">Gesicht waschen & eincremen</div>
+          </div>
+          <div class="phone-item">
+            <div class="phone-item-dot done">✓</div>
+            <div class="phone-item-text">2L Wasser trinken</div>
+          </div>
+          <div class="phone-item">
+            <div class="phone-item-dot done">✓</div>
+            <div class="phone-item-text">Bett machen</div>
+          </div>
+          <div class="phone-item">
+            <div class="phone-item-dot"></div>
+            <div class="phone-item-text">10 Min. spazieren gehen</div>
+          </div>
+          <div class="phone-item">
+            <div class="phone-item-dot"></div>
+            <div class="phone-item-text">To-Do Liste schreiben</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section class="blog" id="blog">
+  <div class="section-label">✦ Blog ✦</div>
+  <h2 class="section-title">Inspiration & Tipps</h2>
+  <p class="section-sub">Lifestyle, Selbstfindung, App-Updates — für alle die sich selbst besser kennenlernen wollen.</p>
+
+  <div class="blog-grid">
+    <div class="blog-card" onclick="openArticle(0)" style="cursor:pointer">
+      <div class="blog-card-img">🌸</div>
+      <div class="blog-card-body">
+        <span class="blog-tag">Selfcare</span>
+        <div class="blog-title">5 sanfte Tipps wenn alles zu viel wird</div>
+        <p class="blog-excerpt">Manchmal ist der Tag einfach zu gross. Diese kleinen Rituale helfen dir, wieder bei dir anzukommen...</p>
+        <div class="blog-read">Weiterlesen →</div>
+      </div>
+    </div>
+    <div class="blog-card" onclick="openArticle(1)" style="cursor:pointer">
+      <div class="blog-card-img">🪐</div>
+      <div class="blog-card-body">
+        <span class="blog-tag">Planung</span>
+        <div class="blog-title">Wie ich meine Monatsroutine aufgebaut habe</div>
+        <p class="blog-excerpt">Von chaotisch zu strukturiert — mein Weg zu einer Routine die sich nicht wie Zwang anfühlt...</p>
+        <div class="blog-read">Weiterlesen →</div>
+      </div>
+    </div>
+    <div class="blog-card" onclick="openArticle(2)" style="cursor:pointer">
+      <div class="blog-card-img">🧠</div>
+      <div class="blog-card-body">
+        <span class="blog-tag">Mental Health</span>
+        <div class="blog-title">ADHS im Alltag — kleine Helfer die wirklich wirken</div>
+        <p class="blog-excerpt">Leben mit ADHS bedeutet nicht, immer hinterherzuhinken. Diese Strategien machen den Unterschied...</p>
+        <div class="blog-read">Weiterlesen →</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTAGRAM -->
+<section class="instagram" id="instagram">
+  <div class="section-label">✦ Folge uns ✦</div>
+  <h2 class="section-title">@saturnplaner</h2>
+  <p class="section-sub" style="margin:0 auto 32px">Täglich Inspiration, Tipps & Motivation auf Instagram 🌸</p>
+
+  <a href="https://instagram.com/saturnplaner" target="_blank" class="insta-handle">
+    📸 @saturnplaner folgen
+  </a>
+
+  <div class="insta-grid">
+    <div class="insta-placeholder">🌸</div>
+    <div class="insta-placeholder">🪐</div>
+    <div class="insta-placeholder">✨</div>
+    <div class="insta-placeholder">🌿</div>
+    <div class="insta-placeholder">💫</div>
+    <div class="insta-placeholder">🌙</div>
+    <div class="insta-placeholder">🎯</div>
+    <div class="insta-placeholder">🦋</div>
+  </div>
+
+  <p style="font-size:13px;color:var(--text-light);font-weight:600;">Klicke auf den Button um uns auf Instagram zu folgen ↑</p>
+</section>
+
+<!-- ÜBER UNS -->
+<section class="about" id="about">
+  <div class="about-inner">
+    <div class="about-visual">
+      <span class="about-planet">🪐</span>
+      <div class="about-name">Saturn Planer</div>
+      <div class="about-role">✦ Zwischen den Sternen ✦</div>
+    </div>
+    <div class="about-text">
+      <div class="section-label">✦ Über uns ✦</div>
+      <h2 class="section-title">Was ist Saturn Planer?</h2>
+      <p class="about-desc">Saturn Planer ist eine persönliche Planungs- und Selfcare-Plattform für alle Menschen die sich selbst besser kennenlernen wollen — egal ob mit ADHS, sozialer Angst, Depression oder einfach dem Wunsch nach mehr Struktur und Positivity im Alltag.</p>
+      <p class="about-desc">Unsere Mission: Planung soll sich nicht wie Zwang anfühlen. Selfcare soll zugänglich sein. Selbstfindung soll Spass machen.</p>
+      <div class="about-tags">
+        <span class="about-tag">🪐 Planung</span>
+        <span class="about-tag">🌸 Selfcare</span>
+        <span class="about-tag">🧠 Mental Health</span>
+        <span class="about-tag">💫 Motivation</span>
+        <span class="about-tag">🦋 Selbstfindung</span>
+        <span class="about-tag">🌿 Lifestyle</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <h2 class="newsletter-title">Bleib in der Umlaufbahn 🪐</h2>
+  <p class="newsletter-sub">Erhalte wöchentlich Inspiration, Tipps & Updates direkt in dein Postfach.</p>
+  <div class="newsletter-form">
+    <input type="email" class="newsletter-input" placeholder="deine@email.com" />
+    <button class="newsletter-btn">Anmelden ✨</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="footer-logo-icon">🪐</span>
+          <span class="footer-logo-text">Saturn Planer</span>
+        </div>
+        <div class="footer-motto">Zwischen den Sternen — zu dir selbst.</div>
+        <div class="footer-social">
+          <a href="https://instagram.com/saturnplaner" target="_blank">📸</a>
+          <a href="#">💌</a>
+          <a href="#">🌐</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#app">Die App</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#about">Über uns</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Rechtliches</h4>
+        <ul>
+          <li><a href="#">Datenschutz</a></li>
+          <li><a href="#">Impressum</a></li>
+          <li><a href="#">AGB</a></li>
+          <li><a href="#">Kontakt</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Saturn Planer — saturnplaner.ch</div>
+      <div class="footer-bottom-links">
+        <a href="#">Datenschutz</a>
+        <a href="#">Impressum</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- BLOG MODAL -->
+<div class="blog-modal-overlay" id="blogModal" onclick="closeBlogModal(event)">
+  <div class="blog-modal">
+    <button class="blog-modal-close" onclick="closeArticle()">✕</button>
+    <div class="blog-modal-img" id="modalImg"></div>
+    <div class="blog-modal-body">
+      <span class="blog-tag" id="modalTag"></span>
+      <h2 class="blog-modal-title" id="modalTitle"></h2>
+      <div class="blog-modal-meta" id="modalMeta"></div>
+      <div class="blog-modal-content" id="modalContent"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .blog-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(60,30,30,0.4);
+    backdrop-filter: blur(6px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .blog-modal-overlay.open { display: flex; }
+
+  .blog-modal {
+    background: var(--cream);
+    border-radius: 28px;
+    max-width: 680px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.3s ease;
+    box-shadow: 0 30px 80px rgba(100,40,60,0.25);
+  }
+
+  .blog-modal-close {
+    position: sticky;
+    top: 16px;
+    float: right;
+    margin: 16px 16px 0 0;
+    background: rgba(255,255,255,0.9);
+    border: none;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--text-light);
+    z-index: 10;
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: all 0.2s;
+  }
+
+  .blog-modal-close:hover { background: var(--rose); color: #7A3030; }
+
+  .blog-modal-img {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    border-radius: 28px 28px 0 0;
+  }
+
+  .blog-modal-body { padding: 28px 36px 40px; }
+
+  .blog-modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--text);
+    margin: 12px 0 8px;
+    line-height: 1.3;
+  }
+
+  .blog-modal-meta {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1.5px solid rgba(247,197,197,0.4);
+  }
+
+  .blog-modal-content {
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 600;
+    line-height: 1.9;
+  }
+
+  .blog-modal-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 24px 0 10px;
+  }
+
+  .blog-modal-content p { margin-bottom: 16px; }
+
+  .blog-modal-content .tip {
+    background: linear-gradient(135deg, rgba(247,197,197,0.2), rgba(217,197,240,0.2));
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-style: italic;
+  }
+
+  .blog-modal-content ul {
+    padding-left: 20px;
+    margin-bottom: 16px;
+  }
+
+  .blog-modal-content ul li { margin-bottom: 8px; }
+</style>
+
+<script>
+const articles = [
+  {
+    emoji: '🌸',
+    tag: 'Selfcare',
+    title: '5 sanfte Tipps wenn alles zu viel wird',
+    meta: '🪐 Saturn Planer · Selfcare · Mai 2026 · 4 Min. lesen',
+    bg: 'linear-gradient(135deg, #FFE0EC, #FFD0C0)',
+    content: `
+      <p>Manchmal ist der Tag einfach zu gross. Alles stapelt sich, der Kopf dreht sich, und irgendwie fühlt sich selbst die kleinste Aufgabe wie ein Berg an. Das kennen wir alle — und du bist damit nicht allein.</p>
+      <p>Hier sind 5 sanfte Rituale die helfen, wieder bei dir anzukommen:</p>
+
+      <h3>1. 🫁 Atme zuerst</h3>
+      <p>Bevor du irgendetwas tust — atme. Vier Sekunden ein, vier Sekunden halten, sechs Sekunden aus. Wiederhole das dreimal. Dein Nervensystem hört zu.</p>
+      <div class="tip">"Du musst nicht alles auf einmal lösen. Du musst nur jetzt atmen."</div>
+
+      <h3>2. 🌿 Raus an die Luft — auch kurz</h3>
+      <p>Fünf Minuten draussen reichen. Kein Spaziergang nötig, einfach stehen, den Himmel anschauen, frische Luft einatmen. Das Gehirn braucht manchmal nur einen Reset.</p>
+
+      <h3>3. 💧 Ein Glas Wasser trinken</h3>
+      <p>Klingt simpel — ist aber oft das erste was wir vergessen wenn wir gestresst sind. Wasser trinken ist ein kleiner Liebesakt an deinen Körper.</p>
+
+      <h3>4. 📋 Alles aufschreiben</h3>
+      <p>Nicht um es zu lösen — nur um es aus dem Kopf zu bekommen. Schreib alles auf was dich beschäftigt. Papier kann es tragen, dein Kopf muss es nicht alleine.</p>
+
+      <h3>5. 🌸 Eine Sache — nur eine</h3>
+      <p>Wähle eine einzige kleine Aufgabe und erledige nur die. Nicht die ganze Liste. Nur eine. Das gibt dir das Gefühl von Kontrolle zurück.</p>
+
+      <div class="tip">"Es ist okay nicht okay zu sein. Und es ist okay, sich Hilfe zu holen — auch bei kleinen Dingen."</div>
+
+      <p>Du schaffst das — Schritt für Schritt, sanft und mit dir selbst. 🌸</p>
+    `
+  },
+  {
+    emoji: '🪐',
+    tag: 'Planung',
+    title: 'Wie ich meine Monatsroutine aufgebaut habe',
+    meta: '🪐 Saturn Planer · Planung · Mai 2026 · 5 Min. lesen',
+    bg: 'linear-gradient(135deg, #E0D0FF, #C0D8FF)',
+    content: `
+      <p>Routine klingt für viele nach Zwang, Langeweile oder zu viel Disziplin. Aber was wenn Routine das Gegenteil sein kann — Freiheit, Sicherheit, Leichtigkeit?</p>
+      <p>Ich habe lange gebraucht um das zu verstehen. Hier ist was mir geholfen hat:</p>
+
+      <h3>🌅 Morgendliche Anker</h3>
+      <p>Ich starte nicht mit einer langen To-Do Liste. Ich starte mit 3 festen "Ankern" — Dinge die immer gleich sind und meinen Tag einleiten. Gesicht waschen, Wasser trinken, 5 Minuten draussen.</p>
+      <div class="tip">"Eine Routine braucht keine 20 Punkte. Drei Dinge die täglich passieren reichen um Struktur zu schaffen."</div>
+
+      <h3>📅 Wöchentlicher Reset</h3>
+      <p>Jeden Sonntagabend nehme ich mir 15 Minuten. Ich schaue was letzte Woche gut lief, was ich mitnehmen möchte und setze mir 3 Ziele für die neue Woche. Nicht mehr.</p>
+
+      <h3>🌙 Abend-Ritual</h3>
+      <p>Das Handy weg, eine Kerze an, kurz aufschreiben was heute schön war. Drei Dinge. Auch an schweren Tagen findet man mindestens eines.</p>
+
+      <h3>💡 Was ich gelernt habe</h3>
+      <ul>
+        <li>Flexibilität ist Teil der Routine — nicht ihr Feind</li>
+        <li>Kleine Rituale wirken mehr als grosse Pläne</li>
+        <li>Routine ist Selbstfürsorge, keine Selbstdisziplin</li>
+        <li>Die Saturn Planer App hilft mir täglich den Überblick zu behalten</li>
+      </ul>
+
+      <p>Fang klein an. Und sei sanft mit dir wenn ein Tag anders läuft als geplant. Das gehört dazu. 🪐</p>
+    `
+  },
+  {
+    emoji: '🧠',
+    tag: 'Mental Health',
+    title: 'ADHS im Alltag — kleine Helfer die wirklich wirken',
+    meta: '🪐 Saturn Planer · Mental Health · Mai 2026 · 6 Min. lesen',
+    bg: 'linear-gradient(135deg, #C0F0D8, #C0E8FF)',
+    content: `
+      <p>Leben mit ADHS bedeutet nicht, immer hinterherzuhinken. Es bedeutet, dass dein Gehirn anders funktioniert — und das ist weder gut noch schlecht, es ist einfach so.</p>
+      <p>Aber ja — der Alltag kann manchmal herausfordernd sein. Diese kleinen Strategien helfen wirklich:</p>
+
+      <h3>⏰ Body Doubling</h3>
+      <p>Arbeitest du besser wenn jemand dabei ist? Das ist kein Zufall — das nennt sich "Body Doubling" und ist bei ADHS sehr verbreitet. Arbeite in Cafés, mit Freunden, oder in virtuellen Arbeitsräumen.</p>
+      <div class="tip">"Du brauchst keine Stille um konzentriert zu sein. Du brauchst die richtige Umgebung für dein Gehirn."</div>
+
+      <h3>🎯 Eine Aufgabe — sichtbar</h3>
+      <p>Schreib die wichtigste Aufgabe des Tages auf einen Post-it und klebe ihn vor dich hin. Nur eine. Der Rest existiert nicht.</p>
+
+      <h3>⏱️ Pomodoro angepasst</h3>
+      <p>25 Minuten Arbeit, 5 Minuten Pause — aber angepasst. Manche brauchen 15/10, andere 45/15. Experimentiere was für dich stimmt.</p>
+
+      <h3>🌈 Reize bewusst einsetzen</h3>
+      <ul>
+        <li>Musik oder Brown Noise beim Arbeiten</li>
+        <li>Bewegung vor schwierigen Aufgaben</li>
+        <li>Belohnungen einplanen — wirklich!</li>
+        <li>Farben und visuelle Strukturen nutzen</li>
+      </ul>
+
+      <h3>📱 Die Saturn Planer App als Helfer</h3>
+      <p>Die App wurde mit Menschen im Hinterkopf entwickelt, die Struktur brauchen aber keine starre Liste wollen. Tägliche Routinen, Habit Tracker und positive Sprüche — alles an einem Ort.</p>
+
+      <div class="tip">"ADHS ist kein Defizit. Es ist ein anderer Modus. Finde deine Bedienungsanleitung."</div>
+
+      <p>Du bist nicht kaputt. Du bist anders — und das ist mehr als genug. 🧠💫</p>
+    `
+  }
+];
+
+function openArticle(index) {
+  const a = articles[index];
+  document.getElementById('modalImg').style.background = a.bg;
+  document.getElementById('modalImg').textContent = a.emoji;
+  document.getElementById('modalTag').textContent = a.tag;
+  document.getElementById('modalTitle').textContent = a.title;
+  document.getElementById('modalMeta').textContent = a.meta;
+  document.getElementById('modalContent').innerHTML = a.content;
+  const modal = document.getElementById('blogModal');
+  modal.classList.add('open');
+  modal.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeArticle() {
+  document.getElementById('blogModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeBlogModal(e) {
+  if (e.target === document.getElementById('blogModal')) closeArticle();
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArticle(); });
+</script>
+
+</body>
+</html>
