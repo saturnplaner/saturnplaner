@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFF0F8"/>
+      <stop offset="100%" style="stop-color:#F0E8FF"/>
+    </linearGradient>
+    <linearGradient id="planet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8A0C0"/>
+      <stop offset="100%" style="stop-color:#C87090"/>
+    </linearGradient>
+    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D9C5F0"/>
+      <stop offset="100%" style="stop-color:#C5A0E0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded rect -->
+  <rect width="512" height="512" rx="112" ry="112" fill="url(#bg)"/>
+
+  <!-- Saturn ring back -->
+  <ellipse cx="256" cy="256" rx="180" ry="40" fill="none" stroke="url(#ring)" stroke-width="22" opacity="0.5"/>
+
+  <!-- Saturn planet -->
+  <circle cx="256" cy="256" r="110" fill="url(#planet)"/>
+
+  <!-- Planet highlight -->
+  <circle cx="220" cy="218" r="36" fill="rgba(255,255,255,0.25)"/>
+
+  <!-- Saturn ring front -->
+  <ellipse cx="256" cy="256" rx="180" ry="40" fill="none" stroke="url(#ring)" stroke-width="22"
+    stroke-dasharray="300 600" stroke-dashoffset="-60"/>
+
+  <!-- Small stars -->
+  <text x="100" y="140" font-size="32" fill="#D9C5F0" opacity="0.7">✦</text>
+  <text x="360" y="110" font-size="22" fill="#F7C5C5" opacity="0.7">✧</text>
+  <text x="390" y="400" font-size="28" fill="#D9C5F0" opacity="0.6">✦</text>
+  <text x="80" y="390" font-size="18" fill="#F7C5C5" opacity="0.6">✧</text>
+</svg>
