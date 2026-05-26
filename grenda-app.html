@@ -1107,6 +1107,100 @@
     color: #A07080;
   }
 
+  /* ===== PROFIL ===== */
+  .profil-card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 28px 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+
+  .profil-avatar {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--rose), var(--lavender));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    margin: 0 auto 16px;
+  }
+
+  .profil-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .profil-email {
+    font-size: 13px;
+    color: var(--text-light);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .profil-form { display: flex; flex-direction: column; gap: 12px; }
+
+  .profil-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 4px;
+    display: block;
+  }
+
+  .profil-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--rose);
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    background: var(--cream);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .profil-input:focus { border-color: #E89090; }
+
+  .profil-save {
+    background: linear-gradient(135deg, var(--rose), var(--peach));
+    border: none;
+    border-radius: 14px;
+    padding: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    color: #7A3030;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(232,144,144,0.3);
+  }
+
+  .profil-save:hover { transform: translateY(-2px); }
+
+  .profil-msg {
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    display: none;
+  }
+
+  .profil-msg.ok { background: var(--mint); color: #2A6A4A; display: block; }
+  .profil-msg.err { background: var(--rose); color: #7A2A2A; display: block; }
+
   /* FLOATING DECORATION */
   .deco {
     position: absolute;
@@ -1180,6 +1274,9 @@
     </button>
     <button class="tab-btn" onclick="showTab('ziele')">
       <span class="tab-icon">🎯</span>Ziele
+    </button>
+    <button class="tab-btn" onclick="showTab('profil')">
+      <span class="tab-icon">👤</span>Profil
     </button>
   </div>
 </div>
@@ -1337,6 +1434,38 @@
   </div>
 </div>
 
+<!-- ===== PROFIL TAB ===== -->
+<div class="tab-panel" id="tab-profil" style="display:none;padding:20px 16px 100px;">
+  <div class="profil-card">
+    <div class="profil-avatar">🪐</div>
+    <div class="profil-name" id="profil-name-display">Mein Profil</div>
+    <div class="profil-email" id="profil-email-display"></div>
+    <div class="profil-msg" id="profil-msg"></div>
+    <div class="profil-form">
+      <div>
+        <label class="profil-label">Vorname</label>
+        <input class="profil-input" id="profil-firstname" type="text" placeholder="Dein Vorname" />
+      </div>
+      <div>
+        <label class="profil-label">Nachname</label>
+        <input class="profil-input" id="profil-lastname" type="text" placeholder="Dein Nachname" />
+      </div>
+      <div>
+        <label class="profil-label">Geburtsdatum</label>
+        <input class="profil-input" id="profil-birthday" type="date" />
+      </div>
+      <div>
+        <label class="profil-label">Alter</label>
+        <input class="profil-input" id="profil-age" type="number" placeholder="Dein Alter" min="13" max="120" />
+      </div>
+      <button class="profil-save" onclick="saveProfil()">✓ Profil speichern</button>
+    </div>
+  </div>
+  <div class="profil-card" style="text-align:center">
+    <button onclick="logout()" style="background:none;border:2px solid var(--rose);border-radius:14px;padding:12px 24px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;color:#C87090;cursor:pointer;width:100%">↩ Ausloggen</button>
+  </div>
+</div>
+
 <!-- Goal Modal -->
 <div class="modal-overlay" id="goal-modal">
   <div class="modal">
@@ -1438,6 +1567,7 @@ function showTab(name) {
   if (name === 'naeh') renderNaeh();
   if (name === 'sprueche') renderSprueche();
   if (name === 'routine') { renderTagesstart(); renderRoutine(); }
+  if (name === 'profil') renderProfil();
 }
 
 // ===== GREETING =====
@@ -2011,6 +2141,70 @@ function renderTagesstart(userName) {
       </div>
     </div>
   `;
+}
+
+// ===== PROFIL =====
+function renderProfil() {
+  const tab = document.getElementById('tab-profil');
+  if (tab) tab.style.display = 'block';
+  try {
+    const { createClient } = window.supabase;
+    const sb = createClient(
+      'https://buowsgggbkpsssspewtk.supabase.co',
+      'sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO'
+    );
+    sb.auth.getSession().then(({ data: { session } }) => {
+      if (!session) return;
+      const meta = session.user.user_metadata || {};
+      document.getElementById('profil-email-display').textContent = session.user.email;
+      const fn = meta.first_name || '';
+      const ln = meta.last_name || '';
+      document.getElementById('profil-name-display').textContent = fn ? fn + ' ' + ln : 'Mein Profil';
+      document.getElementById('profil-firstname').value = fn;
+      document.getElementById('profil-lastname').value = ln;
+      document.getElementById('profil-age').value = meta.age || '';
+      if (meta.birthday) document.getElementById('profil-birthday').value = meta.birthday;
+    });
+  } catch(e) {}
+}
+
+async function saveProfil() {
+  const firstName = document.getElementById('profil-firstname').value.trim();
+  const lastName = document.getElementById('profil-lastname').value.trim();
+  const age = document.getElementById('profil-age').value.trim();
+  const birthday = document.getElementById('profil-birthday').value;
+  const msg = document.getElementById('profil-msg');
+
+  try {
+    const { createClient } = window.supabase;
+    const sb = createClient(
+      'https://buowsgggbkpsssspewtk.supabase.co',
+      'sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO'
+    );
+    const { error } = await sb.auth.updateUser({
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+        full_name: firstName + ' ' + lastName,
+        age: age,
+        birthday: birthday
+      }
+    });
+    if (error) {
+      msg.textContent = 'Fehler beim Speichern.';
+      msg.className = 'profil-msg err';
+    } else {
+      msg.textContent = '✓ Profil gespeichert! 🌸';
+      msg.className = 'profil-msg ok';
+      window._currentUserName = firstName;
+      document.getElementById('profil-name-display').textContent = firstName + ' ' + lastName;
+      document.getElementById('app-user-title').textContent = firstName + "'s Space";
+      setTimeout(() => msg.className = 'profil-msg', 3000);
+    }
+  } catch(e) {
+    msg.textContent = 'Fehler: ' + e.message;
+    msg.className = 'profil-msg err';
+  }
 }
 
 // ===== INIT =====

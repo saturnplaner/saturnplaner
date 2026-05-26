@@ -998,8 +998,12 @@
     <p class="hero-motto">Zwischen den Sternen — zu dir selbst.</p>
     <div class="hero-btns">
       <a href="login.html" class="btn-primary">🪐 App starten</a>
-      <a href="#features" class="btn-secondary">Mehr entdecken ↓</a>
+      <button class="btn-secondary" id="installBtn" onclick="installApp()" style="display:none">📲 App installieren</button>
+      <a href="#features" class="btn-secondary" id="discoverBtn">Mehr entdecken ↓</a>
     </div>
+    <p id="installHint" style="margin-top:16px;font-size:13px;color:var(--text-light);font-weight:600;display:none">
+      📱 iPhone: Teilen ↑ → "Zum Home-Bildschirm"
+    </p>
   </div>
 </section>
 
@@ -1578,6 +1582,38 @@ loadBlog();
 // Register Service Worker
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
+}
+
+// PWA Install
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installBtn').style.display = 'inline-flex';
+  document.getElementById('discoverBtn').style.display = 'none';
+});
+
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+      deferredPrompt = null;
+      document.getElementById('installBtn').style.display = 'none';
+      document.getElementById('discoverBtn').style.display = 'inline-flex';
+    });
+  } else {
+    // iOS fallback
+    document.getElementById('installHint').style.display = 'block';
+    document.getElementById('installBtn').style.display = 'none';
+  }
+}
+
+// Show hint for iOS
+const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+if (isIOS && !isStandalone) {
+  document.getElementById('installBtn').style.display = 'inline-flex';
+  document.getElementById('discoverBtn').style.display = 'none';
 }
 </script>
 
