@@ -33,9 +33,9 @@
 
   html { scroll-behavior: smooth; }
 
-  /* Offset for sticky nav */
+  /* Offset for sticky nav + banner */
   section[id], div[id] {
-    scroll-margin-top: 80px;
+    scroll-margin-top: 116px;
   }
 
   body {
@@ -48,7 +48,7 @@
   /* ===== NAV ===== */
   nav {
     position: fixed;
-    top: 0; left: 0; right: 0;
+    top: 36px; left: 0; right: 0;
     z-index: 1000;
     background: rgba(255,248,240,0.92);
     backdrop-filter: blur(12px);
@@ -963,6 +963,13 @@
 </head>
 <body>
 
+<!-- COMING SOON BANNER -->
+<div style="position:fixed;top:0;left:0;right:0;z-index:1100;background:linear-gradient(135deg,#C87090,#9070C8);padding:8px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;">
+  <span style="font-size:14px;">🪐</span>
+  <span style="font-size:13px;font-weight:800;color:white;letter-spacing:0.5px;">Saturnplaner App — <em>Coming Soon!</em> Trag dich jetzt ein und sei unter den Ersten.</span>
+  <a href="#newsletter" style="background:rgba(255,255,255,0.25);color:white;font-size:12px;font-weight:800;padding:4px 14px;border-radius:20px;text-decoration:none;margin-left:8px;white-space:nowrap;">Jetzt eintragen →</a>
+</div>
+
 <!-- NAV -->
 <nav>
   <a href="javascript:void(0)" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="nav-logo">
@@ -970,12 +977,11 @@
     <div class="nav-logo-text">Saturnplaner</div>
   </a>
   <ul class="nav-links">
-    <li><a href="#features">Features</a></li>
-    <li><a href="#app">Die App</a></li>
     <li><a href="#blog">Blog</a></li>
+    <li><a href="#community">Community</a></li>
     <li><a href="#about">Über uns</a></li>
-    <li><a href="#installieren">📲 App holen</a></li>
-    <li><a href="login.html" class="nav-cta">App starten ✨</a></li>
+    <li><a href="#newsletter">Newsletter</a></li>
+    <li><a href="login.html" class="nav-cta">Einloggen ✨</a></li>
   </ul>
 </nav>
 
@@ -993,125 +999,69 @@
 
   <div class="hero-content">
     <span class="hero-planet">🪐</span>
-    <div class="hero-tag">✦ Dein persönlicher Planer ✦</div>
+    <div class="hero-tag">✦ Zwischen den Sternen — zu dir selbst. ✦</div>
     <h1 class="hero-title">
       Plane dein Leben.<br>
       <span class="accent">Finde dich selbst.</span>
     </h1>
-    <p class="hero-motto">Zwischen den Sternen — zu dir selbst.</p>
+    <p class="hero-motto">Inspiration • Selfcare • Selbstfindung • Community</p>
     <div class="hero-btns">
-      <a href="login.html" class="btn-primary">🪐 App starten</a>
-      <a href="#app" class="btn-secondary">Mehr entdecken ↓</a>
+      <a href="#blog" class="btn-primary">✨ Blog entdecken</a>
+      <a href="#newsletter" class="btn-secondary">💌 Newsletter</a>
+    </div>
+    <!-- Space decoration -->
+    <div style="display:flex;gap:20px;justify-content:center;margin-top:32px;font-size:22px;opacity:0.5;">
+      <span style="animation:float 5s ease-in-out infinite;">🌙</span>
+      <span style="animation:float 7s ease-in-out infinite 1s;">⭐</span>
+      <span style="animation:float 6s ease-in-out infinite 0.5s;">🌸</span>
+      <span style="animation:float 8s ease-in-out infinite 1.5s;">✦</span>
+      <span style="animation:float 5.5s ease-in-out infinite 2s;">🌿</span>
     </div>
   </div>
 </section>
 
 <!-- FEATURES -->
 <section class="features" id="features">
-  <div class="section-label">✦ Was dich erwartet ✦</div>
-  <h2 class="section-title">Alles was du brauchst</h2>
-  <p class="section-sub">Saturnplaner vereint Planung, Selfcare und Selbstfindung in einem — für alle Menschen.</p>
+  <div class="section-label">✦ Themen ✦</div>
+  <h2 class="section-title">Was dich erwartet</h2>
+  <p class="section-sub">Klicke auf ein Thema und entdecke passende Artikel im Blog.</p>
 
   <div class="features-grid">
-    <div class="feature-card">
-      <span class="feature-icon">📅</span>
-      <div class="feature-title">Tägliche Routine</div>
-      <p class="feature-text">Täglich, wöchentlich, monatlich — deine Aufgaben strukturiert und übersichtlich. Mit Fortschrittsanzeige und Motivation.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🎯</span>
-      <div class="feature-title">Ziele & Bucket Lists</div>
-      <p class="feature-text">Setze dir Monatsziele, erstelle Bucket Lists und hake ab was du erreicht hast — visuell und motivierend.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🔄</span>
-      <div class="feature-title">Habit Tracker</div>
-      <p class="feature-text">Verfolge deine täglichen Gewohnheiten mit einem Wochenüberblick und Streak-Zähler. Kleine Schritte, grosse Wirkung.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">💫</span>
-      <div class="feature-title">Positive Sprüche</div>
-      <p class="feature-text">Tägliche Motivation die dich begleitet — eigene Sprüche speichern, Favoriten markieren und täglich neue Energie tanken.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🧵</span>
-      <div class="feature-title">Kreativ-Planer</div>
-      <p class="feature-text">Plane deine kreativen Projekte mit Schritt-für-Schritt Fortschritt — ob Nähen, Malen oder andere Hobbys.</p>
-    </div>
-    <div class="feature-card">
+    <div class="feature-card" onclick="window.location.href='#blog'" style="cursor:pointer;">
       <span class="feature-icon">🌸</span>
-      <div class="feature-title">Selfcare & Mental Health</div>
-      <p class="feature-text">Sanfte Tipps für ADHS, Angst und schwere Tage — für alle Menschen, die sich selbst besser kennenlernen wollen.</p>
+      <div class="feature-title">Selfcare & Wohlbefinden</div>
+      <p class="feature-text">Rituale, Körperpflege & kleine Momente nur für dich.</p>
+      <div style="margin-top:12px;font-size:12px;font-weight:800;color:var(--accent);">Artikel lesen →</div>
     </div>
-  </div>
-</section>
-
-<!-- APP PREVIEW -->
-<section class="app-section" id="app">
-  <div class="app-section-inner">
-    <div class="app-text">
-      <div class="section-label">✦ Die App ✦</div>
-      <h2 class="section-title">Dein persönlicher Planer</h2>
-      <p class="section-sub">Kostenlos, persönlich, für dich gemacht. Jede Person hat ihr eigenes Konto — deine Daten, deine Ziele, dein Rhythmus.</p>
-      <ul class="app-features-list">
-        <li><span>☀️</span> Tagesstart mit Motivation & Überblick</li>
-        <li><span>📋</span> Routine für jeden Zeitraum</li>
-        <li><span>🎯</span> Persönliche Ziele & Bucket Lists</li>
-        <li><span>🔄</span> Habit Tracker mit Streak</li>
-        <li><span>💫</span> Sprüche die dich inspirieren</li>
-      </ul>
-      <a href="login.html" class="btn-primary">Jetzt kostenlos starten 🪐</a>
+    <div class="feature-card" onclick="window.location.href='#blog'" style="cursor:pointer;">
+      <span class="feature-icon">📅</span>
+      <div class="feature-title">Planung & Produktivität</div>
+      <p class="feature-text">Routinen, Ziele & Strukturen die sich gut anfühlen.</p>
+      <div style="margin-top:12px;font-size:12px;font-weight:800;color:var(--accent);">Artikel lesen →</div>
     </div>
-    <div class="app-mockup">
-      <div class="phone-frame">
-        <div class="phone-notch"></div>
-        <div class="phone-screen">
-          <div class="phone-header">Grenda's Space</div>
-          <div class="phone-sub">🪐 Saturnplaner</div>
-          <div class="phone-tabs">
-            <div class="phone-tab active">📅 Routine</div>
-            <div class="phone-tab">🔄 Habits</div>
-            <div class="phone-tab">🎯 Ziele</div>
-          </div>
-          <div class="phone-hero-box">
-            <div class="phone-hero-greeting">Guten Morgen! ☀️</div>
-            <div class="phone-stats">
-              <div class="phone-stat">
-                <div class="phone-stat-num">3/6</div>
-                <div class="phone-stat-label">Heute</div>
-              </div>
-              <div class="phone-stat">
-                <div class="phone-stat-num">4</div>
-                <div class="phone-stat-label">Habits</div>
-              </div>
-              <div class="phone-stat">
-                <div class="phone-stat-num">8/12</div>
-                <div class="phone-stat-label">Ziele</div>
-              </div>
-            </div>
-          </div>
-          <div class="phone-item">
-            <div class="phone-item-dot done">✓</div>
-            <div class="phone-item-text">Gesicht waschen & eincremen</div>
-          </div>
-          <div class="phone-item">
-            <div class="phone-item-dot done">✓</div>
-            <div class="phone-item-text">2L Wasser trinken</div>
-          </div>
-          <div class="phone-item">
-            <div class="phone-item-dot done">✓</div>
-            <div class="phone-item-text">Bett machen</div>
-          </div>
-          <div class="phone-item">
-            <div class="phone-item-dot"></div>
-            <div class="phone-item-text">10 Min. spazieren gehen</div>
-          </div>
-          <div class="phone-item">
-            <div class="phone-item-dot"></div>
-            <div class="phone-item-text">To-Do Liste schreiben</div>
-          </div>
-        </div>
-      </div>
+    <div class="feature-card" onclick="window.location.href='#blog'" style="cursor:pointer;">
+      <span class="feature-icon">🧠</span>
+      <div class="feature-title">Mental Health</div>
+      <p class="feature-text">Sanfte Tipps für ADHS, Angst & schwere Tage.</p>
+      <div style="margin-top:12px;font-size:12px;font-weight:800;color:var(--accent);">Artikel lesen →</div>
+    </div>
+    <div class="feature-card" onclick="window.location.href='#blog'" style="cursor:pointer;">
+      <span class="feature-icon">🌿</span>
+      <div class="feature-title">Lifestyle & Alltag</div>
+      <p class="feature-text">Solo Dates, Jahreszeiten & kleine Freuden.</p>
+      <div style="margin-top:12px;font-size:12px;font-weight:800;color:var(--accent);">Artikel lesen →</div>
+    </div>
+    <div class="feature-card" onclick="window.location.href='#blog'" style="cursor:pointer;">
+      <span class="feature-icon">🦋</span>
+      <div class="feature-title">Selbstfindung & Wachstum</div>
+      <p class="feature-text">Werte, Identität & der Weg zu dir selbst.</p>
+      <div style="margin-top:12px;font-size:12px;font-weight:800;color:var(--accent);">Artikel lesen →</div>
+    </div>
+    <div class="feature-card" onclick="window.location.href='#blog'" style="cursor:pointer;">
+      <span class="feature-icon">💫</span>
+      <div class="feature-title">Motivation & Mindset</div>
+      <p class="feature-text">Sprüche, Perspektivwechsel & tägliche Energie.</p>
+      <div style="margin-top:12px;font-size:12px;font-weight:800;color:var(--accent);">Artikel lesen →</div>
     </div>
   </div>
 </section>
@@ -1137,13 +1087,16 @@
   <!-- Social Links -->
   <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:40px;">
     <a href="https://instagram.com/saturnplaner" target="_blank" class="insta-handle">
-      📸 @saturnplaner
+      📸 Instagram
     </a>
-    <a href="javascript:void(0)" class="insta-handle" style="background:linear-gradient(135deg,#1a1a1a,#333);opacity:0.5;cursor:default;" title="Bald verfügbar!">
-      🎵 TikTok — bald
+    <a href="https://tiktok.com/@saturnplaner" target="_blank" class="insta-handle" style="background:linear-gradient(135deg,#1a1a1a,#333);">
+      🎵 TikTok
     </a>
-    <a href="javascript:void(0)" class="insta-handle" style="background:linear-gradient(135deg,#1877F2,#0d6ae0);opacity:0.5;cursor:default;" title="Bald verfügbar!">
-      👤 Facebook — bald
+    <a href="https://facebook.com/saturnplaner" target="_blank" class="insta-handle" style="background:linear-gradient(135deg,#1877F2,#0d6ae0);">
+      👤 Facebook
+    </a>
+    <a href="https://threads.net/@saturnplaner" target="_blank" class="insta-handle" style="background:linear-gradient(135deg,#1a1a1a,#444);">
+      🧵 Threads
     </a>
   </div>
 
@@ -1161,67 +1114,102 @@
   <p style="font-size:13px;color:var(--text-light);font-weight:600;margin-top:20px;">Klicke auf Instagram um uns zu folgen 🌸</p>
 </section>
 
-<!-- APP INSTALLIEREN -->
-<section style="padding:80px 40px;background:linear-gradient(145deg,#FFF0F8,#F8F0FF);text-align:center;" id="installieren">
-  <div style="max-width:600px;margin:0 auto;">
-    <div class="section-label">✦ App installieren ✦</div>
-    <h2 class="section-title">Nimm Saturnplaner überall mit 🪐</h2>
-    <p class="section-sub" style="margin-bottom:36px;">Kostenlos auf deinem iPhone installieren — kein App Store nötig!</p>
+<!-- COMMUNITY - moved higher -->
+<section style="padding:100px 40px;background:linear-gradient(145deg,#FFF0F8,#F8F0FF);" id="community">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="section-label">✦ Community ✦</div>
+    <h2 class="section-title">Gemeinsam wachsen 🌱</h2>
+    <p class="section-sub">Abstimmungen, Q&A und Gespräche — deine Stimme zählt!</p>
 
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:32px;text-align:left;">
-      <div style="background:rgba(255,255,255,0.8);border-radius:18px;padding:18px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 4px 16px rgba(180,100,140,0.08);">
-        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#F7C5C5,#FFD9B7);display:flex;align-items:center;justify-content:center;font-weight:900;color:#7A3030;flex-shrink:0;font-size:15px;">1</div>
-        <div>
-          <div style="font-size:13px;font-weight:800;color:#3D2C2C;margin-bottom:2px;">Safari öffnen 🧭</div>
-          <div style="font-size:11px;color:#9B7E7E;font-weight:600;">Nicht Chrome!</div>
-        </div>
-      </div>
-      <div style="background:rgba(255,255,255,0.8);border-radius:18px;padding:18px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 4px 16px rgba(180,100,140,0.08);">
-        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#D9C5F0,#C5DCF0);display:flex;align-items:center;justify-content:center;font-weight:900;color:#4A2A7A;flex-shrink:0;font-size:15px;">2</div>
-        <div>
-          <div style="font-size:13px;font-weight:800;color:#3D2C2C;margin-bottom:2px;">saturnplaner.ch</div>
-          <div style="font-size:11px;color:#9B7E7E;font-weight:600;">Diese Seite öffnen</div>
-        </div>
-      </div>
-      <div style="background:rgba(255,255,255,0.8);border-radius:18px;padding:18px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 4px 16px rgba(180,100,140,0.08);">
-        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#C5E8D5,#C5DCF0);display:flex;align-items:center;justify-content:center;font-weight:900;color:#1A5A3A;flex-shrink:0;font-size:15px;">3</div>
-        <div>
-          <div style="font-size:13px;font-weight:800;color:#3D2C2C;margin-bottom:2px;">Teilen ↑ tippen</div>
-          <div style="font-size:11px;color:#9B7E7E;font-weight:600;">Quadrat mit Pfeil unten</div>
-        </div>
-      </div>
-      <div style="background:rgba(255,255,255,0.8);border-radius:18px;padding:18px 16px;display:flex;gap:12px;align-items:flex-start;box-shadow:0 4px 16px rgba(180,100,140,0.08);">
-        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#FFD9B7,#F7C5C5);display:flex;align-items:center;justify-content:center;font-weight:900;color:#7A3A0A;flex-shrink:0;font-size:15px;">4</div>
-        <div>
-          <div style="font-size:13px;font-weight:800;color:#3D2C2C;margin-bottom:2px;">"Zum Startbildschirm" ➕</div>
-          <div style="font-size:11px;color:#9B7E7E;font-weight:600;">Dann "Hinzufügen"</div>
-        </div>
-      </div>
-    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:40px;">
 
-    <div style="background:rgba(255,255,255,0.7);border-radius:20px;padding:16px 24px;display:inline-flex;align-items:center;gap:12px;box-shadow:0 4px 16px rgba(180,100,140,0.1);">
-      <span style="font-size:32px;">🪐</span>
-      <div style="text-align:left;">
-        <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:900;color:#3D2C2C;">Saturnplaner erscheint als App!</div>
-        <div style="font-size:12px;color:#C87090;font-weight:700;">Kein App Store • Kostenlos • Immer aktuell</div>
+      <!-- Abstimmung -->
+      <div style="background:white;border-radius:24px;padding:28px;box-shadow:0 4px 20px rgba(180,100,140,0.1);">
+        <div style="font-size:32px;margin-bottom:12px;">🗳️</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;">Monatliche Abstimmung</div>
+        <p style="font-size:13px;color:var(--text-light);font-weight:600;line-height:1.6;margin-bottom:16px;">Was soll nächsten Monat im Blog erscheinen?</p>
+        <div style="display:flex;flex-direction:column;gap:8px;" id="poll-options">
+          <button onclick="vote(this)" style="background:var(--cream);border:2px solid var(--rose);border-radius:12px;padding:9px 14px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--text);cursor:pointer;text-align:left;transition:all 0.2s;">🌸 Selfcare Rituale für den Alltag</button>
+          <button onclick="vote(this)" style="background:var(--cream);border:2px solid var(--rose);border-radius:12px;padding:9px 14px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--text);cursor:pointer;text-align:left;transition:all 0.2s;">🧠 Mental Health — offen sprechen</button>
+          <button onclick="vote(this)" style="background:var(--cream);border:2px solid var(--rose);border-radius:12px;padding:9px 14px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--text);cursor:pointer;text-align:left;transition:all 0.2s;">📅 Routine die wirklich funktioniert</button>
+          <button onclick="vote(this)" style="background:var(--cream);border:2px solid var(--rose);border-radius:12px;padding:9px 14px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--text);cursor:pointer;text-align:left;transition:all 0.2s;">🦋 Selbstfindung & Werte</button>
+        </div>
+        <div id="poll-result" style="display:none;margin-top:12px;font-size:12px;font-weight:700;color:var(--accent);text-align:center;">✓ Danke für deine Stimme! 🌸</div>
       </div>
+
+      <!-- Q&A -->
+      <div style="background:white;border-radius:24px;padding:28px;box-shadow:0 4px 20px rgba(100,180,140,0.1);">
+        <div style="font-size:32px;margin-bottom:12px;">💬</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;">Frag mich!</div>
+        <p style="font-size:13px;color:var(--text-light);font-weight:600;line-height:1.6;margin-bottom:16px;">Hast du Fragen zu Selfcare, Planung oder Saturnplaner?</p>
+        <textarea id="qa-input" placeholder="Deine Frage..." style="width:100%;padding:10px 14px;border:2px solid var(--mint);border-radius:12px;font-family:'Nunito',sans-serif;font-size:13px;resize:none;height:80px;outline:none;background:var(--cream);color:var(--text);margin-bottom:10px;box-sizing:border-box;"></textarea>
+        <input id="qa-name" type="text" placeholder="Dein Vorname" style="width:100%;padding:10px 14px;border:2px solid var(--mint);border-radius:12px;font-family:'Nunito',sans-serif;font-size:13px;outline:none;background:var(--cream);color:var(--text);margin-bottom:10px;box-sizing:border-box;">
+        <button onclick="submitQA()" style="width:100%;background:linear-gradient(135deg,var(--mint),var(--sky));border:none;border-radius:12px;padding:11px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:#2A4A3A;cursor:pointer;">Frage senden 💬</button>
+        <div id="qa-result" style="display:none;margin-top:10px;font-size:12px;font-weight:700;color:#5ABD8A;text-align:center;">✓ Danke! Ich beantworte deine Frage bald. 🌸</div>
+      </div>
+
+      <!-- Wunsch-Themen -->
+      <div style="background:white;border-radius:24px;padding:28px;box-shadow:0 4px 20px rgba(200,150,100,0.1);">
+        <div style="font-size:32px;margin-bottom:12px;">🌟</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;">Dein Wunschthema</div>
+        <p style="font-size:13px;color:var(--text-light);font-weight:600;line-height:1.6;margin-bottom:16px;">Was fehlt dir? Wähle was dir wichtig ist!</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+          <span onclick="toggleWunsch(this)" style="background:var(--cream);border:2px solid var(--peach);border-radius:20px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;color:var(--text);">😴 Schlaf</span>
+          <span onclick="toggleWunsch(this)" style="background:var(--cream);border:2px solid var(--peach);border-radius:20px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;color:var(--text);">💪 Motivation</span>
+          <span onclick="toggleWunsch(this)" style="background:var(--cream);border:2px solid var(--peach);border-radius:20px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;color:var(--text);">💕 Beziehungen</span>
+          <span onclick="toggleWunsch(this)" style="background:var(--cream);border:2px solid var(--peach);border-radius:20px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;color:var(--text);">💰 Finanzen</span>
+          <span onclick="toggleWunsch(this)" style="background:var(--cream);border:2px solid var(--peach);border-radius:20px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;color:var(--text);">🎯 Ziele</span>
+          <span onclick="toggleWunsch(this)" style="background:var(--cream);border:2px solid var(--peach);border-radius:20px;padding:5px 12px;font-size:11px;font-weight:700;cursor:pointer;color:var(--text);">🧘 Achtsamkeit</span>
+        </div>
+        <button onclick="submitWunsch()" style="width:100%;background:linear-gradient(135deg,var(--peach),var(--rose));border:none;border-radius:12px;padding:11px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:#7A3030;cursor:pointer;">Absenden 🌟</button>
+        <div id="wunsch-result" style="display:none;margin-top:10px;font-size:12px;font-weight:700;color:var(--accent);text-align:center;">✓ Super, danke! 🌸</div>
+      </div>
+
+      <!-- Eigener Vorschlag -->
+      <div style="background:white;border-radius:24px;padding:28px;box-shadow:0 4px 20px rgba(144,112,200,0.1);">
+        <div style="font-size:32px;margin-bottom:12px;">✍️</div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px;">Dein eigener Vorschlag</div>
+        <p style="font-size:13px;color:var(--text-light);font-weight:600;line-height:1.6;margin-bottom:16px;">Hast du eine Idee die noch fehlt? Schreib sie mir!</p>
+        <textarea id="vorschlag-input" placeholder="Dein Vorschlag für einen Blog-Artikel, ein Thema oder ein Feature..." style="width:100%;padding:10px 14px;border:2px solid var(--lavender);border-radius:12px;font-family:'Nunito',sans-serif;font-size:13px;resize:none;height:100px;outline:none;background:var(--cream);color:var(--text);margin-bottom:10px;box-sizing:border-box;"></textarea>
+        <input id="vorschlag-name" type="text" placeholder="Dein Vorname (optional)" style="width:100%;padding:10px 14px;border:2px solid var(--lavender);border-radius:12px;font-family:'Nunito',sans-serif;font-size:13px;outline:none;background:var(--cream);color:var(--text);margin-bottom:10px;box-sizing:border-box;">
+        <button onclick="submitVorschlag()" style="width:100%;background:linear-gradient(135deg,var(--lavender),var(--sky));border:none;border-radius:12px;padding:11px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:#4A2A7A;cursor:pointer;">Vorschlag senden ✨</button>
+        <div id="vorschlag-result" style="display:none;margin-top:10px;font-size:12px;font-weight:700;color:#9070C8;text-align:center;">✓ Danke für deinen Vorschlag! 🪐</div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<!-- ÜBER UNS -->
+<!-- APP COMING SOON -->
+<section style="padding:80px 40px;background:linear-gradient(135deg,#1a1a2e,#2a1a3e);text-align:center;position:relative;overflow:hidden;" id="app-soon">
+  <div style="position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(200,112,144,0.15),transparent);border-radius:50%;"></div>
+  <div style="position:absolute;bottom:-60px;left:-60px;width:250px;height:250px;background:radial-gradient(circle,rgba(144,112,200,0.15),transparent);border-radius:50%;"></div>
+  <div style="position:relative;z-index:2;max-width:600px;margin:0 auto;">
+    <div style="font-size:64px;margin-bottom:16px;animation:float 6s ease-in-out infinite;">🪐</div>
+    <div style="font-size:11px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(200,112,144,0.8);margin-bottom:12px;">✦ Coming Soon ✦</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,44px);font-weight:900;color:white;margin-bottom:16px;line-height:1.2;">Die Saturnplaner App<br>kommt bald! 🌙</h2>
+    <p style="font-size:15px;color:rgba(255,255,255,0.6);font-weight:600;margin-bottom:32px;line-height:1.7;">Persönliche Routinen, Habit Tracker, Ziele & mehr. Trag dich jetzt ein und sei unter den Ersten!</p>
+    <a href="#newsletter" style="background:linear-gradient(135deg,#C87090,#9070C8);color:white;padding:16px 36px;border-radius:50px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;text-decoration:none;box-shadow:0 6px 24px rgba(200,112,144,0.4);display:inline-block;">🚀 Auf Warteliste eintragen</a>
+    <div style="display:flex;gap:20px;justify-content:center;margin-top:28px;font-size:20px;opacity:0.3;">
+      <span>🌙</span><span>✦</span><span>🌸</span><span>✧</span><span>⭐</span>
+    </div>
+  </div>
+</section>
+
+<!-- WAS IST SATURNPLANER -->
 <section class="about" id="about">
   <div class="about-inner">
     <div class="about-visual">
       <span class="about-planet">🪐</span>
       <div class="about-name">Saturnplaner</div>
-      <div class="about-role">✦ Zwischen den Sternen ✦</div>
+      <div class="about-role">✦ Gegründet von Grenda ✦</div>
     </div>
     <div class="about-text">
-      <div class="section-label">✦ Über uns ✦</div>
+      <div class="section-label">✦ Unsere Mission ✦</div>
       <h2 class="section-title">Was ist Saturnplaner?</h2>
-      <p class="about-desc">Saturnplaner ist eine persönliche Planungs- und Selfcare-Plattform für alle Menschen die sich selbst besser kennenlernen wollen — egal ob mit ADHS, sozialer Angst, Depression oder einfach dem Wunsch nach mehr Struktur und Positivity im Alltag.</p>
-      <p class="about-desc">Unsere Mission: Planung soll sich nicht wie Zwang anfühlen. Selfcare soll zugänglich sein. Selbstfindung soll Spass machen.</p>
+      <p class="about-desc">Saturnplaner entstand aus dem Wunsch, Selfcare und Planung endlich zusammenzubringen — auf Deutsch, für alle Menschen, ohne Druck.</p>
+      <p class="about-desc">Wir glauben: Planung soll sich nicht wie Zwang anfühlen. Selfcare soll zugänglich sein. Selbstfindung soll Spass machen — egal ob du mit ADHS lebst, soziale Angst kennst, dich in schweren Phasen befindest oder einfach mehr Struktur und Positivity in deinen Alltag bringen möchtest.</p>
+      <p class="about-desc">Saturnplaner ist ein Ort wo du dich verstanden fühlst. Eine Community die wächst. Ein Begleiter der immer da ist. 🌸</p>
       <div class="about-tags">
         <span class="about-tag">🪐 Planung</span>
         <span class="about-tag">🌸 Selfcare</span>
@@ -1229,19 +1217,24 @@
         <span class="about-tag">💫 Motivation</span>
         <span class="about-tag">🦋 Selbstfindung</span>
         <span class="about-tag">🌿 Lifestyle</span>
+        <span class="about-tag">🇨🇭 Auf Deutsch</span>
+        <span class="about-tag">💕 Community</span>
       </div>
     </div>
   </div>
 </section>
 
 <!-- NEWSLETTER -->
-<section class="newsletter">
+<section class="newsletter" id="newsletter">
   <h2 class="newsletter-title">Bleib in der Umlaufbahn 🪐</h2>
-  <p class="newsletter-sub">Erhalte wöchentlich Inspiration, Tipps & Updates direkt in dein Postfach.</p>
+  <p class="newsletter-sub">Neue Blog-Artikel, monatliche Tipps & als Erste die App-News — direkt in dein Postfach! 🌙</p>
   <div class="newsletter-form">
-    <input type="email" class="newsletter-input" placeholder="deine@email.com" />
-    <button class="newsletter-btn">Anmelden ✨</button>
+    <input type="text" class="newsletter-input" id="nl-name" placeholder="Dein Vorname" style="max-width:160px;" />
+    <input type="email" class="newsletter-input" id="nl-email" placeholder="deine@email.com" />
+    <button class="newsletter-btn" onclick="subscribeNewsletter()">Anmelden ✨</button>
   </div>
+  <div id="nl-result" style="display:none;margin-top:16px;font-size:14px;font-weight:700;color:rgba(255,255,255,0.9);">✓ Super! Du bist dabei 🌸 Schau in dein Postfach!</div>
+  <p style="margin-top:16px;font-size:12px;color:rgba(255,255,255,0.4);font-weight:600;">Kein Spam. Jederzeit abmeldbar. 🌙</p>
 </section>
 
 <!-- FOOTER -->
@@ -1256,9 +1249,10 @@
         <div class="footer-motto">Zwischen den Sternen — zu dir selbst.</div>
         <div class="footer-social">
           <a href="https://instagram.com/saturnplaner" target="_blank" title="Instagram">📸</a>
+          <a href="https://tiktok.com/@saturnplaner" target="_blank" title="TikTok">🎵</a>
+          <a href="https://facebook.com/saturnplaner" target="_blank" title="Facebook">👤</a>
+          <a href="https://threads.net/@saturnplaner" target="_blank" title="Threads">🧵</a>
           <a href="mailto:saturnplaner1@gmail.com" title="E-Mail">💌</a>
-          <a href="javascript:void(0)" title="TikTok — bald">🎵</a>
-          <a href="javascript:void(0)" title="Facebook — bald">👤</a>
         </div>
       </div>
       <div class="footer-col">
@@ -1650,10 +1644,54 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js');
 }
 
-// Toggle install guide
-function toggleInstallGuide() {
-  const guide = document.getElementById('installGuide');
-  if (guide) guide.style.display = guide.style.display === 'none' ? 'block' : 'none';
+// Community functions
+function vote(btn) {
+  document.querySelectorAll('#poll-options button').forEach(b => {
+    b.style.background = 'white';
+    b.style.borderColor = 'var(--rose)';
+    b.style.color = 'var(--text)';
+  });
+  btn.style.background = 'linear-gradient(135deg,var(--rose),var(--peach))';
+  btn.style.borderColor = 'transparent';
+  btn.style.color = '#7A3030';
+  document.getElementById('poll-result').style.display = 'block';
+}
+
+function toggleWunsch(el) {
+  const active = el.style.background.includes('gradient');
+  el.style.background = active ? 'white' : 'linear-gradient(135deg,var(--peach),var(--rose))';
+  el.style.borderColor = active ? 'var(--peach)' : 'transparent';
+  el.style.color = active ? 'var(--text)' : '#7A3030';
+}
+
+function submitQA() {
+  const q = document.getElementById('qa-input').value.trim();
+  const n = document.getElementById('qa-name').value.trim();
+  if (!q) return;
+  document.getElementById('qa-result').style.display = 'block';
+  document.getElementById('qa-input').value = '';
+  document.getElementById('qa-name').value = '';
+}
+
+function submitWunsch() {
+  document.getElementById('wunsch-result').style.display = 'block';
+}
+
+function submitVorschlag() {
+  const v = document.getElementById('vorschlag-input').value.trim();
+  if (!v) return;
+  document.getElementById('vorschlag-result').style.display = 'block';
+  document.getElementById('vorschlag-input').value = '';
+  document.getElementById('vorschlag-name').value = '';
+}
+
+function subscribeNewsletter() {
+  const name = document.getElementById('nl-name').value.trim();
+  const email = document.getElementById('nl-email').value.trim();
+  if (!name || !email) return;
+  document.getElementById('nl-result').style.display = 'block';
+  document.getElementById('nl-name').value = '';
+  document.getElementById('nl-email').value = '';
 }
 
 // Legal modals
