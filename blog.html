@@ -347,13 +347,13 @@ function renderGrid(posts) {
   const grid = document.getElementById('blog-grid');
   if (posts.length === 0) { grid.innerHTML = '<div class="empty"><div class="empty-icon">🌸</div><p>Noch keine Artikel in dieser Kategorie</p></div>'; return; }
   grid.innerHTML = posts.map(p => `
-    <div class="blog-card" onclick="openArticle(${p.id})">
+    <div class="blog-card" onclick="${p.tag === 'Challenge' ? "window.location.href='juni-challenge.html'" : `openArticle(${p.id})`}">
       <div class="blog-card-img" style="background:${bgColors[p.tag]||defaultBg}">${p.emoji||'🌸'}</div>
       <div class="blog-card-body">
         <span class="blog-tag">${p.tag||''}</span>
         <div class="blog-title">${p.title}</div>
         <p class="blog-excerpt">${(p.content||'').substring(0,100)}...</p>
-        <div class="blog-read">Weiterlesen →</div>
+        <div class="blog-read">${p.tag === 'Challenge' ? 'Zur Challenge →' : 'Weiterlesen →'}</div>
       </div>
     </div>
   `).join('');
