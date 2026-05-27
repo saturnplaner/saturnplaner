@@ -67,6 +67,19 @@
     nav { top:32px !important; }
     .hero, [style*="padding:130px"], [style*="padding:140px"] { padding-top:115px !important; }
   }
+
+  /* BANNER MOBILE TICKER */
+  @media(max-width:640px){
+    .banner { height:36px !important; padding:0 10px !important; overflow:hidden !important; flex-wrap:nowrap !important; gap:8px !important; }
+    .banner-full { display:none !important; }
+    .banner-mobile-text { display:none !important; }
+    .banner-ticker-wrap { flex:1; overflow:hidden; height:36px; display:flex; align-items:center; }
+    .banner-ticker { white-space:nowrap; animation:ticker 14s linear infinite; font-size:12px; font-weight:800; color:white; display:inline-block; }
+    @keyframes ticker { 0%{transform:translateX(100vw)} 100%{transform:translateX(-100%)} }
+    .banner a { flex-shrink:0; font-size:11px !important; padding:3px 10px !important; white-space:nowrap; }
+    .banner > span:first-child { flex-shrink:0; }
+    nav { top:36px !important; }
+  }
 </style>
 </head>
 <body>
@@ -232,7 +245,7 @@ function fixNavPosition() {
   const banner = document.querySelector('.banner') || document.querySelector('[class*="banner"]');
   const nav = document.querySelector('nav');
   if (banner && nav) {
-    const h = banner.offsetHeight;
+    const h = window.innerWidth <= 640 ? 36 : banner.offsetHeight;
     nav.style.top = h + 'px';
     // Fix body padding
     const bodyPad = h + 70;
