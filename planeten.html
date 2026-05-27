@@ -112,7 +112,7 @@
   footer a:hover{color:var(--rose);}
 
   /* MOBILE NAV */
-  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; background:none; border:none; z-index:1001; }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; background:none; border:none; z-index:1200 !important; position:relative; }
   .hamburger span { display:block; width:24px; height:2px; background:var(--text); border-radius:2px; transition:all 0.3s; }
   .mobile-menu { display:none; position:fixed; inset:0; background:rgba(255,248,240,0.98); backdrop-filter:blur(12px); z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:24px; }
   .mobile-menu.open { display:flex; }
@@ -124,6 +124,15 @@
     .nav-links { display:none !important; }
     .hamburger { display:flex !important; }
     nav { padding:0 20px; }
+  }
+
+  /* MOBILE BANNER + NAV FIX */
+  @media(max-width:768px){
+    .banner { padding:6px 12px; flex-wrap:nowrap; }
+    .banner .banner-text-long { display:none; }
+    .banner .banner-short { display:inline !important; }
+    nav { top:32px !important; }
+    .hero, [style*="padding:130px"], [style*="padding:140px"] { padding-top:115px !important; }
   }
 </style>
 </head>
@@ -236,6 +245,33 @@
 
 </div>
 
+<!-- PLANET DETAIL MODAL -->
+<div id="planetDetailOverlay" style="display:none;position:fixed;inset:0;background:rgba(40,20,60,0.45);backdrop-filter:blur(8px);z-index:3000;align-items:center;justify-content:center;padding:20px;overflow-y:auto;" onclick="closePlanetDetail(event)">
+  <div style="background:var(--cream);border-radius:32px;max-width:560px;width:100%;box-shadow:0 30px 80px rgba(60,20,80,0.2);overflow:hidden;animation:slideUp 0.3s ease;position:relative;">
+    <div id="pdHeader" style="padding:36px 36px 24px;text-align:center;position:relative;">
+      <button onclick="closePlanetModal()" style="position:absolute;top:16px;right:16px;background:rgba(247,197,197,0.3);border:none;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;color:var(--text-light);">✕</button>
+      <span id="pdEmoji" style="font-size:64px;display:block;margin-bottom:12px;"></span>
+      <div id="pdKeyword" style="font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;"></div>
+      <h2 id="pdName" style="font-family:'Playfair Display',serif;font-size:30px;font-weight:900;color:var(--text);"></h2>
+    </div>
+    <div style="padding:0 36px 36px;">
+      <div style="background:white;border-radius:20px;padding:20px 22px;margin-bottom:16px;box-shadow:0 3px 12px var(--shadow);">
+        <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">✦ Heute sagt dir dieser Planet</div>
+        <p id="pdTodayMsg" style="font-size:15px;color:var(--text);font-weight:600;line-height:1.7;font-style:italic;"></p>
+      </div>
+      <div style="background:white;border-radius:20px;padding:20px 22px;margin-bottom:16px;box-shadow:0 3px 12px var(--shadow);">
+        <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">✦ Was dieser Planet bedeutet</div>
+        <p id="pdDescription" style="font-size:14px;color:var(--text-light);font-weight:600;line-height:1.7;"></p>
+      </div>
+      <div style="background:white;border-radius:20px;padding:20px 22px;box-shadow:0 3px 12px var(--shadow);">
+        <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">✦ Als dein Schutzplanet</div>
+        <p id="pdPersonal" style="font-size:14px;color:var(--text-light);font-weight:600;line-height:1.7;"></p>
+        <div id="pdBirthMonths" style="margin-top:12px;font-size:12px;font-weight:700;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer>
   <div style="margin-bottom:12px;">🪐 Saturnplaner — Zwischen den Sternen, zu dir selbst.</div>
   <div>
@@ -299,13 +335,14 @@ function renderPlanets(){
   document.getElementById('planetsGrid').innerHTML=planets.map((p,i)=>{
     const msg=p.messages[(dayOfYear+i)%p.messages.length];
     const energy=((dayOfYear+i*3)%5)+1;
-    return`<div class="planet-card" style="--pcolor:${p.color}">
+    return`<div class="planet-card" style="--pcolor:${p.color};cursor:pointer;" onclick="openPlanetDetail(${i})">
       <div style="position:absolute;top:0;left:0;right:0;height:5px;border-radius:24px 24px 0 0;background:${p.color};"></div>
       <span class="planet-emoji">${p.emoji}</span>
       <div class="planet-name">${p.name}</div>
       <div class="planet-keyword" style="color:${p.color}">${p.keyword}</div>
       <div class="planet-msg">${msg}</div>
       <div class="planet-energy" style="background:${p.color}22;color:${p.color}">${'⭐'.repeat(energy)} Energie</div>
+      <div style="font-size:11px;font-weight:800;color:${p.color};margin-top:8px;opacity:0.7;">Mehr erfahren →</div>
     </div>`;
   }).join('');
 }
@@ -338,6 +375,45 @@ window.findPersonalPlanet=function(){
   origFind();
 };
 
+const planetDescriptions = [
+  "Die Sonne ist das Zentrum unseres Sonnensystems — und in der Astrologie steht sie für das Ich, die Lebenskraft und den Willen. Sie symbolisiert Vitalität, Kreativität und die Fähigkeit zu strahlen. Wer unter dem Einfluss der Sonne steht, trägt ein natürliches Charisma in sich. 🌟",
+  "Der Mond steht für das Unterbewusstsein, die Gefühle und die innere Welt. Er ist der Planet der Intuition und der Empfindsamkeit. Der Mond beeinflusst unsere Stimmungen und Rhythmen — wie die Gezeiten des Meeres. 🌊",
+  "Saturn ist der Planet der Struktur, Disziplin und Weisheit. Er lehrt uns durch Geduld und Ausdauer. Was Saturn anfasst, wächst langsam — aber bleibt. Er steht für Reife, Verantwortung und das Ernten dessen was wir gesät haben. ⏳",
+  "Venus ist die Göttin der Liebe und Schönheit. In der Astrologie steht sie für Harmonie, Ästhetik, Beziehungen und den Sinn für das Schöne im Leben. Venus erinnert uns daran, dass Liebe — zu uns selbst und anderen — die wichtigste Kraft ist. 💕",
+  "Mars ist der Planet der Energie, des Mutes und des Antriebs. Er gibt uns die Kraft anzufangen, Hindernisse zu überwinden und für das einzustehen was uns wichtig ist. Mars sagt: Handle. Jetzt. 🔥",
+  "Jupiter ist der grösste Planet — und auch der Glücksplanet. Er steht für Wachstum, Fülle, Optimismus und Expansion. Wo Jupiter wirkt, entstehen Möglichkeiten. Er lädt ein gross zu denken und dem Leben zu vertrauen. ✨",
+  "Uranus ist der Planet des Wandels, der Innovation und der Freiheit. Er steht für Rebellion gegen das Gewöhnliche und die Suche nach dem Eigenen Weg. Uranus erinnert uns: Andersartig zu sein ist keine Schwäche — es ist Stärke. 💜",
+  "Neptun ist der Planet der Träume, der Tiefe und des Unsichtbaren. Er steht für Kreativität, Spiritualität und tiefes Mitgefühl. Neptun lädt uns ein zu fühlen was jenseits des Sichtbaren liegt. 🌊"
+];
+
+const monthNames = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+
+function openPlanetDetail(idx) {
+  const p = planets[idx];
+  const msg = p.messages[dayOfYear % p.messages.length];
+  const header = document.getElementById('pdHeader');
+  header.style.background = `linear-gradient(145deg,${p.color}18,${p.color}08)`;
+  document.getElementById('pdEmoji').textContent = p.emoji;
+  document.getElementById('pdKeyword').textContent = '✦ ' + p.keyword + ' ✦';
+  document.getElementById('pdKeyword').style.color = p.color;
+  document.getElementById('pdName').textContent = p.name;
+  document.getElementById('pdTodayMsg').textContent = msg;
+  document.getElementById('pdDescription').textContent = planetDescriptions[idx];
+  document.getElementById('pdPersonal').textContent = p.personalMsg;
+  document.getElementById('pdBirthMonths').innerHTML = `<span style="color:${p.color};">🎂 Schutzplanet für:</span> ${p.birthMonths.map(m=>monthNames[m-1]).join(', ')}`;
+  const overlay = document.getElementById('planetDetailOverlay');
+  overlay.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closePlanetModal() {
+  document.getElementById('planetDetailOverlay').style.display = 'none';
+  document.body.style.overflow = '';
+}
+function closePlanetDetail(e) {
+  if (e.target === document.getElementById('planetDetailOverlay')) closePlanetModal();
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closePlanetModal(); });
+
 renderPlanets();
 </script>
 <script>
@@ -345,5 +421,14 @@ renderPlanets();
 function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow=''; }
 </script>
+
+<!-- BACK TO TOP -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="display:none;position:fixed;bottom:28px;right:24px;z-index:800;background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(200,112,144,0.4);transition:all 0.2s;">↑</button>
+<script>
+window.addEventListener('scroll',function(){
+  document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'block' : 'none';
+});
+</script>
 </body>
 </html>
+renderPlanets();

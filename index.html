@@ -977,7 +977,7 @@
   }
 
   /* MOBILE NAV */
-  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; background:none; border:none; z-index:1001; }
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; background:none; border:none; z-index:1200 !important; position:relative; }
   .hamburger span { display:block; width:24px; height:2px; background:var(--text); border-radius:2px; transition:all 0.3s; }
   .mobile-menu { display:none; position:fixed; inset:0; background:rgba(255,248,240,0.98); backdrop-filter:blur(12px); z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:24px; }
   .mobile-menu.open { display:flex; }
@@ -989,6 +989,15 @@
     .nav-links { display:none !important; }
     .hamburger { display:flex !important; }
     nav { padding:0 20px; }
+  }
+
+  /* MOBILE BANNER + NAV FIX */
+  @media(max-width:768px){
+    .banner { padding:6px 12px; flex-wrap:nowrap; }
+    .banner .banner-text-long { display:none; }
+    .banner .banner-short { display:inline !important; }
+    nav { top:32px !important; }
+    .hero, [style*="padding:130px"], [style*="padding:140px"] { padding-top:115px !important; }
   }
 </style>
 <script type="application/ld+json">
@@ -2289,6 +2298,14 @@ function acceptCookies() {
 // Mobile Menu
 function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow=''; }
+</script>
+
+<!-- BACK TO TOP -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="display:none;position:fixed;bottom:28px;right:24px;z-index:800;background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(200,112,144,0.4);transition:all 0.2s;">↑</button>
+<script>
+window.addEventListener('scroll',function(){
+  document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'block' : 'none';
+});
 </script>
 </body>
 </html>
