@@ -975,6 +975,21 @@
     .instagram { padding: 60px 20px; }
     .about { padding: 60px 20px; }
   }
+
+  /* MOBILE NAV */
+  .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; background:none; border:none; z-index:1001; }
+  .hamburger span { display:block; width:24px; height:2px; background:var(--text); border-radius:2px; transition:all 0.3s; }
+  .mobile-menu { display:none; position:fixed; inset:0; background:rgba(255,248,240,0.98); backdrop-filter:blur(12px); z-index:999; flex-direction:column; align-items:center; justify-content:center; gap:24px; }
+  .mobile-menu.open { display:flex; }
+  .mobile-menu a { font-family:'Nunito',sans-serif; font-size:20px; font-weight:800; color:var(--text); text-decoration:none; transition:color 0.2s; }
+  .mobile-menu a:hover, .mobile-menu a.active { color:var(--accent); }
+  .mobile-menu .mob-cta { background:linear-gradient(135deg,var(--rose),var(--peach)); color:#7A3030!important; padding:14px 32px; border-radius:50px; box-shadow:0 4px 14px rgba(232,144,144,0.3); }
+  .mobile-close { position:absolute; top:24px; right:24px; background:rgba(247,197,197,0.3); border:none; width:40px; height:40px; border-radius:50%; font-size:20px; cursor:pointer; color:var(--text-light); }
+  @media(max-width:900px) {
+    .nav-links { display:none !important; }
+    .hamburger { display:flex !important; }
+    nav { padding:0 20px; }
+  }
 </style>
 <script type="application/ld+json">
 {
@@ -1051,8 +1066,23 @@
     <li><a href="about.html">🪐 Über uns</a></li>
     <li><a href="newsletter.html">💌 Newsletter</a></li>
     <li><a href="login.html" class="nav-cta">Einloggen ✨</a></li>
-  </ul>
+  <button class="hamburger" onclick="openMobileMenu()"><span></span><span></span><span></span></button>
+</ul>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="index.html" onclick="closeMobileMenu()">🪐 Home</a>
+  <a href="blog.html" onclick="closeMobileMenu()">📖 Blog</a>
+  <a href="tipps.html" onclick="closeMobileMenu()">⚡ Tipps & Tricks</a>
+  <a href="journal-prompts.html" onclick="closeMobileMenu()">📓 Journal</a>
+  <a href="planeten.html" onclick="closeMobileMenu()">🌌 Planeten</a>
+  <a href="community.html" onclick="closeMobileMenu()">🌱 Community</a>
+  <a href="about.html" onclick="closeMobileMenu()">🪐 Über uns</a>
+  <a href="newsletter.html" onclick="closeMobileMenu()">💌 Newsletter</a>
+  <a href="login.html" class="mob-cta" onclick="closeMobileMenu()">Einloggen ✨</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1090,6 +1120,20 @@
       <span style="animation:float 8s ease-in-out infinite 1.5s;">✦</span>
       <span style="animation:float 5.5s ease-in-out infinite 2s;">🌿</span>
     </div>
+  </div>
+</section>
+
+
+<!-- TÄGLICHE AFFIRMATION -->
+<section style="padding:60px 40px;background:white;text-align:center;" id="affirmation">
+  <div style="max-width:700px;margin:0 auto;">
+    <div class="section-label">✦ Für dich heute ✦</div>
+    <h2 class="section-title">Deine Affirmation des Tages</h2>
+    <div id="affirmBox" style="background:linear-gradient(145deg,#FFF0F8,#F8F0FF);border:1.5px solid rgba(247,197,197,0.4);border-radius:28px;padding:40px 36px;margin:24px 0;box-shadow:0 8px 32px rgba(180,100,140,0.1);position:relative;overflow:hidden;min-height:140px;display:flex;align-items:center;justify-content:center;">
+      <div style="position:absolute;font-size:120px;opacity:0.04;top:-20px;right:-20px;pointer-events:none;">✦</div>
+      <p id="affirmText" style="font-family:'Playfair Display',serif;font-size:clamp(18px,2.5vw,26px);font-weight:700;color:var(--text);line-height:1.6;position:relative;z-index:1;animation:fadeUp 0.5s ease;"></p>
+    </div>
+    <button onclick="newAffirmation()" style="background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;border-radius:50px;padding:12px 28px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(200,112,144,0.3);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">✨ Neue Affirmation</button>
   </div>
 </section>
 
@@ -1858,6 +1902,122 @@ document.addEventListener('click', function(e) {
   }
 });
 
+
+// === TÄGLICHE AFFIRMATION ===
+const affirmations = [
+  // KURZ (A)
+  "Du bist genug. Genau jetzt. 🌸",
+  "Du verdienst Ruhe — ohne Grund. 💕",
+  "Dein Tempo ist das richtige Tempo. 🌿",
+  "Du darfst sanft mit dir sein. 🤍",
+  "Heute reicht das was du kannst. ✨",
+  "Du bist mehr als das was du leistest. 🪐",
+  "Deine Gefühle sind erlaubt. Alle davon. 💜",
+  "Du darfst Fehler machen — und trotzdem gut sein. 🌸",
+  "Du wächst — auch wenn du es nicht siehst. 🌱",
+  "Dein Wert hängt nicht von Produktivität ab. ✦",
+  "Es darf leicht sein. 💕",
+  "Du bist auf dem richtigen Weg. 🌟",
+  "Heute ist genug. Du bist genug. 🤍",
+  "Du verdienst Liebe — auch von dir selbst. 💗",
+  "Atme. Du schaffst das. 🫁",
+  "Kleine Schritte zählen genauso. 🌸",
+  "Deine Sensibilität ist eine Stärke. 💜",
+  "Du darfst heute einfach sein. ✨",
+  "Nein sagen ist auch Selbstliebe. 🌿",
+  "Du bist genau richtig so wie du bist. 🪐",
+  "Dein bestes ist immer gut genug. 🌟",
+  "Lass los was dich nicht nährt. 🍃",
+  "Du bist stärker als du denkst. 💪",
+  "Heute darfst du sanft beginnen. 🌅",
+  "Dein Herz weiss den Weg. 💕",
+  "Du gehörst zu dir selbst zuerst. 🌸",
+  "Pause ist kein Versagen. 🤍",
+  "Du bist in Sicherheit. Hier. Jetzt. ✦",
+  "Deine Geschichte ist wertvoll. 📖",
+  "Du darfst stolz auf dich sein. 🌟",
+  "Vertraue dir selbst. 🪐",
+  "Dein Lächeln verändert deinen Tag. 😊",
+  "Du bist geliebt — auch an schweren Tagen. 💗",
+  "Grenzen setzen ist Selbstrespekt. 🌿",
+  "Du bist nicht allein. 🤝",
+  "Dein Mut ist grösser als deine Angst. 💜",
+  "Heute darfst du dir selbst vergeben. 🌸",
+  "Du bist ein Geschenk für diese Welt. ✨",
+  "Alles braucht seine Zeit — auch du. ⏳",
+  "Du verdienst das Beste. Punkt. 💕",
+  // LANG (B)
+  "Du musst heute nicht perfekt sein. Du darfst einfach du sein — und das reicht vollkommen. 💕",
+  "Auch wenn es sich nicht so anfühlt — du wächst. Jeden Tag ein kleines bisschen, auch wenn du es nicht siehst. 🌱",
+  "Du hast schon so vieles überstanden was sich unmöglich anfühlte. Das hier schaffst du auch. 💪",
+  "Deine Gefühle machen dich nicht schwach. Sie machen dich menschlich — und das ist wunderschön. 🌸",
+  "Es ist okay langsam zu sein. Nicht alles muss schnell gehen. Dein Rhythmus ist der richtige. 🌿",
+  "Du verdienst dieselbe Freundlichkeit die du anderen gibst — fang heute damit an. 🤍",
+  "Selbstfürsorge ist keine Selbstsucht. Es ist die Voraussetzung dafür dass du für andere da sein kannst. ✨",
+  "Du musst deinen Wert nicht verdienen. Du bist wertvoll — einfach weil du existierst. 💗",
+  "Auch ein schwerer Tag ist ein Tag in dem du gewachsen bist — selbst wenn du es nicht merkst. 🌱",
+  "Deine Vergangenheit definiert dich nicht. Jeden Morgen darfst du neu beginnen. 🌅",
+  "Es ist mutig zuzugeben wenn es dir nicht gut geht. Das ist keine Schwäche — das ist Stärke. 💜",
+  "Du musst nicht funktionieren — du darfst auch einfach fühlen, sein und atmen. 🫁",
+  "Die kleinen Dinge die du heute tust — für dich, für andere — sie zählen mehr als du weisst. 🌟",
+  "Dein Körper trägt dich jeden Tag. Er verdient deine Dankbarkeit und deine Fürsorge. 💕",
+  "Du bist nicht das was andere über dich denken. Du bist das was du in deinen stillen Momenten weisst. ✦",
+  "Nicht jeder Tag muss grossartig sein. Manche Tage dürfen einfach sein — und das reicht. 🌸",
+  "Du hast das Recht nein zu sagen — ohne dich erklären zu müssen. Deine Grenzen sind heilig. 🌿",
+  "Lass dich nicht von dem vergleichen was andere zeigen. Dein Leben hat seinen eigenen Rhythmus. 🪐",
+  "Du bist auf einem Weg der ganz dir gehört. Vertraue ihm — auch wenn du das Ziel noch nicht siehst. 🗺️",
+  "Das was dich heute herausfordert macht dich morgen stärker. Du lernst — immer. 💪",
+  "Deine Träume sind gültig. Auch die leisen. Auch die die sich unrealistisch anfühlen. ✨",
+  "Es ist okay Hilfe anzunehmen. Stärke zeigt sich nicht im Alleinekämpfen. 🤝",
+  "Du verdienst einen schönen Tag — nicht weil du etwas dafür getan hast, sondern einfach so. 💗",
+  "Deine Andersartigkeit ist keine Schwäche — sie ist das was dich besonders macht. 🦋",
+  "Heute darfst du aufhören dich zu entschuldigen dafür dass du Platz brauchst. Du gehörst hierher. 🌸",
+  "Was wäre wenn du dir selbst gegenüber so geduldig wärst wie du es bei deinen besten Freunden bist? 🤍",
+  "Du trägst mehr in dir als du glaubst — Mut, Wärme, Weisheit. Lass sie heute ein bisschen raus. 💜",
+  "Auch wenn heute nichts perfekt war — du warst da. Du hast weitergemacht. Das ist alles. ✦",
+  "Vergleiche dich nicht mit gestern — du bist eine andere Person als damals. Feier das. 🌟",
+  "Deine Art zu sein — auch die unordentliche, unsichere — ist vollkommen liebenswert. 💕",
+  "Du musst nicht immer stark sein. Manchmal ist weich sein die mutigste Wahl. 🌸",
+  "Jeder kleine Schritt den du heute machst zählt — auch wenn du ihn nicht siehst. 🌱",
+  "Du bist es wert geliebt zu werden — genau so wie du bist, ohne etwas ändern zu müssen. 💗",
+  "Dein Inneres weiss mehr als du denkst. Hör heute ein bisschen mehr darauf. 🪐",
+  "Es darf auch mal nicht gut gehen. Das gehört dazu — und du kommst wieder raus. 🤍",
+  "Dankbarkeit beginnt bei dir selbst. Was magst du heute an dir? 💜",
+  "Du gibst so viel — vergiss nicht auch dir selbst etwas zurückzugeben. 🌿",
+  "Alles was du heute gefühlt hast war real und gültig. Du musstest nichts davon verstecken. 🌸",
+  "Du bist nicht zu viel. Für die richtigen Menschen bist du genau richtig. ✨",
+  "Dein heutiges Bestes ist heute das Beste. Morgen ist ein neuer Tag. 💕",
+  "Sei heute ein bisschen freundlicher zu dir — du verdienst dieselbe Sanftheit die du anderen schenkst. 🤍",
+  "Du trägst Licht in dir — auch wenn du es gerade nicht siehst. Die Welt braucht es. 🌟",
+  "Was du fühlst ist wichtig. Was du brauchst ist wichtig. Du bist wichtig. 💗",
+  "Heute darfst du einfach atmen und sein — ohne Erwartungen an dich selbst. 🫁",
+  "Du bist auf einem Weg — und jeder Schritt, auch der kleine, bringt dich weiter. 🗺️",
+  "Manchmal ist Weitermachen die grösste Heldentat. Und du machst weiter. 💜",
+  "Du verdienst Räume in denen du einfach du sein kannst — ohne Maske, ohne Leistung. 🌸",
+  "Dein Körper, dein Herz, dein Kopf arbeiten alle für dich — sag ihnen heute Danke. 💕",
+  "Du hast das Recht dir Zeit zu nehmen. Für dich. Ohne Schuldgefühl. ✦",
+  "Was du heute pflanzt — auch wenn es nur ein Gedanke ist — wächst. Glaub daran. 🌱"
+];
+
+let lastAffirmIdx = -1;
+function getAffirmation() {
+  let idx;
+  do { idx = Math.floor(Math.random() * affirmations.length); } while(idx === lastAffirmIdx);
+  lastAffirmIdx = idx;
+  return affirmations[idx];
+}
+function showAffirmation(text) {
+  const el = document.getElementById('affirmText');
+  if(el) { el.style.opacity='0'; setTimeout(() => { el.textContent=text; el.style.opacity='1'; el.style.transition='opacity 0.5s'; }, 250); }
+}
+function newAffirmation() { showAffirmation(getAffirmation()); }
+
+// Show on load
+window.addEventListener('DOMContentLoaded', () => {
+  const el = document.getElementById('affirmText');
+  if(el) el.textContent = getAffirmation();
+});
+
 // === TÄGLICHE PLANETENBOTSCHAFTEN (Hauptseite) ===
 (function(){
   const now = new Date();
@@ -2124,6 +2284,11 @@ function acceptCookies() {
     }
   } catch(e) {}
 })();
+</script>
+<script>
+// Mobile Menu
+function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow=''; }
 </script>
 </body>
 </html>
