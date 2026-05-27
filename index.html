@@ -1057,7 +1057,8 @@
 <!-- COMING SOON BANNER -->
 <div style="position:fixed;top:0;left:0;right:0;z-index:1100;background:linear-gradient(135deg,#C87090,#9070C8);padding:8px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;">
   <span style="font-size:14px;">🪐</span>
-  <span style="font-size:13px;font-weight:800;color:white;letter-spacing:0.5px;">Saturnplaner App — <em>Coming Soon!</em> Sei unter den Ersten.</span>
+  <span class="banner-full" style="font-size:13px;font-weight:800;color:white;letter-spacing:0.5px;">Saturnplaner App — <em>Coming Soon!</em> Sei unter den Ersten.</span>
+  <div class="banner-ticker-wrap"><span class="banner-ticker">🪐 Saturnplaner App — Coming Soon! ✨ Sei unter den Ersten! 🌸 Trag dich jetzt ein!</span></div>
   <button onclick="toggleBannerPopup()" id="bannerBtn" style="background:rgba(255,255,255,0.25);color:white;font-size:12px;font-weight:800;padding:4px 14px;border-radius:20px;border:none;cursor:pointer;margin-left:8px;white-space:nowrap;">Jetzt eintragen →</button>
 </div>
 
@@ -1096,8 +1097,8 @@
     <li><a href="about.html">🪐 Über uns</a></li>
     <li><a href="newsletter.html">💌 Newsletter</a></li>
     <li><a href="login.html" class="nav-cta">Einloggen ✨</a></li>
-  <button class="hamburger" onclick="openMobileMenu()"><span></span><span></span><span></span></button>
 </ul>
+  <button class="hamburger" onclick="openMobileMenu()"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- MOBILE MENU -->
@@ -2348,6 +2349,20 @@ function fixNavPosition() {
 }
 fixNavPosition();
 window.addEventListener('resize', fixNavPosition);
+</script>
+
+<script>
+function fixNav() {
+  const banner = document.getElementById('siteBanner');
+  const nav = document.querySelector('nav');
+  if (banner && nav) {
+    const h = banner.getBoundingClientRect().height;
+    nav.style.top = Math.round(h) + 'px';
+  }
+}
+fixNav();
+window.addEventListener('resize', fixNav);
+window.addEventListener('load', fixNav);
 </script>
 </body>
 </html>
