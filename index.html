@@ -6,6 +6,7 @@
 <title>Saturnplaner — Selfcare, Planung & Selbstfindung auf Deutsch</title>
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='pg' cx='40%25' cy='35%25'><stop offset='0%25' stop-color='%23F0C87A'/><stop offset='60%25' stop-color='%23C87090'/><stop offset='100%25' stop-color='%239070C8'/></radialGradient></defs><ellipse cx='50' cy='52' rx='48' ry='12' fill='none' stroke='%23D9C5F0' stroke-width='5' transform='rotate(-20 50 52)'/><circle cx='50' cy='50' r='28' fill='url(%23pg)'/><circle cx='42' cy='44' r='7' fill='%23FFF8F0' opacity='0.25'/></svg>">
 <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
 <meta name="description" content="Saturnplaner: Selfcare, Mental Health & Planung ohne Druck — auf Deutsch, für dich. Blog, tägliche Planetenbotschaften & bald die App.">
@@ -59,15 +60,17 @@
   /* ===== NAV ===== */
   nav {
     position: fixed;
-    top: 36px; left: 0; right: 0;
+    top: 40px; left: 0; right: 0;
     z-index: 1000;
-    background: rgba(255,248,240,0.92);
+    background: rgba(255,248,240,0.97);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(247,197,197,0.3);
+    border-bottom: 1.5px solid rgba(247,197,197,0.35);
     padding: 0 40px;
-    height: 70px;
+    height: 68px;
+    min-height: 68px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     justify-content: space-between;
   }
 
@@ -1010,18 +1013,34 @@
 
   /* BANNER MOBILE TICKER */
   @media(max-width:640px){
-    .banner-ticker-wrap { display:flex !important; }
-    .banner-full { display:none !important; }
+    .banner-ticker-wrap { display:none !important; }
     .banner { height:36px !important; padding:0 10px !important; overflow:hidden !important; flex-wrap:nowrap !important; gap:8px !important; }
     .banner-full { display:none !important; }
     .banner-mobile-text { display:none !important; }
-    .banner-ticker-wrap { display:none; flex:1; overflow:hidden; height:36px; align-items:center; }
+    .banner-ticker-wrap { display:none !important; }
     .banner-ticker { white-space:nowrap; animation:ticker 14s linear infinite; font-size:12px; font-weight:800; color:white; display:inline-block; }
     @keyframes ticker { 0%{transform:translateX(100vw)} 100%{transform:translateX(-100%)} }
     .banner a { flex-shrink:0; font-size:11px !important; padding:3px 10px !important; white-space:nowrap; }
+    .banner-ticker-wrap { display:flex !important; }
+    .banner-full { display:none !important; }
     .banner > span:first-child { flex-shrink:0; }
     nav { top:36px !important; }
   }
+
+  /* BANNER TICKER */
+  .banner-ticker-wrap { display:none; }
+  @media(max-width:640px){
+    .banner-full { display:none !important; }
+    .banner-ticker-wrap { display:flex !important; flex:1; overflow:hidden; height:36px; align-items:center; }
+    .banner-ticker { white-space:nowrap; animation:ticker 14s linear infinite; font-size:12px; font-weight:800; color:white; display:inline-block; }
+    @keyframes ticker { 0%{transform:translateX(100vw)} 100%{transform:translateX(-100%)} }
+    .banner { height:36px !important; padding:0 10px !important; overflow:hidden !important; flex-wrap:nowrap !important; gap:8px !important; }
+    .banner a { font-size:11px !important; padding:3px 10px !important; white-space:nowrap; flex-shrink:0; }
+  }
+
+  /* NAV HEIGHT FIX */
+  nav { height: 70px !important; min-height: 70px !important; box-sizing: border-box !important; align-items: flex-end !important; padding-bottom: 14px !important; }
+  nav .nav-logo, nav .nav-links, nav .hamburger { margin-top: 0 !important; margin-bottom: 0 !important; }
 </style>
 <script type="application/ld+json">
 {
@@ -2346,7 +2365,7 @@ function fixNavPosition() {
   const banner = document.querySelector('.banner') || document.querySelector('[class*="banner"]');
   const nav = document.querySelector('nav');
   if (banner && nav) {
-    const h = window.innerWidth <= 640 ? 36 : banner.offsetHeight;
+    const h = window.innerWidth <= 640 ? 36 : banner.offsetHeight + 4;
     nav.style.top = h + 'px';
     // Fix body padding
     const bodyPad = h + 70;
@@ -2367,7 +2386,7 @@ function fixNav() {
   const nav = document.querySelector('nav');
   if (banner && nav) {
     const h = banner.getBoundingClientRect().height;
-    nav.style.top = Math.round(h) + 'px';
+    nav.style.top = (Math.round(h) + 4) + 'px';
   }
 }
 fixNav();
