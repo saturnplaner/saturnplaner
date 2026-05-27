@@ -999,6 +999,14 @@
     nav { top:32px !important; }
     .hero, [style*="padding:130px"], [style*="padding:140px"] { padding-top:115px !important; }
   }
+
+  @media(max-width:768px){
+    .insta-grid, [style*="repeat(4,1fr)"] { grid-template-columns:1fr 1fr !important; }
+  }
+
+  .social-grid-mobile { grid-template-columns: repeat(4,1fr) !important; }
+  @media(max-width:700px){ .social-grid-mobile { grid-template-columns: 1fr 1fr !important; } }
+  @media(max-width:400px){ .social-grid-mobile { grid-template-columns: 1fr !important; } }
 </style>
 <script type="application/ld+json">
 {
@@ -1297,7 +1305,7 @@
   <h2 class="section-title">Wir sind überall! 🪐</h2>
   <p class="section-sub" style="margin:0 auto 40px">Täglich Inspiration, Tipps & Motivation 🌸</p>
 
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1100px;margin:0 auto;">
+  <div class="social-grid-mobile" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1100px;margin:0 auto;">
     <a href="https://instagram.com/saturnplaner" target="_blank" style="text-decoration:none;background:linear-gradient(135deg,#FFE0EC,#FFD0D8,#E8C0F0);border-radius:24px;padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(180,100,140,0.15);transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='none'">
       <div style="font-size:36px;">📸</div>
       <div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:900;color:#3D2C2C;">Instagram</div>
@@ -2306,6 +2314,27 @@ function closeMobileMenu() { document.getElementById('mobileMenu').classList.rem
 window.addEventListener('scroll',function(){
   document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'block' : 'none';
 });
+</script>
+
+<script>
+// Fix nav position based on actual banner height
+function fixNavPosition() {
+  const banner = document.querySelector('.banner') || document.querySelector('[class*="banner"]');
+  const nav = document.querySelector('nav');
+  if (banner && nav) {
+    const h = banner.offsetHeight;
+    nav.style.top = h + 'px';
+    // Fix body padding
+    const bodyPad = h + 70;
+    document.querySelectorAll('.hero, [style*="padding:130px"], [style*="padding:140px"], .blog-hero, .hero-section').forEach(el => {
+      if (parseInt(el.style.paddingTop) < bodyPad || !el.style.paddingTop) {
+        el.style.paddingTop = bodyPad + 'px';
+      }
+    });
+  }
+}
+fixNavPosition();
+window.addEventListener('resize', fixNavPosition);
 </script>
 </body>
 </html>

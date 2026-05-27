@@ -381,5 +381,26 @@ window.addEventListener('scroll',function(){
   document.getElementById('backToTop').style.display = window.scrollY > 300 ? 'block' : 'none';
 });
 </script>
+
+<script>
+// Fix nav position based on actual banner height
+function fixNavPosition() {
+  const banner = document.querySelector('.banner') || document.querySelector('[class*="banner"]');
+  const nav = document.querySelector('nav');
+  if (banner && nav) {
+    const h = banner.offsetHeight;
+    nav.style.top = h + 'px';
+    // Fix body padding
+    const bodyPad = h + 70;
+    document.querySelectorAll('.hero, [style*="padding:130px"], [style*="padding:140px"], .blog-hero, .hero-section').forEach(el => {
+      if (parseInt(el.style.paddingTop) < bodyPad || !el.style.paddingTop) {
+        el.style.paddingTop = bodyPad + 'px';
+      }
+    });
+  }
+}
+fixNavPosition();
+window.addEventListener('resize', fixNavPosition);
+</script>
 </body>
 </html>
