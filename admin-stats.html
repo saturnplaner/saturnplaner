@@ -38,84 +38,14 @@
   .refresh-btn{display:block;margin:20px auto 0;background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;border-radius:50px;padding:12px 28px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;}
   .loading{text-align:center;padding:40px;color:var(--text-light);font-size:14px;font-weight:600;}
   .secret-note{text-align:center;margin-top:32px;font-size:12px;color:var(--text-light);font-weight:600;padding:12px;background:rgba(247,197,197,0.1);border-radius:10px;max-width:500px;margin-left:auto;margin-right:auto;}
-  /* LOGIN GATE */
-  #login-gate{position:fixed;inset:0;z-index:9999;background:linear-gradient(145deg,#FFF0F8,#F8F0FF);display:flex;align-items:center;justify-content:center;}
-  #login-box{background:white;border-radius:24px;padding:40px 36px;box-shadow:0 8px 40px rgba(180,130,130,0.2);text-align:center;width:100%;max-width:360px;}
-  #login-box h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:#3D2C2C;margin:12px 0 6px;}
-  #login-box p{font-size:13px;color:#9B7E7E;font-weight:600;margin-bottom:24px;}
-  #email-input{width:100%;padding:14px 18px;border-radius:50px;border:2px solid #F7C5C5;font-family:'Nunito',sans-serif;font-size:14px;color:#3D2C2C;outline:none;margin-bottom:12px;background:#FFF8F0;}
-  #email-input:focus{border-color:#C87090;}
-  #login-btn{width:100%;padding:14px;border-radius:50px;border:none;background:linear-gradient(135deg,#C87090,#9070C8);color:white;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;}
-  #login-btn:disabled{opacity:0.6;cursor:default;}
-  #login-error{color:#C03030;font-size:13px;font-weight:700;margin-top:10px;display:none;}
-  #login-success{color:#C87090;font-size:13px;font-weight:700;margin-top:10px;display:none;}
-  #admin-content{display:none;}
-  .logout-btn{background:rgba(200,112,144,0.1);border:none;border-radius:20px;padding:6px 16px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;color:var(--accent);cursor:pointer;margin-top:8px;}
 </style>
 </head>
 <body>
 
-<!-- LOGIN GATE -->
-<div id="login-gate">
-  <div id="login-box">
-    <div style="font-size:48px;">🪐</div>
-    <h2>Admin Login</h2>
-    <p>Du bekommst einen Magic Link per E-Mail</p>
-    <input id="email-input" type="email" placeholder="saturnplaner1@gmail.com" onkeydown="if(event.key==='Enter')sendMagicLink()">
-    <button id="login-btn" onclick="sendMagicLink()">Magic Link senden ✨</button>
-    <div id="login-error">Nicht autorisiert ✕</div>
-    <div id="login-success">✓ Link gesendet! Schau in dein Gmail-Postfach 🌸</div>
-  </div>
-</div>
-
-<script>
-const { createClient } = supabase;
-const sb = createClient('https://buowsgggbkpsssspewtk.supabase.co','sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO');
-const ADMIN_EMAIL = 'saturnplaner1@gmail.com';
-
-sb.auth.onAuthStateChange((event, session) => {
-  if (session && session.user.email === ADMIN_EMAIL) unlock();
-});
-
-async function sendMagicLink() {
-  const email = document.getElementById('email-input').value.trim().toLowerCase();
-  if (email !== ADMIN_EMAIL) {
-    document.getElementById('login-error').style.display = 'block';
-    return;
-  }
-  const btn = document.getElementById('login-btn');
-  btn.disabled = true; btn.textContent = 'Sende...';
-  const { error } = await sb.auth.signInWithOtp({
-    email,
-    options: { emailRedirectTo: window.location.href }
-  });
-  if (error) {
-    document.getElementById('login-error').textContent = 'Fehler: ' + error.message;
-    document.getElementById('login-error').style.display = 'block';
-    btn.disabled = false; btn.textContent = 'Magic Link senden ✨';
-  } else {
-    document.getElementById('login-success').style.display = 'block';
-    document.getElementById('email-input').style.display = 'none';
-    btn.style.display = 'none';
-  }
-}
-
-function unlock() {
-  document.getElementById('login-gate').remove();
-  document.getElementById('admin-content').style.display = 'block';
-}
-
-function logout() {
-  sb.auth.signOut().then(() => location.reload());
-}
-</script>
-
-<div id="admin-content">
 <div class="header">
   <div style="font-size:48px;margin-bottom:12px;">🪐</div>
   <h1>Admin Dashboard</h1>
   <p>Nur für dich — teile diese URL mit niemandem</p>
-  <button class="logout-btn" onclick="logout()">Ausloggen</button>
 </div>
 
 <!-- STATS CARDS -->
@@ -158,6 +88,9 @@ function logout() {
 </div>
 
 <script>
+const { createClient } = supabase;
+const sb = createClient('https://buowsgggbkpsssspewtk.supabase.co','sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO');
+
 async function loadData() {
   // Subscribers
   const { data: subs, error } = await sb
@@ -257,6 +190,5 @@ async function deleteAdminComment(id) {
 
 loadData();
 </script>
-</div><!-- /admin-content -->
 </body>
 </html>
