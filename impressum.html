@@ -63,10 +63,12 @@
 
   /* BANNER MOBILE TICKER */
   @media(max-width:640px){
+    .banner-ticker-wrap { display:flex !important; }
+    .banner-full { display:none !important; }
     .banner { height:36px !important; padding:0 10px !important; overflow:hidden !important; flex-wrap:nowrap !important; gap:8px !important; }
     .banner-full { display:none !important; }
     .banner-mobile-text { display:none !important; }
-    .banner-ticker-wrap { flex:1; overflow:hidden; height:36px; display:flex; align-items:center; }
+    .banner-ticker-wrap { display:none; flex:1; overflow:hidden; height:36px; align-items:center; }
     .banner-ticker { white-space:nowrap; animation:ticker 14s linear infinite; font-size:12px; font-weight:800; color:white; display:inline-block; }
     @keyframes ticker { 0%{transform:translateX(100vw)} 100%{transform:translateX(-100%)} }
     .banner a { flex-shrink:0; font-size:11px !important; padding:3px 10px !important; white-space:nowrap; }
@@ -152,7 +154,15 @@
 </footer>
 <script>
 // Mobile Menu
-function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow='hidden'; }
+function openMobileMenu() {
+  const menu = document.getElementById('mobileMenu');
+  if (menu.classList.contains('open')) {
+    closeMobileMenu();
+  } else {
+    menu.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+}
 function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow=''; }
 </script>
 
