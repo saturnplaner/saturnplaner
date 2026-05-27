@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin-stats.html
+Disallow: /grenda-app.html
+Disallow: /app.html
+Disallow: /login.html
+
+Sitemap: https://www.saturnplaner.ch/sitemap.xml

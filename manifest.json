@@ -1,6 +1,6 @@
 {
-  "name": "Saturn Planer",
-  "short_name": "Saturn Planer",
+  "name": "Saturnplaner",
+  "short_name": "Saturnplaner",
   "description": "Zwischen den Sternen — zu dir selbst.",
   "start_url": "/login.html",
   "display": "standalone",

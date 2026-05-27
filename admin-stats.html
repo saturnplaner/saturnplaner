@@ -38,10 +38,51 @@
   .refresh-btn{display:block;margin:20px auto 0;background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;border-radius:50px;padding:12px 28px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;}
   .loading{text-align:center;padding:40px;color:var(--text-light);font-size:14px;font-weight:600;}
   .secret-note{text-align:center;margin-top:32px;font-size:12px;color:var(--text-light);font-weight:600;padding:12px;background:rgba(247,197,197,0.1);border-radius:10px;max-width:500px;margin-left:auto;margin-right:auto;}
+  /* LOGIN GATE */
+  #login-gate{position:fixed;inset:0;z-index:9999;background:linear-gradient(145deg,#FFF0F8,#F8F0FF);display:flex;align-items:center;justify-content:center;}
+  #login-box{background:white;border-radius:24px;padding:40px 36px;box-shadow:0 8px 40px rgba(180,130,130,0.2);text-align:center;width:100%;max-width:360px;}
+  #login-box h2{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:#3D2C2C;margin:12px 0 6px;}
+  #login-box p{font-size:13px;color:#9B7E7E;font-weight:600;margin-bottom:24px;}
+  #pw-input{width:100%;padding:14px 18px;border-radius:50px;border:2px solid #F7C5C5;font-family:'Nunito',sans-serif;font-size:14px;color:#3D2C2C;outline:none;margin-bottom:12px;background:#FFF8F0;}
+  #pw-input:focus{border-color:#C87090;}
+  #pw-btn{width:100%;padding:14px;border-radius:50px;border:none;background:linear-gradient(135deg,#C87090,#9070C8);color:white;font-family:'Nunito',sans-serif;font-size:15px;font-weight:800;cursor:pointer;}
+  #pw-error{color:#C03030;font-size:13px;font-weight:700;margin-top:10px;display:none;}
+  #admin-content{display:none;}
 </style>
 </head>
 <body>
 
+<!-- LOGIN GATE -->
+<div id="login-gate">
+  <div id="login-box">
+    <div style="font-size:48px;">🪐</div>
+    <h2>Admin Login</h2>
+    <p>Nur für dich — bitte Passwort eingeben</p>
+    <input id="pw-input" type="password" placeholder="Passwort" onkeydown="if(event.key==='Enter')checkPw()">
+    <button id="pw-btn" onclick="checkPw()">Einloggen ✨</button>
+    <div id="pw-error">Falsches Passwort ✕</div>
+  </div>
+</div>
+
+<script>
+async function sha256(msg) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+const HASH = 'b8a7513f4bb301569fa8d7486e04639a5026d8adf72293030408b4fbec235aea';
+if (sessionStorage.getItem('admin_ok') === '1') unlock();
+async function checkPw() {
+  const val = document.getElementById('pw-input').value;
+  if (await sha256(val) === HASH) { sessionStorage.setItem('admin_ok','1'); unlock(); }
+  else { document.getElementById('pw-error').style.display='block'; }
+}
+function unlock() {
+  document.getElementById('login-gate').remove();
+  document.getElementById('admin-content').style.display='block';
+}
+</script>
+
+<div id="admin-content">
 <div class="header">
   <div style="font-size:48px;margin-bottom:12px;">🪐</div>
   <h1>Admin Dashboard</h1>
@@ -190,5 +231,6 @@ async function deleteAdminComment(id) {
 
 loadData();
 </script>
+</div><!-- /admin-content -->
 </body>
 </html>
