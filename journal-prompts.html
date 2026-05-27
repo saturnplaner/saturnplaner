@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal Prompts — Saturnplaner</title>
+<meta name="description" content="Deine täglichen Journal Prompts — Fragen die dich zum Nachdenken bringen. Selfcare, Selbstfindung, Motivation & mehr.">
+<meta property="og:title" content="Journal Prompts — Saturnplaner">
+<meta property="og:description" content="Klick eine Frage an und schreib drauflos. Für alle die sich selbst besser kennenlernen wollen. 🌸">
+<meta property="og:url" content="https://www.saturnplaner.ch/journal-prompts.html">
+<link rel="canonical" href="https://www.saturnplaner.ch/journal-prompts.html">
+<meta name="theme-color" content="#C87090">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --rose:#F7C5C5;--peach:#FFD9B7;--lavender:#D9C5F0;
+    --mint:#C5E8D5;--sky:#C5DCF0;--cream:#FFF8F0;
+    --text:#3D2C2C;--text-light:#9B7E7E;--accent:#C87090;
+    --shadow:rgba(180,130,130,0.15);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Nunito',sans-serif;color:var(--text);background:var(--cream);overflow-x:hidden;}
+
+  .banner{position:fixed;top:0;left:0;right:0;z-index:1100;background:linear-gradient(135deg,#C87090,#9070C8);padding:8px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;}
+  .banner span{font-size:13px;font-weight:800;color:white;}
+  .banner a{background:rgba(255,255,255,0.25);color:white;font-size:12px;font-weight:800;padding:4px 14px;border-radius:20px;text-decoration:none;}
+  nav{position:fixed;top:36px;left:0;right:0;z-index:1000;background:rgba(255,248,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(247,197,197,0.3);padding:0 40px;height:70px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .nav-logo-icon{font-size:28px;}
+  .nav-logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--text);}
+  .nav-links{display:flex;align-items:center;gap:20px;list-style:none;}
+  .nav-links a{text-decoration:none;font-size:13px;font-weight:700;color:var(--text-light);transition:color 0.2s;}
+  .nav-links a:hover,.nav-links a.active{color:var(--accent);}
+  .nav-cta{background:linear-gradient(135deg,var(--rose),var(--peach));color:#7A3030!important;padding:10px 22px;border-radius:50px;}
+
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes popIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+
+  /* HERO */
+  .hero{padding:130px 40px 48px;background:linear-gradient(145deg,#FFF0F8,#F8F0FF);text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'📓';position:absolute;font-size:250px;opacity:0.04;top:-20px;right:-20px;pointer-events:none;}
+  .hero-planet{font-size:60px;display:block;margin-bottom:14px;animation:float 5s ease-in-out infinite;}
+  .hero-badge{display:inline-block;background:rgba(200,112,144,0.1);border:1.5px solid rgba(200,112,144,0.25);color:var(--accent);font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:5px 16px;border-radius:50px;margin-bottom:14px;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,48px);font-weight:900;color:var(--text);margin-bottom:10px;line-height:1.2;}
+  .hero h1 span{background:linear-gradient(135deg,#C87090,#9070C8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .hero-sub{font-size:15px;color:var(--text-light);font-weight:600;max-width:480px;margin:0 auto;}
+
+  /* CATEGORIES */
+  .cat-section{padding:40px 40px 0;max-width:900px;margin:0 auto;}
+  .cat-title{font-size:12px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--text-light);margin-bottom:16px;text-align:center;}
+  .cat-pills{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+  .cat-pill{padding:10px 22px;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:all 0.2s;border:2px solid transparent;background:white;color:var(--text-light);box-shadow:0 2px 10px var(--shadow);}
+  .cat-pill:hover{transform:translateY(-2px);box-shadow:0 6px 20px var(--shadow);}
+  .cat-pill.active{color:white;border-color:transparent;box-shadow:0 4px 16px rgba(200,112,144,0.3);}
+
+  /* PROMPTS GRID */
+  .prompts-section{padding:32px 40px 80px;max-width:900px;margin:0 auto;}
+  .prompts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
+
+  .prompt-card{background:white;border-radius:20px;padding:22px 20px;box-shadow:0 3px 16px var(--shadow);cursor:pointer;transition:all 0.2s;border:1.5px solid rgba(247,197,197,0.2);position:relative;overflow:hidden;animation:fadeUp 0.3s ease both;}
+  .prompt-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:20px 20px 0 0;}
+  .prompt-card:hover{transform:translateY(-4px);box-shadow:0 10px 32px var(--shadow);}
+  .prompt-card:active{transform:scale(0.98);}
+  .prompt-emoji{font-size:28px;margin-bottom:10px;display:block;}
+  .prompt-text{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--text);line-height:1.5;}
+  .prompt-hint{font-size:11px;color:var(--text-light);font-weight:700;margin-top:10px;}
+
+  /* MODAL */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(60,20,40,0.45);backdrop-filter:blur(8px);z-index:3000;align-items:center;justify-content:center;padding:20px;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--cream);border-radius:32px;max-width:520px;width:100%;padding:40px;box-shadow:0 30px 80px rgba(100,40,60,0.2);animation:popIn 0.3s ease;text-align:center;position:relative;}
+  .modal-close{position:absolute;top:16px;right:16px;background:rgba(247,197,197,0.3);border:none;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;color:var(--text-light);}
+  .modal-emoji{font-size:56px;margin-bottom:16px;display:block;}
+  .modal-cat{font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+  .modal-question{font-family:'Playfair Display',serif;font-size:clamp(20px,3vw,26px);font-weight:900;color:var(--text);line-height:1.4;margin-bottom:20px;}
+  .modal-hint{font-size:13px;color:var(--text-light);font-weight:600;line-height:1.6;margin-bottom:24px;font-style:italic;}
+  .modal-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .modal-btn-next{background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;border-radius:50px;padding:12px 28px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;}
+  .modal-btn-share{background:white;color:var(--accent);border:2px solid var(--rose);border-radius:50px;padding:12px 22px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;}
+
+  /* WATERMARK */
+  .watermark{text-align:center;padding:0 40px 48px;font-size:12px;color:var(--text-light);font-weight:600;}
+  .watermark a{color:var(--accent);font-weight:800;text-decoration:none;}
+
+  footer{background:#1a1a2e;padding:40px;text-align:center;color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;}
+  footer a{color:rgba(255,255,255,0.7);text-decoration:none;margin:0 12px;}
+
+  @media(max-width:768px){
+    nav{padding:0 20px;}
+    .nav-links{display:none;}
+    .cat-section,.prompts-section{padding-left:20px;padding-right:20px;}
+    .hero{padding:110px 20px 40px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <span>🪐</span>
+  <span>Saturnplaner App — <em>Coming Soon!</em></span>
+  <a href="newsletter.html">Jetzt eintragen →</a>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-icon">🪐</span>
+    <div class="nav-logo-text">Saturnplaner</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="blog.html">📖 Blog</a></li>
+    <li><a href="tipps.html">⚡ Tipps & Tricks</a></li>
+    <li><a href="planeten.html">🌌 Planeten</a></li>
+    <li><a href="community.html">🌱 Community</a></li>
+    <li><a href="about.html">🪐 Über uns</a></li>
+    <li><a href="newsletter.html">💌 Newsletter</a></li>
+    <li><a href="login.html" class="nav-cta">Einloggen ✨</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-planet">📓</span>
+  <div class="hero-badge">✦ Journal Prompts ✦</div>
+  <h1>Fragen die dich<br><span>wirklich bewegen</span></h1>
+  <p class="hero-sub">Klick eine Frage an, nimm dir einen Moment — und schreib drauflos. Kein Druck, kein Muss. 🌸</p>
+</div>
+
+<!-- CATEGORIES -->
+<div class="cat-section">
+  <div class="cat-title">Wähle ein Thema</div>
+  <div class="cat-pills">
+    <div class="cat-pill active" data-cat="alle" onclick="filterPrompts('alle',this)" style="background:linear-gradient(135deg,#C87090,#9070C8);color:white;">✦ Alle</div>
+    <div class="cat-pill" data-cat="selfcare" onclick="filterPrompts('selfcare',this)">🌸 Selfcare</div>
+    <div class="cat-pill" data-cat="selbstfindung" onclick="filterPrompts('selbstfindung',this)">🦋 Selbstfindung</div>
+    <div class="cat-pill" data-cat="gefühle" onclick="filterPrompts('gefühle',this)">💭 Gefühle</div>
+    <div class="cat-pill" data-cat="motivation" onclick="filterPrompts('motivation',this)">💫 Motivation</div>
+    <div class="cat-pill" data-cat="alltag" onclick="filterPrompts('alltag',this)">🌿 Alltag</div>
+    <div class="cat-pill" data-cat="dankbarkeit" onclick="filterPrompts('dankbarkeit',this)">🙏 Dankbarkeit</div>
+  </div>
+</div>
+
+<!-- PROMPTS -->
+<div class="prompts-section">
+  <div class="prompts-grid" id="promptsGrid"></div>
+</div>
+
+<div class="watermark">
+  🪐 Journal Prompts von <a href="https://www.saturnplaner.ch">saturnplaner.ch</a> —
+  Teile deine Gedanken: <a href="https://instagram.com/saturnplaner" target="_blank">@saturnplaner</a>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalIfBg(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <span class="modal-emoji" id="modalEmoji"></span>
+    <div class="modal-cat" id="modalCat"></div>
+    <div class="modal-question" id="modalQuestion"></div>
+    <div class="modal-hint" id="modalHint"></div>
+    <div class="modal-btns">
+      <button class="modal-btn-next" onclick="nextPrompt()">Nächste Frage ✨</button>
+      <button class="modal-btn-share" onclick="copyPrompt()">📋 Kopieren</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:12px;">🪐 Saturnplaner — Zwischen den Sternen, zu dir selbst.</div>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="tipps.html">Tipps & Tricks</a>
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+  </div>
+  <div style="margin-top:16px;font-size:11px;opacity:0.4;">© 2026 Saturnplaner</div>
+</footer>
+
+<script>
+const prompts = [
+  // SELFCARE
+  {cat:'selfcare', emoji:'🛁', text:'Was hat mir heute wirklich gut getan — auch wenn es nur etwas Kleines war?', hint:'Denk an einen Moment wo du dich leicht oder wohl gefühlt hast.', color:'#C87090'},
+  {cat:'selfcare', emoji:'🌸', text:'Wie fühlt sich mein Körper gerade an? Was braucht er heute?', hint:'Schliess kurz die Augen bevor du schreibst.', color:'#C87090'},
+  {cat:'selfcare', emoji:'🛁', text:'Was tue ich für mich — nicht für andere, nicht weil ich muss?', hint:'Selfcare ist kein Luxus. Es ist notwendig.', color:'#C87090'},
+  {cat:'selfcare', emoji:'💤', text:'Wann habe ich zuletzt wirklich gut geschlafen und was war anders?', hint:'Denk an deine letzte echte Erholung.', color:'#C87090'},
+  {cat:'selfcare', emoji:'🌙', text:'Was würde mir heute Abend gut tun?', hint:'Kein Muss — nur was sich schön anfühlt.', color:'#C87090'},
+
+  // SELBSTFINDUNG
+  {cat:'selbstfindung', emoji:'🦋', text:'Wer bin ich wenn niemand zuschaut?', hint:'Das ist vielleicht die ehrlichste Version von dir.', color:'#9070C8'},
+  {cat:'selbstfindung', emoji:'🌟', text:'Was würde ich tun wenn ich wüsste dass ich nicht scheitern kann?', hint:'Träum gross. Niemand liest das ausser dir.', color:'#9070C8'},
+  {cat:'selbstfindung', emoji:'🪞', text:'Was mag ich an mir — ohne mich direkt zu vergleichen?', hint:'Mindestens drei Dinge. Du findest sie.', color:'#9070C8'},
+  {cat:'selbstfindung', emoji:'🗺️', text:'Wohin möchte ich in einem Jahr stehen — innerlich?', hint:'Nicht im Job, nicht im Leben. Innerlich.', color:'#9070C8'},
+  {cat:'selbstfindung', emoji:'💜', text:'Was habe ich in letzter Zeit über mich selbst gelernt?', hint:'Auch kleine Erkenntnisse zählen.', color:'#9070C8'},
+
+  // GEFÜHLE
+  {cat:'gefühle', emoji:'💭', text:'Was trage ich gerade mit mir das ich noch niemandem gesagt habe?', hint:'Schreiben ist manchmal leichter als sprechen.', color:'#B070A8'},
+  {cat:'gefühle', emoji:'🌊', text:'Welches Gefühl begleitet mich gerade am meisten?', hint:'Benennen hilft. Du musst es nicht lösen.', color:'#B070A8'},
+  {cat:'gefühle', emoji:'😮‍💨', text:'Was darf ich heute loslassen?', hint:'Auch wenn es schwer fällt — es darf gehen.', color:'#B070A8'},
+  {cat:'gefühle', emoji:'🤍', text:'Was brauche ich gerade am meisten — von mir selbst?', hint:'Mitgefühl? Ruhe? Mut? Geduld?', color:'#B070A8'},
+  {cat:'gefühle', emoji:'💬', text:'Was würde ich mir selbst sagen wenn ich meine beste Freundin wäre?', hint:'Du verdienst dieselbe Fürsorge die du anderen gibst.', color:'#B070A8'},
+
+  // MOTIVATION
+  {cat:'motivation', emoji:'💫', text:'Was macht mich wirklich stolz auf mich — auch wenn es niemand sieht?', hint:'Kleine Dinge zählen genauso viel.', color:'#C8A030'},
+  {cat:'motivation', emoji:'🎯', text:'Was ist ein kleiner Schritt den ich heute machen kann?', hint:'Nicht die ganze Liste. Nur einer.', color:'#C8A030'},
+  {cat:'motivation', emoji:'🌱', text:'Was möchte ich in diesem Monat wachsen lassen — in mir?', hint:'Eine Eigenschaft, eine Gewohnheit, eine Einstellung.', color:'#C8A030'},
+  {cat:'motivation', emoji:'🔥', text:'Was gibt mir Energie wenn ich mich leer fühle?', hint:'Denk an das letzte Mal wo du richtig aufgelebt bist.', color:'#C8A030'},
+  {cat:'motivation', emoji:'✨', text:'Welcher Satz würde mir gerade helfen weiterzumachen?', hint:'Schreib ihn auf. Mach ihn zu deinem Mantra.', color:'#C8A030'},
+
+  // ALLTAG
+  {cat:'alltag', emoji:'🌿', text:'Was hat mich heute zum Lächeln gebracht — auch wenn es winzig war?', hint:'Ein Geruch, ein Moment, ein Licht.', color:'#40A070'},
+  {cat:'alltag', emoji:'☕', text:'Was ist mein Lieblingsmoment im Alltag und warum?', hint:'Der kleine Moment der sich wie Zuhause anfühlt.', color:'#40A070'},
+  {cat:'alltag', emoji:'🛍️', text:'Was gönne ich mir heute — ohne schlechtes Gewissen?', hint:'Du verdienst es einfach so.', color:'#40A070'},
+  {cat:'alltag', emoji:'🏙️', text:'Was liebe ich an meiner Stadt oder meinem Zuhause?', hint:'Manchmal übersehen wir das Schöne das immer da ist.', color:'#40A070'},
+  {cat:'alltag', emoji:'🌤️', text:'Wie sieht ein perfekter Tag für mich aus?', hint:'Von morgens bis abends. Nur für mich.', color:'#40A070'},
+
+  // DANKBARKEIT
+  {cat:'dankbarkeit', emoji:'🙏', text:'Für was bin ich heute dankbar — auch wenn der Tag schwer war?', hint:'Mindestens eine Sache. Sie ist da.', color:'#D080A0'},
+  {cat:'dankbarkeit', emoji:'💕', text:'Welcher Mensch in meinem Leben verdient mehr Dankbarkeit?', hint:'Vielleicht magst du es ihm sagen.', color:'#D080A0'},
+  {cat:'dankbarkeit', emoji:'🌸', text:'Was nehme ich in meinem Leben als selbstverständlich hin das eigentlich ein Geschenk ist?', hint:'Gesundheit, Sicherheit, Liebe — manchmal vergessen wir es.', color:'#D080A0'},
+  {cat:'dankbarkeit', emoji:'🪐', text:'Was hat mich dieses Jahr verändert — und dafür bin ich dankbar?', hint:'Auch schwere Erfahrungen können Wachstum bringen.', color:'#D080A0'},
+  {cat:'dankbarkeit', emoji:'✨', text:'Was kann ich heute zu jemand anderem sagen das ihm den Tag schöner macht?', hint:'Dankbarkeit weitergeben ist doppelt schön.', color:'#D080A0'},
+];
+
+const catColors = {
+  selfcare: 'linear-gradient(135deg,#C87090,#D090A0)',
+  selbstfindung: 'linear-gradient(135deg,#9070C8,#B080D0)',
+  gefühle: 'linear-gradient(135deg,#B070A8,#C080B8)',
+  motivation: 'linear-gradient(135deg,#C8A030,#D8B040)',
+  alltag: 'linear-gradient(135deg,#40A070,#50B080)',
+  dankbarkeit: 'linear-gradient(135deg,#D080A0,#E090B0)',
+};
+
+let activeFilter = 'alle';
+let currentPromptIndex = 0;
+let filteredPrompts = [];
+
+function filterPrompts(cat, el) {
+  activeFilter = cat;
+  document.querySelectorAll('.cat-pill').forEach(p => {
+    p.classList.remove('active');
+    p.style.background = 'white';
+    p.style.color = '#9B7E7E';
+  });
+  el.classList.add('active');
+  if (cat === 'alle') {
+    el.style.background = 'linear-gradient(135deg,#C87090,#9070C8)';
+    el.style.color = 'white';
+  } else {
+    el.style.background = catColors[cat] || 'linear-gradient(135deg,#C87090,#9070C8)';
+    el.style.color = 'white';
+  }
+  renderPrompts(cat === 'alle' ? prompts : prompts.filter(p => p.cat === cat));
+}
+
+function renderPrompts(list) {
+  filteredPrompts = list;
+  const grid = document.getElementById('promptsGrid');
+  grid.innerHTML = list.map((p, i) => `
+    <div class="prompt-card" onclick="openPrompt(${i})" style="animation-delay:${i*0.04}s;">
+      <div style="position:absolute;top:0;left:0;right:0;height:4px;background:${p.color};border-radius:20px 20px 0 0;"></div>
+      <span class="prompt-emoji">${p.emoji}</span>
+      <div class="prompt-text">${p.text}</div>
+      <div class="prompt-hint">✦ Tippen zum Öffnen</div>
+    </div>
+  `).join('');
+}
+
+function openPrompt(index) {
+  currentPromptIndex = index;
+  const p = filteredPrompts[index];
+  document.getElementById('modalEmoji').textContent = p.emoji;
+  document.getElementById('modalCat').textContent = '✦ ' + p.cat.charAt(0).toUpperCase() + p.cat.slice(1) + ' ✦';
+  document.getElementById('modalQuestion').textContent = p.text;
+  document.getElementById('modalHint').textContent = p.hint;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalIfBg(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function nextPrompt() {
+  currentPromptIndex = (currentPromptIndex + 1) % filteredPrompts.length;
+  openPrompt(currentPromptIndex);
+}
+
+function copyPrompt() {
+  const text = filteredPrompts[currentPromptIndex].text;
+  navigator.clipboard.writeText('📓 Journal Prompt von @saturnplaner:\n\n"' + text + '"\n\nsaturnplaner.ch/journal-prompts.html');
+  const btn = document.querySelector('.modal-btn-share');
+  btn.textContent = '✓ Kopiert!';
+  setTimeout(() => { btn.textContent = '📋 Kopieren'; }, 2000);
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+renderPrompts(prompts);
+</script>
+</body>
+</html>
