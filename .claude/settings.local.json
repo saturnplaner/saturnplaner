@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init *)",
+      "Bash(git remote *)",
+      "Bash(git fetch *)",
+      "Bash(git checkout *)",
+      "PowerShell([System.BitConverter]::ToString\\([System.Security.Cryptography.SHA256]::Create\\(\\).ComputeHash\\([System.Text.Encoding]::UTF8.GetBytes\\(\"Shefkide.1993\"\\)\\)\\).Replace\\(\"-\",\"\"\\).ToLower\\(\\))",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git config *)",
+      "Bash(git push *)",
+      "PowerShell(Get-Process *)",
+      "PowerShell(cmd /c \"rd /s /q C:\\\\Users\\\\grend\\\\saturnplaner-app\\\\node_modules\" 2>&1; cmd /c \"del /f C:\\\\Users\\\\grend\\\\saturnplaner-app\\\\package-lock.json\" 2>&1; Write-Output \"Bereinigt\")",
+      "PowerShell(cmd /c \"rd /s /q C:\\\\Users\\\\grend\\\\saturnplaner-app\\\\node_modules\" 2>&1; Write-Output \"Gelöscht\")"
+    ]
+  }
+}

@@ -206,6 +206,16 @@
 const { createClient } = supabase;
 const sb = createClient('https://buowsgggbkpsssspewtk.supabase.co','sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO');
 
+async function addToBrevo(email, name) {
+  try {
+    await fetch('https://buowsgggbkpsssspewtk.supabase.co/functions/v1/brevo-subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, name: name || '' })
+    });
+  } catch(e) {}
+}
+
 async function subscribe() {
   const name = document.getElementById('nl-name').value.trim();
   const email = document.getElementById('nl-email').value.trim();
@@ -218,6 +228,7 @@ async function subscribe() {
   btn.disabled = true;
   try {
     await sb.from('newsletter_subscribers').upsert({ email, name, source: 'newsletter_page' });
+    await addToBrevo(email, name);
   } catch(e) {}
   document.getElementById('nl-name').style.display = 'none';
   document.getElementById('nl-email').style.display = 'none';

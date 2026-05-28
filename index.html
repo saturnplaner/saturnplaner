@@ -1927,17 +1927,22 @@ function toggleBannerPopup() {
   const p = document.getElementById('bannerPopup');
   p.style.display = p.style.display === 'none' ? 'block' : 'none';
 }
+async function addToBrevo(email, name) {
+  try {
+    await fetch('https://buowsgggbkpsssspewtk.supabase.co/functions/v1/brevo-subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, name: name || '' })
+    });
+  } catch(e) {}
+}
+
 async function submitBannerEmail() {
   const email = document.getElementById('bannerEmail').value.trim();
   if (!email || !email.includes('@')) return;
   try {
     await sb.from('newsletter_subscribers').upsert({ email, source: 'banner', wants_app: true });
-    // E-Mail Benachrichtigung an dich
-    await fetch('https://buowsgggbkpsssspewtk.supabase.co/functions/v1/notify', {
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO'},
-      body: JSON.stringify({ message: `Neue App-Anmeldung: ${email}` })
-    }).catch(()=>{});
+    await addToBrevo(email, '');
   } catch(e) {}
   document.getElementById('bannerSuccess').style.display = 'block';
   document.getElementById('bannerEmail').style.display = 'none';
