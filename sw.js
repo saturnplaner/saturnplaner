@@ -1,4 +1,4 @@
-const CACHE_NAME = 'saturn-planer-v1';
+const CACHE_NAME = 'saturnplaner-v2';
 const ASSETS = [
   '/',
   '/index.html',
