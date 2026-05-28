@@ -212,7 +212,7 @@ async function addToBrevo(email, name) {
   try {
     await fetch('https://buowsgggbkpsssspewtk.supabase.co/functions/v1/brevo-subscribe', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO' },
       body: JSON.stringify({ email, name: name || '' })
     });
   } catch(e) {}
