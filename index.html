@@ -1929,9 +1929,9 @@ function toggleBannerPopup() {
 }
 async function addToBrevo(email, name) {
   try {
-    await fetch('https://buowsgggbkpsssspewtk.supabase.co/functions/v1/brevo-subscribe', {
+    await fetch('https://buowsgggbkpsssspewtk.supabase.co/functions/v1/dynamic-action', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO' },
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1b3dzZ2dnYmtwc3Nzc3Bld3RrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3NTA1MDIsImV4cCI6MjA5NTMyNjUwMn0.KN_xiOMo5oz8NIzq1HTNXWW0UIurT7LpQWI1seJawyw' },
       body: JSON.stringify({ email, name: name || '' })
     });
   } catch(e) {}
