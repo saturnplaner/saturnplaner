@@ -10,9 +10,7 @@
       "Bash(git commit -m ' *)",
       "Bash(git config *)",
       "Bash(git push *)",
-      "PowerShell(Get-Process *)",
-      "PowerShell(cmd /c \"rd /s /q C:\\\\Users\\\\grend\\\\saturnplaner-app\\\\node_modules\" 2>&1; cmd /c \"del /f C:\\\\Users\\\\grend\\\\saturnplaner-app\\\\package-lock.json\" 2>&1; Write-Output \"Bereinigt\")",
-      "PowerShell(cmd /c \"rd /s /q C:\\\\Users\\\\grend\\\\saturnplaner-app\\\\node_modules\" 2>&1; Write-Output \"Gelöscht\")"
+      "Bash(git reset *)"
     ]
   }
 }
