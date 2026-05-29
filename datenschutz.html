@@ -224,5 +224,21 @@ function fixNavPosition() {
 fixNavPosition();
 window.addEventListener('resize', fixNavPosition);
 </script>
+
+<!-- COOKIE BANNER -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:8000;backdrop-filter:blur(8px);padding:16px 40px;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;border-top:2px solid rgba(200,112,144,0.3);background:rgba(26,26,46,0.97);">
+  <div style="font-size:13px;color:rgba(255,255,255,0.8);font-weight:600;max-width:600px;line-height:1.5;">
+    🍪 Wir verwenden technisch notwendige Cookies für die Funktion der Website. Keine Werbe-Cookies.
+    <a href="datenschutz.html" style="color:#F7C5C5;text-decoration:none;font-weight:700;">Datenschutz lesen →</a>
+  </div>
+  <div style="display:flex;gap:10px;flex-shrink:0;">
+    <button onclick="acceptCookies()" style="background:linear-gradient(135deg,#C87090,#9070C8);border:none;border-radius:50px;padding:10px 22px;color:white;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">Alles klar ✓</button>
+  </div>
+</div>
+<script>
+const cookieBanner = document.getElementById('cookieBanner');
+if (!localStorage.getItem('sp_cookies_accepted')) { cookieBanner.style.display = 'flex'; }
+function acceptCookies() { localStorage.setItem('sp_cookies_accepted', '1'); cookieBanner.style.display = 'none'; }
+</script>
 </body>
 </html>
