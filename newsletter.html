@@ -23,6 +23,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  (function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t);})();
+</script>
 <style>
   :root {
     --rose:#F7C5C5;--peach:#FFD9B7;--lavender:#D9C5F0;
@@ -103,6 +106,16 @@
   /* NAV HEIGHT FIX */
   nav { height: 70px !important; min-height: 70px !important; box-sizing: border-box !important; align-items: flex-end !important; padding-bottom: 14px !important; }
   nav .nav-logo, nav .nav-links, nav .hamburger { margin-top: 0 !important; margin-bottom: 0 !important; }
+  .theme-toggle{background:none;border:1.5px solid rgba(200,112,144,0.3);border-radius:20px;padding:5px 11px;cursor:pointer;font-size:16px;transition:all 0.2s;color:var(--text);}
+  .theme-toggle:hover{background:rgba(247,197,197,0.2);}
+  [data-theme="dark"] html,[data-theme="dark"] body{background:#1C1028 !important;color:#F0E0D0 !important;}
+  [data-theme="dark"] nav{background:rgba(28,16,40,0.97) !important;border-bottom-color:rgba(200,112,144,0.2) !important;}
+  [data-theme="dark"] .mobile-menu{background:rgba(28,16,40,0.98) !important;}
+  [data-theme="dark"] .mobile-menu a{color:#F0E0D0 !important;}
+  [data-theme="dark"] .hamburger span{background:#F0E0D0 !important;}
+  [data-theme="dark"] .nav-logo-text{color:#F0E0D0 !important;}
+  [data-theme="dark"] .nav-links a{color:#C0A0A0 !important;}
+  [data-theme="dark"] footer{background:#0D0A12 !important;}
 </style>
 </head>
 <body>
@@ -128,6 +141,8 @@
     <li><a href="newsletter.html" class="active">💌 Newsletter</a></li>
     <li><a href="login.html" class="nav-cta">Einloggen ✨</a></li>
 </ul>
+  <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Hell/Dunkel">&#x1F319;</button>
+
   <button class="hamburger" onclick="openMobileMenu()"><span></span><span></span><span></span></button>
 </nav>
 
@@ -298,6 +313,13 @@ window.addEventListener('resize', fixNavPosition);
 const cookieBanner = document.getElementById('cookieBanner');
 if (!localStorage.getItem('sp_cookies_accepted')) { cookieBanner.style.display = 'flex'; }
 function acceptCookies() { localStorage.setItem('sp_cookies_accepted', '1'); cookieBanner.style.display = 'none'; }
+</script>
+<script>
+var DARK={card:'linear-gradient(135deg,#2A1535,#201040)',section:'linear-gradient(145deg,#1C1028,#1A1535,#182040)',cardRgba:'rgba(42,21,53,0.92)',text:'#F0E0D0',textLight:'#C0A0B8'};
+function applyDark(){document.querySelectorAll('*').forEach(function(el){if(['SCRIPT','STYLE','HEAD','HTML'].includes(el.tagName))return;var s=el.getAttribute('style');if(!s)return;var ns=s;if(/background[^:]*:\s*linear-gradient\([^)]*(?:#FFF|#F8F|#F0F|#FFE|#FFD|#F5E|#FAF)/i.test(s))ns=ns.replace(/background[^:]*:\s*linear-gradient\([^;)]+\)/g,'background:'+DARK.section);if(/rgba\(255,248,240/i.test(s))ns=ns.replace(/rgba\(255,248,240,[\d.]+\)/g,'rgba(28,16,40,0.97)');if(/background[^:]*:\s*(?:white|#[Ff]{3,6})\b/.test(s))ns=ns.replace(/background[^:]*:\s*(?:white|#[Ff]{3,6})\b/g,'background:'+DARK.card);if(/background[^:]*:\s*rgba\(255,\s*255,\s*255/i.test(s))ns=ns.replace(/background[^:]*:\s*rgba\(255,\s*255,\s*255,\s*[\d.]+\)/gi,'background:'+DARK.cardRgba);if(/#3[Dd]2[Cc]2[Cc]/.test(s))ns=ns.replace(/#3[Dd]2[Cc]2[Cc]/g,DARK.text);if(/#9[Bb]7[Ee]7[Ee]/.test(s))ns=ns.replace(/#9[Bb]7[Ee]7[Ee]/g,DARK.textLight);if(/#1[Aa]1[Aa][12][Ee2a]/.test(s))ns=ns.replace(/#1[Aa]1[Aa][12][Ee2a]/g,DARK.text);if(/#414141/.test(s))ns=ns.replace(/#414141/g,DARK.text);if(/color:\s*#[246][46][46]/.test(s))ns=ns.replace(/color:\s*(#[246][46][46]+)/g,'color:'+DARK.textLight);if(ns!==s){el.dataset.origStyle=s;el.setAttribute('style',ns);}});}
+function removeDark(){document.querySelectorAll('[data-orig-style]').forEach(function(el){el.setAttribute('style',el.dataset.origStyle);delete el.dataset.origStyle;});}
+function toggleTheme(){var isDark=document.documentElement.getAttribute('data-theme')==='dark';var t=isDark?'light':'dark';document.documentElement.setAttribute('data-theme',t);var btn=document.getElementById('theme-toggle');if(btn)btn.textContent=isDark?'🌙':'☀️';localStorage.setItem('theme',t);isDark?removeDark():applyDark();}
+document.addEventListener('DOMContentLoaded',function(){var saved=localStorage.getItem('theme')||'light';var btn=document.getElementById('theme-toggle');if(btn)btn.textContent=saved==='dark'?'☀️':'🌙';if(saved==='dark')applyDark();});
 </script>
 </body>
 </html>
