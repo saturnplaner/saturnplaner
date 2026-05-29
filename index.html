@@ -1064,18 +1064,15 @@
   .theme-toggle:hover { background: rgba(247,197,197,0.2); }
 
   /* DARK MODE */
-  [data-theme="dark"] html { background: #1E1428; }
-  [data-theme="dark"] body {
-    filter: invert(0.92) hue-rotate(180deg) brightness(1.08) saturate(0.9);
-  }
-  [data-theme="dark"] img,
-  [data-theme="dark"] video,
-  [data-theme="dark"] iframe,
-  [data-theme="dark"] .banner,
-  [data-theme="dark"] footer,
-  [data-theme="dark"] #cookieBanner {
-    filter: invert(1) hue-rotate(180deg);
-  }
+  [data-theme="dark"] html,
+  [data-theme="dark"] body { background: #1C1028 !important; color: #F0E0D0 !important; }
+  [data-theme="dark"] nav { background: rgba(28,16,40,0.97) !important; border-bottom-color: rgba(200,112,144,0.2) !important; }
+  [data-theme="dark"] .mobile-menu { background: rgba(28,16,40,0.98) !important; }
+  [data-theme="dark"] .mobile-menu a { color: #F0E0D0 !important; }
+  [data-theme="dark"] .hamburger span { background: #F0E0D0 !important; }
+  [data-theme="dark"] .nav-logo-text { color: #F0E0D0 !important; }
+  [data-theme="dark"] .nav-links a { color: #C0A0A0 !important; }
+  [data-theme="dark"] footer { background: #0D0A12 !important; }
 </style>
 <script type="application/ld+json">
 {
@@ -2378,18 +2375,70 @@ function acceptCookies() {
 </script>
 <script>
 // Theme Toggle
+const DARK = {
+  card: 'linear-gradient(135deg,#2A1535,#201040)',
+  section: 'linear-gradient(145deg,#1C1028,#1A1535,#182040)',
+  sectionAlt: 'linear-gradient(145deg,#1A1535,#1C1028)',
+  cardRgba: 'rgba(42,21,53,0.92)',
+  text: '#F0E0D0',
+  textLight: '#C0A0B8',
+  nav: 'rgba(28,16,40,0.97)'
+};
+
+function applyDark() {
+  document.querySelectorAll('*').forEach(el => {
+    if (['SCRIPT','STYLE','HEAD','HTML'].includes(el.tagName)) return;
+    const s = el.getAttribute('style');
+    if (!s) return;
+    let ns = s;
+    // Section gradients with light colors
+    if (/background[^:]*:\s*linear-gradient\([^)]*(?:#FFF|#F8F|#F0F|#FFE|#FFD|#F5E|#FAF)/i.test(s)) {
+      ns = ns.replace(/background[^:]*:\s*linear-gradient\([^;)]+\)/g, `background:${DARK.section}`);
+    }
+    // Nav rgba white
+    if (/rgba\(255,248,240/i.test(s)) {
+      ns = ns.replace(/rgba\(255,248,240,[\d.]+\)/g, 'rgba(28,16,40,0.97)');
+    }
+    // White card backgrounds
+    if (/background[^:]*:\s*(?:white|#[Ff]{3,6})\b/.test(s)) {
+      ns = ns.replace(/background[^:]*:\s*(?:white|#[Ff]{3,6})\b/g, `background:${DARK.card}`);
+    }
+    // rgba white
+    if (/background[^:]*:\s*rgba\(255,\s*255,\s*255/i.test(s)) {
+      ns = ns.replace(/background[^:]*:\s*rgba\(255,\s*255,\s*255,\s*[\d.]+\)/gi, `background:${DARK.cardRgba}`);
+    }
+    // Dark text colors
+    if (/#3[Dd]2[Cc]2[Cc]/.test(s)) ns = ns.replace(/#3[Dd]2[Cc]2[Cc]/g, DARK.text);
+    if (/#9[Bb]7[Ee]7[Ee]/.test(s)) ns = ns.replace(/#9[Bb]7[Ee]7[Ee]/g, DARK.textLight);
+    if (/#1[Aa]1[Aa][12][Ee2a]/.test(s)) ns = ns.replace(/#1[Aa]1[Aa][12][Ee2a]/g, DARK.text);
+    if (/#414141/.test(s)) ns = ns.replace(/#414141/g, DARK.text);
+    if (/color:\s*#[246][46][46]/.test(s)) ns = ns.replace(/color:\s*(#[246][46][46]+)/g, `color:${DARK.textLight}`);
+    if (/color:\s*#(?:2|1)[Aa]1[Aa]/.test(s)) ns = ns.replace(/color:\s*#(?:2|1)[Aa]1[Aa]\w+/g, `color:${DARK.text}`);
+    if (ns !== s) { el.dataset.origStyle = s; el.setAttribute('style', ns); }
+  });
+}
+
+function removeDark() {
+  document.querySelectorAll('[data-orig-style]').forEach(el => {
+    el.setAttribute('style', el.dataset.origStyle);
+    delete el.dataset.origStyle;
+  });
+}
+
 function toggleTheme() {
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   const newTheme = isDark ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', newTheme);
   document.getElementById('theme-toggle').textContent = isDark ? '🌙' : '☀️';
   localStorage.setItem('theme', newTheme);
+  isDark ? removeDark() : applyDark();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
   const saved = localStorage.getItem('theme') || 'light';
   const btn = document.getElementById('theme-toggle');
   if (btn) btn.textContent = saved === 'dark' ? '☀️' : '🌙';
+  if (saved === 'dark') applyDark();
 });
 
 // Mobile Menu
