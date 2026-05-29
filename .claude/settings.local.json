@@ -10,20 +10,11 @@
       "Bash(git commit -m ' *)",
       "Bash(git config *)",
       "Bash(git push *)",
-      "Bash(git reset *)",
-      "Bash(curl *)",
-      "Bash(git rm *)",
-      "Bash(npm install *)",
-      "Bash(node -e \"const m = require\\('multer'\\); console.log\\('multer version OK:', typeof m\\)\")",
-      "Bash(node server.js)",
-      "Bash(ipconfig)",
-      "Bash(findstr /i \"IPv4\")",
-      "PowerShell(New-NetFirewallRule *)",
-      "Bash(npx ngrok *)",
-      "Bash(npx --yes localtunnel --port 3000)",
-      "Bash(npx localtunnel *)",
-      "PowerShell(Get-NetTCPConnection *)",
-      "Bash(cmd /c start.bat)"
+      "PowerShell(Get-Process *)",
+      "PowerShell(cmd /c \"rd /s /q C:\\\\Users\\\\grend\\\\saturnplaner-app\\\\node_modules\" 2>&1; cmd /c \"del /f C:\\\\Users\\\\grend\\\\saturnplaner-app\\\\package-lock.json\" 2>&1; Write-Output \"Bereinigt\")",
+      "PowerShell(cmd /c \"rd /s /q C:\\\\Users\\\\grend\\\\saturnplaner-app\\\\node_modules\" 2>&1; Write-Output \"Gelöscht\")",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "PowerShell(New-NetFirewallRule *)"
     ]
   }
 }
