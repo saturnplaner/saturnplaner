@@ -1201,6 +1201,41 @@
 </section>
 
 
+<!-- PROFIL & BEGRÜSSUNG -->
+<section style="padding:48px 40px;background:white;" id="mein-profil">
+
+  <!-- Nicht eingeloggt -->
+  <div id="profil-gast" style="max-width:560px;margin:0 auto;text-align:center;padding:32px;background:linear-gradient(145deg,#FFF0F8,#F8F0FF);border-radius:28px;border:1.5px solid rgba(247,197,197,0.35);box-shadow:0 4px 20px rgba(180,100,140,0.08);">
+    <div style="font-size:48px;margin-bottom:12px;animation:float 5s ease-in-out infinite;">🪐</div>
+    <div style="font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">✦ Mein Bereich ✦</div>
+    <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:10px;">Dein persönlicher Bereich</div>
+    <p style="font-size:14px;color:var(--text-light);font-weight:600;margin-bottom:22px;line-height:1.6;">Logge dich ein um deinen Namen zu speichern, deinen persönlichen Schutzplaneten zu sehen und die Website zu personalisieren.</p>
+    <a href="login.html" style="display:inline-block;background:linear-gradient(135deg,#C87090,#9070C8);color:white;text-decoration:none;border-radius:50px;padding:12px 28px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;box-shadow:0 4px 16px rgba(200,112,144,0.3);">✨ Einloggen / Registrieren</a>
+  </div>
+
+  <!-- Eingeloggt -->
+  <div id="profil-user" style="display:none;max-width:560px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">✦ Mein Bereich ✦</div>
+      <h2 id="ws-greeting" style="font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:900;color:var(--text);margin:0;">Hallo! 🌸</h2>
+    </div>
+    <div style="background:var(--cream);border-radius:24px;padding:28px;box-shadow:0 4px 24px var(--shadow);border:1.5px solid rgba(247,197,197,0.3);">
+      <div style="display:grid;gap:14px;">
+        <div>
+          <label style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:6px;">Vorname</label>
+          <input id="ws-firstname" type="text" placeholder="Dein Vorname" style="width:100%;padding:11px 14px;border:2px solid var(--rose);border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;background:white;box-sizing:border-box;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:6px;">Geburtsdatum</label>
+          <input id="ws-birthday" type="date" style="width:100%;padding:11px 14px;border:2px solid var(--rose);border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;background:white;box-sizing:border-box;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
+        </div>
+      </div>
+      <button onclick="saveWsProfil()" style="width:100%;margin-top:16px;background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;border-radius:14px;padding:13px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">✓ Profil speichern</button>
+      <div id="ws-msg" style="margin-top:10px;font-size:13px;font-weight:700;color:var(--accent);text-align:center;min-height:18px;"></div>
+    </div>
+  </div>
+</section>
+
 <!-- TÄGLICHE AFFIRMATION -->
 <section style="padding:60px 40px;background:white;text-align:center;" id="affirmation">
   <div style="max-width:700px;margin:0 auto;">
@@ -1995,6 +2030,81 @@ document.addEventListener('click', function(e) {
   }
 });
 
+
+// === PROFIL SECTION ===
+(async function initWsProfil() {
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) {
+      document.getElementById('profil-gast').style.display = 'none';
+      document.getElementById('profil-user').style.display = 'block';
+      const meta = session.user.user_metadata || {};
+      const firstName = meta.first_name || meta.full_name?.split(' ')[0] || '';
+      const h = new Date().getHours();
+      const greet = h < 12 ? 'Guten Morgen' : h < 17 ? 'Guten Tag' : 'Guten Abend';
+      const icon = h < 12 ? '☀️' : h < 17 ? '🌻' : '🌙';
+      document.getElementById('ws-greeting').textContent = greet + ', ' + (firstName || 'du') + '! ' + icon;
+      if (firstName) document.getElementById('ws-firstname').value = firstName;
+      const birthday = meta.birthday || localStorage.getItem('sp_birthday') || '';
+      if (birthday) {
+        document.getElementById('ws-birthday').value = birthday;
+        localStorage.setItem('sp_birthday', birthday);
+        wsUpdatePlanet(birthday);
+      }
+    }
+  } catch(e) {}
+})();
+
+async function saveWsProfil() {
+  const firstName = document.getElementById('ws-firstname').value.trim();
+  const birthday = document.getElementById('ws-birthday').value;
+  const msg = document.getElementById('ws-msg');
+  try {
+    const { error } = await sb.auth.updateUser({ data: { first_name: firstName, birthday: birthday } });
+    if (error) throw error;
+    if (birthday) { localStorage.setItem('sp_birthday', birthday); wsUpdatePlanet(birthday); }
+    if (firstName) {
+      const h = new Date().getHours();
+      const greet = h < 12 ? 'Guten Morgen' : h < 17 ? 'Guten Tag' : 'Guten Abend';
+      const icon = h < 12 ? '☀️' : h < 17 ? '🌻' : '🌙';
+      document.getElementById('ws-greeting').textContent = greet + ', ' + firstName + '! ' + icon;
+      try {
+        const { data: { user } } = await sb.auth.getUser();
+        if (user?.email) await addToBrevo(user.email, firstName);
+      } catch(e) {}
+    }
+    msg.textContent = '✓ Gespeichert! 🌸';
+    setTimeout(() => { msg.textContent = ''; }, 3000);
+  } catch(e) {
+    msg.textContent = 'Fehler beim Speichern.';
+  }
+}
+
+function wsUpdatePlanet(birthdayStr) {
+  const planetData = [
+    {emoji:'☀️',name:'Sonne',   keyword:'Energie & Kraft',    birthMonths:[7,8],  msg:'Die Sonne ist dein Schutzplanet — du strahlst von innen heraus und bringst Licht in jeden Raum. 🌟'},
+    {emoji:'🌙',name:'Mond',    keyword:'Gefühle & Intuition',birthMonths:[6],    msg:'Der Mond ist dein Schutzplanet — du spürst tief und verstehst Menschen intuitiv. Deine Gefühlswelt ist deine Stärke. 🌙'},
+    {emoji:'🪐',name:'Saturn',  keyword:'Struktur & Weisheit',birthMonths:[12,1], msg:'Saturn ist dein Schutzplanet — du bist weise, geduldig und verlässlich. Du weisst wie man Träume in die Realität umsetzt. 🪐'},
+    {emoji:'♀️',name:'Venus',   keyword:'Liebe & Schönheit',  birthMonths:[4,5],  msg:'Venus ist dein Schutzplanet — du hast ein natürliches Gespür für Schönheit, Harmonie und tiefe Verbindungen. 💕'},
+    {emoji:'♂️',name:'Mars',    keyword:'Antrieb & Mut',      birthMonths:[3],    msg:'Mars ist dein Schutzplanet — du hast eine innere Feuerkraft und den Mut Dinge anzugehen die andere aufschieben. 🔥'},
+    {emoji:'♃', name:'Jupiter', keyword:'Glück & Wachstum',   birthMonths:[11,2], msg:'Jupiter ist dein Schutzplanet — Glück und Wachstum begleiten dich. Du siehst immer das grosse Bild. ✨'},
+    {emoji:'♅', name:'Uranus',  keyword:'Freiheit & Wandel',  birthMonths:[10],   msg:'Uranus ist dein Schutzplanet — du bist einzigartig, denkst anders und hast den Mut neue Wege zu gehen. 🌿'},
+    {emoji:'♆', name:'Neptun',  keyword:'Träume & Tiefe',     birthMonths:[9],    msg:'Neptun ist dein Schutzplanet — du bist sensibel, kreativ und hast einen tiefen Sinn für das Unsichtbare. 🌊'}
+  ];
+  const birth = new Date(birthdayStr);
+  const month = birth.getMonth() + 1;
+  const found = planetData.find(p => p.birthMonths.includes(month)) || planetData[birth.getDate() % planetData.length];
+  const personalDiv = document.getElementById('indexPersonalPlanet');
+  const noBirthdayDiv = document.getElementById('indexNoBirthday');
+  if (found && personalDiv) {
+    document.getElementById('indexPersonalEmoji').textContent = found.emoji;
+    document.getElementById('indexPersonalName').textContent = found.name;
+    document.getElementById('indexPersonalKeyword').textContent = found.keyword;
+    document.getElementById('indexPersonalMsg').textContent = found.msg;
+    personalDiv.style.display = 'block';
+    if (noBirthdayDiv) noBirthdayDiv.style.display = 'none';
+  }
+}
 
 // === TÄGLICHE AFFIRMATION ===
 const affirmations = [
