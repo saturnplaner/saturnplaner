@@ -450,7 +450,7 @@
   // Check if already logged in
   sb.auth.getSession().then(({ data: { session } }) => {
     if (session) {
-      window.location.href = 'app.html';
+      window.location.href = 'index.html';
     }
   });
 
@@ -502,7 +502,7 @@
       btn.innerHTML = '🪐 Einloggen';
     } else {
       showMessage('Willkommen zurück! 🌸', 'success');
-      setTimeout(() => { window.location.href = 'app.html'; }, 1000);
+      setTimeout(() => { window.location.href = 'index.html'; }, 1000);
     }
   }
 
@@ -561,7 +561,7 @@
   async function loginWithGoogle() {
     await sb.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: window.location.origin + '/app.html' }
+      options: { redirectTo: window.location.origin + '/index.html' }
     });
   }
 
