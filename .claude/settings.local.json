@@ -20,7 +20,9 @@
       "mcp__plugin_chrome-devtools-mcp_chrome-devtools__navigate_page",
       "Bash(git commit *)",
       "Bash(python3 *)",
-      "Bash(python *)"
+      "Bash(python *)",
+      "PowerShell(Stop-Process *)",
+      "Bash(git restore *)"
     ]
   }
 }
