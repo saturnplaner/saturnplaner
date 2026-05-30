@@ -24,7 +24,8 @@
       "PowerShell(Stop-Process *)",
       "Bash(git restore *)",
       "Bash(git log *)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(git *)"
     ]
   }
 }
