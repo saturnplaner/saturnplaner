@@ -1064,8 +1064,8 @@
   .theme-toggle:hover { background: rgba(247,197,197,0.2); }
 
   /* DARK MODE */
-  [data-theme="dark"] html{background:#1E1428;}
-  [data-theme="dark"] body{filter:invert(0.92) hue-rotate(180deg) brightness(1.1);}
+  html[data-theme="dark"]{background:#1E1428;}
+  [data-theme="dark"] body{background:transparent;filter:invert(0.92) hue-rotate(180deg) brightness(1.1);}
   [data-theme="dark"] img,[data-theme="dark"] video,[data-theme="dark"] iframe,[data-theme="dark"] .banner,[data-theme="dark"] footer,[data-theme="dark"] #cookieBanner{filter:invert(1) hue-rotate(180deg);}
 
 </style>
