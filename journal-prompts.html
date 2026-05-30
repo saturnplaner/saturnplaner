@@ -228,35 +228,26 @@
   <div class="prompts-grid" id="promptsGrid"></div>
 </div>
 
-<!-- KOMMENTARE -->
+<!-- JOURNAL EINSCHICKEN -->
 <section style="padding:0 40px 80px;max-width:800px;margin:0 auto;">
   <div style="text-align:center;margin-bottom:36px;">
-    <div style="font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;">✦ Community ✦</div>
-    <h2 style="font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--text);margin-bottom:8px;">Teile deine Erfahrungen 💕</h2>
-    <p style="font-size:14px;color:var(--text-light);font-weight:600;">Welcher Prompt hat dich heute bewegt? Schreib es hier — für alle die es lesen. 🌸</p>
+    <div style="font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;">✦ Nur für mich ✦</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--text);margin-bottom:8px;">Schick mir dein Journal 📬</h2>
+    <p style="font-size:14px;color:var(--text-light);font-weight:600;">Was hat dich heute beschäftigt? Ich lese jeden Eintrag — nur ich sehe ihn. 🌸</p>
   </div>
-
-  <!-- KOMMENTAR FORMULAR -->
-  <div style="background:white;border-radius:24px;padding:28px;box-shadow:0 4px 20px var(--shadow);margin-bottom:32px;border:1.5px solid rgba(247,197,197,0.2);">
+  <div style="background:white;border-radius:24px;padding:28px;box-shadow:0 4px 20px var(--shadow);margin-bottom:20px;border:1.5px solid rgba(247,197,197,0.2);">
     <div style="display:flex;flex-direction:column;gap:12px;">
-      <input id="commentName" type="text" placeholder="Dein Vorname (optional)" style="padding:12px 16px;border-radius:12px;border:2px solid var(--rose);background:var(--cream);font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
-      <input id="commentPrompt" type="text" placeholder="Auf welche Frage antwortest du? (optional)" style="padding:12px 16px;border-radius:12px;border:2px solid var(--rose);background:var(--cream);font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
-      <textarea id="commentText" placeholder="Schreib deine Erfahrung, deinen Gedanken oder deine Antwort... 🌸" style="padding:12px 16px;border-radius:12px;border:2px solid var(--rose);background:var(--cream);font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);outline:none;resize:none;height:100px;line-height:1.6;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'"></textarea>
-      <button onclick="submitComment()" style="background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;border-radius:12px;padding:13px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;">Teilen ✨</button>
+      <input id="jName" type="text" placeholder="Dein Name (optional)" style="padding:12px 16px;border-radius:12px;border:2px solid var(--rose);background:var(--cream);font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
+      <input id="jEmail" type="email" placeholder="Deine E-Mail (optional — für meine Antwort)" style="padding:12px 16px;border-radius:12px;border:2px solid var(--rose);background:var(--cream);font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
+      <textarea id="jText" placeholder="Was hast du heute geschrieben? Welcher Prompt hat dich bewegt? Teile so viel oder so wenig du möchtest... 🌸" style="padding:12px 16px;border-radius:12px;border:2px solid var(--rose);background:var(--cream);font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);outline:none;resize:none;height:140px;line-height:1.6;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'"></textarea>
+      <button onclick="submitJournal()" id="jBtn" style="background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;border-radius:12px;padding:13px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;">Abschicken ✨</button>
     </div>
-    <div id="commentSuccess" style="display:none;margin-top:12px;text-align:center;font-size:14px;font-weight:700;color:var(--accent);">✓ Danke fürs Teilen! 🌸</div>
+    <div id="jSuccess" style="display:none;margin-top:12px;text-align:center;font-size:14px;font-weight:700;color:var(--accent);">✓ Danke! Deine Worte sind sicher angekommen. 🌸</div>
+    <div id="jError" style="display:none;margin-top:12px;text-align:center;font-size:14px;font-weight:700;color:#C03030;">Fehler beim Absenden — bitte erneut versuchen.</div>
   </div>
-
-  <!-- KOMMENTAR LISTE -->
-  <div id="commentsList"></div>
-
-  <!-- ADMIN PIN (versteckt) -->
-  <div style="text-align:center;margin-top:32px;">
-    <span onclick="toggleAdmin()" style="font-size:11px;color:rgba(180,150,160,0.3);cursor:pointer;user-select:none;">🔒</span>
-  </div>
-  <div id="adminPanel" style="display:none;margin-top:12px;text-align:center;">
-    <input id="adminPin" type="password" placeholder="Admin PIN" style="padding:8px 14px;border-radius:10px;border:2px solid var(--rose);font-family:'Nunito',sans-serif;font-size:13px;outline:none;margin-right:8px;" maxlength="6">
-    <button onclick="checkPin()" style="background:var(--accent);color:white;border:none;border-radius:10px;padding:8px 16px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">✓</button>
+  <div style="text-align:center;padding:16px 20px;background:rgba(247,197,197,0.08);border-radius:14px;border:1.5px dashed rgba(200,112,144,0.25);">
+    <div style="font-size:13px;font-weight:700;color:var(--text-light);">🔒 Dein Eintrag ist privat — nur ich lese ihn.</div>
+    <div style="font-size:12px;font-weight:600;color:var(--text-light);margin-top:3px;">Veröffentlicht wird nur mit deiner ausdrücklichen Erlaubnis.</div>
   </div>
 </section>
 
@@ -414,90 +405,36 @@ function copyPrompt() {
   setTimeout(() => { btn.textContent = '📋 Kopieren'; }, 2000);
 }
 
-// === SUPABASE KOMMENTARE ===
-const SUPABASE_URL = 'https://buowsgggbkpsssspewtk.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO';
-let sbClient = null;
-
-async function initSupabase() {
-  if (typeof supabase !== 'undefined') {
-    sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    loadComments();
-  }
-}
-
-async function loadComments() {
-  if (!sbClient) return;
-  const { data, error } = await sbClient
-    .from('journal_comments')
-    .select('*')
-    .eq('approved', true)
-    .order('created_at', { ascending: false });
-
-  const list = document.getElementById('commentsList');
-  if (!data || data.length === 0) {
-    list.innerHTML = '<div style="text-align:center;padding:24px;font-size:14px;color:var(--text-light);font-weight:600;font-style:italic;">Noch keine Einträge — sei die Erste! 🌸</div>';
-    return;
-  }
-
-  const isAdmin = localStorage.getItem('sp_admin') === '1';
-  list.innerHTML = data.map(c => `
-    <div id="comment-${c.id}" style="background:white;border-radius:18px;padding:20px 22px;box-shadow:0 3px 14px var(--shadow);margin-bottom:14px;border:1.5px solid rgba(247,197,197,0.15);position:relative;">
-      ${isAdmin ? `<button onclick="deleteComment(${c.id})" style="position:absolute;top:12px;right:12px;background:rgba(220,50,50,0.1);border:none;border-radius:8px;padding:4px 10px;font-size:11px;font-weight:800;color:#C03030;cursor:pointer;">🗑️ Löschen</button>` : ''}
-      ${c.prompt ? `<div style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">📓 ${c.prompt}</div>` : ''}
-      <div style="font-size:14px;color:var(--text);font-weight:600;line-height:1.7;margin-bottom:10px;">${c.comment}</div>
-      <div style="font-size:11px;color:var(--text-light);font-weight:700;">🌸 ${c.name || 'Anonym'} · ${new Date(c.created_at).toLocaleDateString('de-CH')}</div>
-    </div>
-  `).join('');
-}
-
-async function submitComment() {
-  if (!sbClient) return;
-  const name = document.getElementById('commentName').value.trim() || 'Anonym';
-  const comment = document.getElementById('commentText').value.trim();
-  const prompt = document.getElementById('commentPrompt').value.trim();
-  if (!comment) return;
-
-  await sbClient.from('journal_comments').insert({ name, comment, prompt: prompt || null });
-
-  document.getElementById('commentText').value = '';
-  document.getElementById('commentName').value = '';
-  document.getElementById('commentPrompt').value = '';
-  document.getElementById('commentSuccess').style.display = 'block';
-  setTimeout(() => { document.getElementById('commentSuccess').style.display = 'none'; }, 3000);
-  loadComments();
-}
-
-async function deleteComment(id) {
-  if (!sbClient) return;
-  if (!confirm('Diesen Kommentar löschen?')) return;
-  await sbClient.from('journal_comments').delete().eq('id', id);
-  document.getElementById('comment-' + id)?.remove();
-}
-
-// Admin PIN
-function toggleAdmin() {
-  const panel = document.getElementById('adminPanel');
-  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-}
-
-function checkPin() {
-  const pin = document.getElementById('adminPin').value;
-  if (pin === '1234') { // Ändere diesen PIN!
-    localStorage.setItem('sp_admin', '1');
-    document.getElementById('adminPanel').style.display = 'none';
-    loadComments();
-    alert('Admin Modus aktiv 🔓');
-  } else {
-    alert('Falscher PIN');
-  }
-}
-
-// Supabase Script laden
+// === JOURNAL EINREICHEN ===
 const script = document.createElement('script');
 script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-script.onload = initSupabase;
+script.onload = function() {
+  window._sbj = supabase.createClient(
+    'https://buowsgggbkpsssspewtk.supabase.co',
+    'sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO'
+  );
+};
 document.head.appendChild(script);
+
+async function submitJournal() {
+  const content = document.getElementById('jText').value.trim();
+  if (!content) { document.getElementById('jText').focus(); return; }
+  if (!window._sbj) return;
+  const btn = document.getElementById('jBtn');
+  btn.disabled = true; btn.textContent = 'Wird gesendet...';
+  const { error } = await window._sbj.from('journal_submissions').insert({
+    name: document.getElementById('jName').value.trim() || null,
+    email: document.getElementById('jEmail').value.trim() || null,
+    content
+  });
+  btn.disabled = false; btn.textContent = 'Abschicken ✨';
+  if (error) { document.getElementById('jError').style.display = 'block'; return; }
+  document.getElementById('jText').value = '';
+  document.getElementById('jName').value = '';
+  document.getElementById('jEmail').value = '';
+  document.getElementById('jSuccess').style.display = 'block';
+  setTimeout(() => { document.getElementById('jSuccess').style.display = 'none'; }, 5000);
+}
 
 </script>
 <script>

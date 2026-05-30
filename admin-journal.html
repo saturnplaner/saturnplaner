@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal Admin — Saturnplaner</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#C87090">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>(function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+<style>
+  :root{--rose:#F7C5C5;--peach:#FFD9B7;--cream:#FFF8F0;--text:#3D2C2C;--text-light:#9B7E7E;--accent:#C87090;--shadow:rgba(180,130,130,0.15);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text);}
+  .wrap{max-width:800px;margin:0 auto;padding:40px 20px 80px;}
+  h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:900;color:var(--text);margin-bottom:6px;}
+  .subtitle{font-size:13px;color:var(--text-light);font-weight:600;margin-bottom:28px;}
+  .tabs{display:flex;gap:4px;margin-bottom:24px;border-bottom:2px solid rgba(247,197,197,0.3);padding-bottom:0;}
+  .tab{padding:10px 18px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;border:none;background:none;color:var(--text-light);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all 0.2s;}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+  .card{background:white;border-radius:20px;padding:24px;margin-bottom:16px;box-shadow:0 3px 16px var(--shadow);border:1.5px solid rgba(247,197,197,0.2);}
+  .card-meta{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;}
+  .card-name{font-size:15px;font-weight:800;color:var(--text);margin-bottom:4px;}
+  .card-email{font-size:12px;color:var(--text-light);font-weight:600;margin-bottom:12px;}
+  .card-content{font-size:14px;line-height:1.7;color:var(--text);white-space:pre-wrap;background:rgba(247,197,197,0.07);border-radius:12px;padding:14px;margin-bottom:14px;}
+  .card-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+  label{display:block;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:6px;margin-top:16px;}
+  input,textarea{width:100%;padding:12px 14px;border:2px solid var(--rose);border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;background:var(--cream);box-sizing:border-box;transition:border-color 0.2s;}
+  input:focus,textarea:focus{border-color:var(--accent);}
+  textarea{resize:vertical;line-height:1.7;}
+  .btn{padding:10px 18px;border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:all 0.2s;display:inline-block;text-decoration:none;}
+  .btn-primary{background:linear-gradient(135deg,#C87090,#9070C8);color:white;}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(200,112,144,0.3);}
+  .btn-success{background:linear-gradient(135deg,#40A070,#50B080);color:white;}
+  .btn-danger{background:rgba(220,50,50,0.08);color:#C03030;border:1.5px solid rgba(220,50,50,0.2);}
+  .btn-secondary{background:rgba(247,197,197,0.3);color:var(--text);}
+  .save-msg{font-size:13px;font-weight:700;color:var(--accent);min-height:18px;margin-top:12px;}
+  .empty{text-align:center;padding:40px;font-size:14px;color:var(--text-light);font-weight:600;font-style:italic;}
+  .badge{display:inline-block;background:linear-gradient(135deg,#C87090,#9070C8);color:white;font-size:11px;font-weight:800;padding:2px 9px;border-radius:20px;margin-left:6px;}
+  #auth-screen{text-align:center;padding:100px 20px;}
+  html[data-theme="dark"]{background:#1E1428;}
+  [data-theme="dark"] body{background:linear-gradient(145deg,#FFF0F8,#F8F0FF);filter:invert(0.92) hue-rotate(180deg) brightness(1.1);}
+</style>
+</head>
+<body>
+
+<div id="auth-screen">
+  <div style="font-size:56px;margin-bottom:16px;">🔒</div>
+  <p style="font-size:15px;font-weight:700;color:var(--text-light);">Wird geladen...</p>
+</div>
+
+<div id="admin-wrap" style="display:none;">
+<div class="wrap">
+  <h1>📓 Journal Admin</h1>
+  <p class="subtitle">Einsendungen · Neue Beiträge · Veröffentlichtes</p>
+
+  <div class="tabs">
+    <button class="tab active" id="tab-btn-submissions" onclick="switchTab('submissions',this)">📬 Einsendungen <span id="sub-badge" class="badge" style="display:none;">0</span></button>
+    <button class="tab" id="tab-btn-new" onclick="switchTab('new',this)">✍️ Neuer Beitrag</button>
+    <button class="tab" id="tab-btn-published" onclick="switchTab('published',this)">📖 Veröffentlicht</button>
+  </div>
+
+  <!-- EINSENDUNGEN -->
+  <div class="tab-panel active" id="tab-submissions">
+    <div id="sub-list"><div class="empty">Wird geladen... 🌸</div></div>
+  </div>
+
+  <!-- NEUER BEITRAG -->
+  <div class="tab-panel" id="tab-new">
+    <div class="card">
+      <label>Titel <span style="font-weight:600;font-size:10px;">(optional)</span></label>
+      <input id="new-title" type="text" placeholder="Titel des Eintrags...">
+      <label>Inhalt</label>
+      <textarea id="new-content" rows="14" placeholder="Schreib deinen Journal-Eintrag hier..."></textarea>
+      <br>
+      <button class="btn btn-primary" onclick="publishNewPost()" style="margin-top:16px;">✓ Veröffentlichen</button>
+      <div class="save-msg" id="new-msg"></div>
+    </div>
+  </div>
+
+  <!-- VERÖFFENTLICHT -->
+  <div class="tab-panel" id="tab-published">
+    <div id="pub-list"><div class="empty">Wird geladen... 🌸</div></div>
+  </div>
+</div>
+</div>
+
+<script>
+const {createClient}=supabase;
+const sb=createClient(
+  'https://buowsgggbkpsssspewtk.supabase.co',
+  'sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO'
+);
+const ADMIN='grenda.93@icloud.com';
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+(async function init(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session||session.user.email!==ADMIN){
+    const s=document.getElementById('auth-screen');
+    s.innerHTML='';
+    const lock=document.createElement('div');
+    lock.style.cssText='font-size:56px;margin-bottom:16px;';
+    lock.textContent='🔒';
+    const h=document.createElement('h2');
+    h.style.cssText='font-family:\'Playfair Display\',serif;font-size:24px;font-weight:900;color:var(--text);margin-bottom:12px;';
+    h.textContent='Kein Zugang';
+    const p=document.createElement('p');
+    p.style.cssText='font-size:14px;color:var(--text-light);font-weight:600;margin-bottom:24px;';
+    p.textContent='Diese Seite ist nur für den Admin.';
+    const a=document.createElement('a');
+    a.href='login.html';
+    a.style.cssText='display:inline-block;background:linear-gradient(135deg,#C87090,#9070C8);color:white;text-decoration:none;border-radius:50px;padding:13px 32px;font-family:\'Nunito\',sans-serif;font-size:14px;font-weight:800;';
+    a.textContent='✨ Einloggen';
+    s.appendChild(lock);s.appendChild(h);s.appendChild(p);s.appendChild(a);
+    return;
+  }
+  document.getElementById('auth-screen').style.display='none';
+  document.getElementById('admin-wrap').style.display='block';
+  loadSubmissions();
+  loadPublished();
+})();
+
+function switchTab(name,btn){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-'+name).classList.add('active');
+}
+
+// ===== EINSENDUNGEN =====
+async function loadSubmissions(){
+  const {data}=await sb.from('journal_submissions').select('*').eq('status','pending').order('created_at',{ascending:false});
+  const list=document.getElementById('sub-list');
+  const badge=document.getElementById('sub-badge');
+  if(!data||data.length===0){
+    while(list.firstChild)list.removeChild(list.firstChild);
+    const empty=document.createElement('div');
+    empty.className='empty';
+    empty.textContent='Keine neuen Einsendungen 🌸';
+    list.appendChild(empty);
+    badge.style.display='none';
+    return;
+  }
+  badge.textContent=data.length;
+  badge.style.display='inline-block';
+  while(list.firstChild)list.removeChild(list.firstChild);
+  for(const s of data){
+    const card=document.createElement('div');
+    card.className='card';
+    card.id='sub-'+s.id;
+
+    const meta=document.createElement('div');
+    meta.className='card-meta';
+    meta.textContent=new Date(s.created_at).toLocaleDateString('de-CH',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    card.appendChild(meta);
+
+    const name=document.createElement('div');
+    name.className='card-name';
+    name.textContent='🌸 '+(s.name||'Anonym');
+    card.appendChild(name);
+
+    if(s.email){
+      const email=document.createElement('div');
+      email.className='card-email';
+      email.textContent='✉️ '+s.email;
+      card.appendChild(email);
+    }
+
+    const content=document.createElement('div');
+    content.className='card-content';
+    content.textContent=s.content;
+    card.appendChild(content);
+
+    const actions=document.createElement('div');
+    actions.className='card-actions';
+
+    const pubBtn=document.createElement('button');
+    pubBtn.className='btn btn-success';
+    pubBtn.textContent='✓ Veröffentlichen';
+    pubBtn.onclick=()=>publishSubmission(s.id,s.name,s.content);
+    actions.appendChild(pubBtn);
+
+    const rejBtn=document.createElement('button');
+    rejBtn.className='btn btn-danger';
+    rejBtn.textContent='✕ Ablehnen';
+    rejBtn.onclick=()=>rejectSubmission(s.id);
+    actions.appendChild(rejBtn);
+
+    if(s.email){
+      const mailto=document.createElement('a');
+      mailto.className='btn btn-secondary';
+      mailto.href='mailto:'+s.email+'?subject=Dein Journal auf Saturnplaner';
+      mailto.textContent='📧 Antworten';
+      actions.appendChild(mailto);
+    }
+
+    card.appendChild(actions);
+
+    const msg=document.createElement('div');
+    msg.className='save-msg';
+    msg.id='sub-msg-'+s.id;
+    card.appendChild(msg);
+
+    list.appendChild(card);
+  }
+}
+
+async function publishSubmission(id,name,content){
+  const title=name?'Von '+name:'Journal-Eintrag';
+  const {error}=await sb.from('journal_posts').insert({title,content});
+  if(error){
+    const m=document.getElementById('sub-msg-'+id);
+    if(m)m.textContent='Fehler: '+error.message;
+    return;
+  }
+  await sb.from('journal_submissions').update({status:'published'}).eq('id',id);
+  const card=document.getElementById('sub-'+id);
+  if(card)card.remove();
+  loadSubmissions();
+}
+
+async function rejectSubmission(id){
+  if(!confirm('Einsendung ablehnen und entfernen?'))return;
+  await sb.from('journal_submissions').update({status:'rejected'}).eq('id',id);
+  const card=document.getElementById('sub-'+id);
+  if(card)card.remove();
+  loadSubmissions();
+}
+
+// ===== NEUER BEITRAG =====
+async function publishNewPost(){
+  const title=document.getElementById('new-title').value.trim();
+  const content=document.getElementById('new-content').value.trim();
+  const msg=document.getElementById('new-msg');
+  if(!content){msg.textContent='Bitte Inhalt eingeben.';return;}
+  const {error}=await sb.from('journal_posts').insert({title:title||null,content});
+  if(error){msg.textContent='Fehler: '+error.message;return;}
+  document.getElementById('new-title').value='';
+  document.getElementById('new-content').value='';
+  msg.textContent='✓ Veröffentlicht! Auf journal.html sichtbar. 🌸';
+  setTimeout(()=>{msg.textContent='';},4000);
+  loadPublished();
+}
+
+// ===== VERÖFFENTLICHT =====
+async function loadPublished(){
+  const {data}=await sb.from('journal_posts').select('*').order('created_at',{ascending:false});
+  const list=document.getElementById('pub-list');
+  while(list.firstChild)list.removeChild(list.firstChild);
+  if(!data||data.length===0){
+    const empty=document.createElement('div');
+    empty.className='empty';
+    empty.textContent='Noch keine Beiträge veröffentlicht.';
+    list.appendChild(empty);
+    return;
+  }
+  for(const p of data){
+    const card=document.createElement('div');
+    card.className='card';
+    card.id='pub-'+p.id;
+
+    const meta=document.createElement('div');
+    meta.className='card-meta';
+    meta.textContent=new Date(p.created_at).toLocaleDateString('de-CH',{day:'numeric',month:'long',year:'numeric'});
+    card.appendChild(meta);
+
+    if(p.title){
+      const t=document.createElement('div');
+      t.className='card-name';
+      t.textContent=p.title;
+      card.appendChild(t);
+    }
+
+    const content=document.createElement('div');
+    content.className='card-content';
+    content.style.maxHeight='120px';
+    content.style.overflow='hidden';
+    content.textContent=p.content;
+    card.appendChild(content);
+
+    const actions=document.createElement('div');
+    actions.className='card-actions';
+
+    const delBtn=document.createElement('button');
+    delBtn.className='btn btn-danger';
+    delBtn.textContent='🗑️ Löschen';
+    delBtn.onclick=()=>deletePost(p.id);
+    actions.appendChild(delBtn);
+
+    const viewLink=document.createElement('a');
+    viewLink.className='btn btn-secondary';
+    viewLink.href='journal.html';
+    viewLink.target='_blank';
+    viewLink.textContent='👁️ Ansehen';
+    actions.appendChild(viewLink);
+
+    card.appendChild(actions);
+    list.appendChild(card);
+  }
+}
+
+async function deletePost(id){
+  if(!confirm('Diesen Beitrag wirklich löschen? Alle Kommentare werden ebenfalls gelöscht.'))return;
+  await sb.from('journal_posts').delete().eq('id',id);
+  const card=document.getElementById('pub-'+id);
+  if(card)card.remove();
+}
+</script>
+</body>
+</html>
