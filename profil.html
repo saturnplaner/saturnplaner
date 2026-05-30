@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mein Profil — Saturnplaner</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='pg' cx='40%25' cy='35%25'><stop offset='0%25' stop-color='%23F0C87A'/><stop offset='60%25' stop-color='%23C87090'/><stop offset='100%25' stop-color='%239070C8'/></radialGradient></defs><ellipse cx='50' cy='52' rx='48' ry='12' fill='none' stroke='%23D9C5F0' stroke-width='5' transform='rotate(-20 50 52)'/><circle cx='50' cy='50' r='28' fill='url(%23pg)'/><circle cx='42' cy='44' r='7' fill='%23FFF8F0' opacity='0.25'/></svg>">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#C87090">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>(function(){var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t);})();</script>
+<style>
+  :root{
+    --rose:#F7C5C5;--peach:#FFD9B7;--lavender:#D9C5F0;
+    --mint:#C5E8D5;--sky:#C5DCF0;--cream:#FFF8F0;
+    --text:#3D2C2C;--text-light:#9B7E7E;
+    --white:#FFFFFF;--shadow:rgba(180,130,130,0.15);--accent:#C87090;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif;color:var(--text);background:var(--cream);}
+
+  /* BANNER */
+  .banner{position:fixed;top:0;left:0;right:0;z-index:1100;background:linear-gradient(135deg,#C87090,#9070C8);padding:8px 20px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;}
+  .banner span{font-size:13px;font-weight:800;color:white;}
+  .banner a{background:rgba(255,255,255,0.25);color:white;font-size:12px;font-weight:800;padding:4px 14px;border-radius:20px;text-decoration:none;}
+
+  /* NAV */
+  nav{position:fixed;top:40px;left:0;right:0;z-index:1000;background:rgba(255,248,240,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(247,197,197,0.3);padding:0 40px;height:70px;display:flex;align-items:center;justify-content:space-between;}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .nav-logo-icon{font-size:28px;}
+  .nav-logo-text{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--text);}
+  .nav-links{display:flex;align-items:center;gap:20px;list-style:none;}
+  .nav-links a{text-decoration:none;font-size:13px;font-weight:700;color:var(--text-light);transition:color 0.2s;}
+  .nav-links a:hover{color:var(--accent);}
+  .nav-cta{background:linear-gradient(135deg,var(--rose),var(--peach));color:#7A3030!important;padding:10px 22px;border-radius:50px;box-shadow:0 4px 14px rgba(232,144,144,0.3);}
+
+  /* MAIN */
+  .page-wrap{max-width:600px;margin:0 auto;padding:160px 20px 80px;}
+
+  /* HERO */
+  .profil-hero{text-align:center;margin-bottom:40px;}
+  .profil-avatar{font-size:64px;margin-bottom:12px;display:block;}
+  .profil-greeting{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,36px);font-weight:900;color:var(--text);margin-bottom:6px;}
+  .profil-email-display{font-size:13px;font-weight:600;color:var(--text-light);}
+
+  /* CARDS */
+  .card{background:white;border-radius:24px;padding:28px;margin-bottom:20px;box-shadow:0 4px 24px var(--shadow);border:1.5px solid rgba(247,197,197,0.2);}
+  .card-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:var(--text);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);margin-bottom:6px;}
+  .field input{width:100%;padding:12px 14px;border:2px solid var(--rose);border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;background:var(--cream);box-sizing:border-box;transition:border-color 0.2s;}
+  .field input:focus{border-color:var(--accent);}
+  .field-hint{font-size:11px;color:var(--text-light);font-weight:600;margin-top:5px;}
+  .btn-save{width:100%;background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;border-radius:14px;padding:13px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:all 0.2s;margin-top:4px;}
+  .btn-save:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(200,112,144,0.3);}
+  .save-msg{font-size:13px;font-weight:700;color:var(--accent);text-align:center;min-height:18px;margin-top:10px;}
+
+  /* NEWSLETTER TOGGLE */
+  .nl-row{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .nl-info{flex:1;}
+  .nl-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:3px;}
+  .nl-sub{font-size:12px;color:var(--text-light);font-weight:600;}
+  .toggle-wrap{flex-shrink:0;}
+  .toggle{position:relative;display:inline-block;width:52px;height:28px;}
+  .toggle input{opacity:0;width:0;height:0;}
+  .toggle-slider{position:absolute;inset:0;background:#E0D0D0;border-radius:28px;cursor:pointer;transition:background 0.3s;}
+  .toggle-slider:before{content:'';position:absolute;width:22px;height:22px;left:3px;top:3px;background:white;border-radius:50%;transition:transform 0.3s;box-shadow:0 2px 6px rgba(0,0,0,0.15);}
+  .toggle input:checked + .toggle-slider{background:linear-gradient(135deg,#C87090,#9070C8);}
+  .toggle input:checked + .toggle-slider:before{transform:translateX(24px);}
+
+  /* LOGOUT BTN */
+  .btn-logout{width:100%;background:none;border:2px solid rgba(247,197,197,0.8);color:var(--text-light);border-radius:14px;padding:13px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:all 0.2s;}
+  .btn-logout:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* NOT LOGGED IN */
+  .not-logged-in{text-align:center;padding:60px 20px;}
+  .not-logged-in p{font-size:15px;color:var(--text-light);font-weight:600;margin-bottom:24px;}
+
+  footer{background:#1a1a2e;padding:40px;text-align:center;color:rgba(255,255,255,0.5);font-size:13px;font-weight:600;}
+  footer a{color:rgba(255,255,255,0.7);text-decoration:none;margin:0 12px;}
+
+  /* MOBILE NAV */
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none;z-index:1200!important;position:relative;}
+  .hamburger span{display:block;width:24px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s;}
+  .mobile-menu{display:none;position:fixed;inset:0;background:rgba(255,248,240,0.98);backdrop-filter:blur(12px);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:24px;}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{font-family:'Nunito',sans-serif;font-size:20px;font-weight:800;color:var(--text);text-decoration:none;}
+  .mobile-menu a:hover{color:var(--accent);}
+  .mobile-menu .mob-cta{background:linear-gradient(135deg,var(--rose),var(--peach));color:#7A3030!important;padding:14px 32px;border-radius:50px;}
+  .mobile-close{position:absolute;top:24px;right:24px;background:rgba(247,197,197,0.3);border:none;width:40px;height:40px;border-radius:50%;font-size:20px;cursor:pointer;color:var(--text-light);}
+  @media(max-width:900px){.nav-links{display:none!important;}.hamburger{display:flex!important;}nav{padding:0 20px;}}
+
+  /* MOBILE BANNER + NAV FIX */
+  @media(max-width:768px){
+    .banner{padding:6px 12px;flex-wrap:nowrap;}
+    nav{top:32px!important;}
+    .page-wrap{padding-top:130px;}
+  }
+  @media(max-width:640px){
+    nav{top:36px!important;}
+  }
+
+  /* NAV HEIGHT FIX */
+  nav{height:70px!important;min-height:70px!important;box-sizing:border-box!important;align-items:flex-end!important;padding-bottom:14px!important;}
+  nav .nav-logo,nav .nav-links,nav .hamburger{margin-top:0!important;margin-bottom:0!important;}
+  .theme-toggle{background:none;border:1.5px solid rgba(200,112,144,0.3);border-radius:20px;padding:5px 11px;cursor:pointer;font-size:16px;transition:all 0.2s;color:var(--text);}
+  .theme-toggle:hover{background:rgba(247,197,197,0.2);}
+  html[data-theme="dark"]{background:#1E1428;}
+  [data-theme="dark"] body{background:linear-gradient(145deg,#FFF0F8,#F8F0FF);filter:invert(0.92) hue-rotate(180deg) brightness(1.1);}
+  [data-theme="dark"] img,[data-theme="dark"] video,[data-theme="dark"] iframe,[data-theme="dark"] .banner,[data-theme="dark"] footer,[data-theme="dark"] #cookieBanner{filter:invert(1) hue-rotate(180deg);}
+</style>
+</head>
+<body>
+
+<!-- BANNER -->
+<div class="banner">
+  <span>🪐</span>
+  <span>Saturnplaner App — <em>Coming Soon!</em></span>
+  <a href="newsletter.html">Jetzt eintragen →</a>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-icon">🪐</span>
+    <div class="nav-logo-text">Saturnplaner</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="blog.html">📖 Blog</a></li>
+    <li><a href="tipps.html">⚡ Tipps & Tricks</a></li>
+    <li><a href="journal-prompts.html">📓 Journal</a></li>
+    <li><a href="planeten.html">🌌 Planeten</a></li>
+    <li><a href="community.html">🌱 Community</a></li>
+    <li><a href="about.html">🪐 Über uns</a></li>
+    <li><a href="newsletter.html">💌 Newsletter</a></li>
+    <li id="nav-login-li"><a href="login.html" class="nav-cta">Einloggen ✨</a></li>
+    <li id="nav-profil-li" style="display:none;"><a href="profil.html" class="nav-cta active">👤 Profil</a></li>
+  </ul>
+  <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Hell/Dunkel">🌙</button>
+  <button class="hamburger" onclick="openMobileMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="index.html" onclick="closeMobileMenu()">🪐 Home</a>
+  <a href="blog.html" onclick="closeMobileMenu()">📖 Blog</a>
+  <a href="tipps.html" onclick="closeMobileMenu()">⚡ Tipps & Tricks</a>
+  <a href="journal-prompts.html" onclick="closeMobileMenu()">📓 Journal</a>
+  <a href="planeten.html" onclick="closeMobileMenu()">🌌 Planeten</a>
+  <a href="community.html" onclick="closeMobileMenu()">🌱 Community</a>
+  <a href="about.html" onclick="closeMobileMenu()">🪐 Über uns</a>
+  <a href="newsletter.html" onclick="closeMobileMenu()">💌 Newsletter</a>
+  <a href="login.html" id="mob-login-link" class="mob-cta" onclick="closeMobileMenu()">Einloggen ✨</a>
+  <a href="profil.html" id="mob-profil-link" style="display:none;" class="mob-cta" onclick="closeMobileMenu()">👤 Profil</a>
+</div>
+
+<div class="page-wrap">
+
+  <!-- Nicht eingeloggt -->
+  <div id="view-guest" style="display:none;" class="not-logged-in">
+    <div style="font-size:56px;margin-bottom:16px;">🔒</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--text);margin-bottom:12px;">Bitte einloggen</h2>
+    <p>Logge dich ein um dein Profil zu verwalten.</p>
+    <a href="login.html" style="display:inline-block;background:linear-gradient(135deg,#C87090,#9070C8);color:white;text-decoration:none;border-radius:50px;padding:13px 32px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;box-shadow:0 4px 16px rgba(200,112,144,0.3);">✨ Einloggen</a>
+  </div>
+
+  <!-- Eingeloggt -->
+  <div id="view-user" style="display:none;">
+
+    <!-- Hero / Begrüssung -->
+    <div class="profil-hero">
+      <span class="profil-avatar">🪐</span>
+      <div class="profil-greeting" id="profil-greeting">Hallo! 🌸</div>
+      <div class="profil-email-display" id="profil-email-display"></div>
+    </div>
+
+    <!-- Persönliche Daten -->
+    <div class="card">
+      <div class="card-title">👤 Persönliche Daten</div>
+      <div class="field">
+        <label>Vorname</label>
+        <input id="p-firstname" type="text" placeholder="Dein Vorname">
+      </div>
+      <div class="field">
+        <label>Nachname</label>
+        <input id="p-lastname" type="text" placeholder="Dein Nachname">
+      </div>
+      <div class="field">
+        <label>Geburtsdatum</label>
+        <input id="p-birthday" type="date">
+      </div>
+      <button class="btn-save" onclick="saveDaten()">✓ Daten speichern</button>
+      <div class="save-msg" id="msg-daten"></div>
+    </div>
+
+    <!-- E-Mail ändern -->
+    <div class="card">
+      <div class="card-title">✉️ E-Mail ändern</div>
+      <div class="field">
+        <label>Neue E-Mail-Adresse</label>
+        <input id="p-email" type="email" placeholder="neue@email.com">
+        <div class="field-hint">Du erhältst eine Bestätigungs-E-Mail an die neue Adresse.</div>
+      </div>
+      <button class="btn-save" onclick="saveEmail()">✓ E-Mail ändern</button>
+      <div class="save-msg" id="msg-email"></div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="card">
+      <div class="card-title">💌 Newsletter</div>
+      <div class="nl-row">
+        <div class="nl-info">
+          <div class="nl-title">Saturnplaner Newsletter</div>
+          <div class="nl-sub">Neue Artikel, Selfcare-Tipps & Mondphasen direkt ins Postfach.</div>
+        </div>
+        <label class="toggle toggle-wrap">
+          <input type="checkbox" id="nl-toggle" onchange="toggleNewsletter(this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+      <div class="save-msg" id="msg-nl"></div>
+    </div>
+
+    <!-- Ausloggen -->
+    <div class="card" style="text-align:center;">
+      <button class="btn-logout" onclick="doLogout()">↩ Ausloggen</button>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div style="margin-bottom:12px;">
+    <a href="index.html">Home</a>
+    <a href="blog.html">Blog</a>
+    <a href="newsletter.html">Newsletter</a>
+    <a href="datenschutz.html">Datenschutz</a>
+    <a href="impressum.html">Impressum</a>
+  </div>
+  <div>© 2025 Saturnplaner · Mit 🌸 gemacht</div>
+</footer>
+
+<script>
+const { createClient } = supabase;
+const sb = createClient(
+  'https://buowsgggbkpsssspewtk.supabase.co',
+  'sb_publishable_Oz8d08OndfOkZe-xIjm4_g_Gw1SEyeO'
+);
+
+// Dark mode
+function toggleTheme() {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  document.getElementById('theme-toggle').textContent = next === 'dark' ? '☀️' : '🌙';
+}
+const savedTheme = localStorage.getItem('theme') || 'light';
+document.getElementById('theme-toggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+
+// Mobile menu
+function openMobileMenu() { document.getElementById('mobileMenu').classList.add('open'); }
+function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+// Nav position fix
+function fixNavPosition() {
+  const banner = document.querySelector('.banner');
+  const nav = document.querySelector('nav');
+  if (banner && nav) {
+    const h = window.innerWidth <= 640 ? 36 : banner.offsetHeight + 4;
+    nav.style.top = h + 'px';
+  }
+}
+fixNavPosition();
+window.addEventListener('resize', fixNavPosition);
+
+// ===== INIT =====
+let currentUser = null;
+
+(async function init() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) {
+    document.getElementById('view-guest').style.display = 'block';
+    return;
+  }
+  currentUser = session.user;
+  document.getElementById('view-user').style.display = 'block';
+  document.getElementById('nav-login-li').style.display = 'none';
+  document.getElementById('nav-profil-li').style.display = 'block';
+  document.getElementById('mob-login-link').style.display = 'none';
+  document.getElementById('mob-profil-link').style.display = 'block';
+
+  const meta = session.user.user_metadata || {};
+  const firstName = meta.first_name || meta.full_name?.split(' ')[0] || '';
+  const h = new Date().getHours();
+  const greet = h < 12 ? 'Guten Morgen' : h < 17 ? 'Guten Tag' : 'Guten Abend';
+  const icon = h < 12 ? '☀️' : h < 17 ? '🌻' : '🌙';
+  document.getElementById('profil-greeting').textContent = greet + ', ' + (firstName || 'du') + '! ' + icon;
+  document.getElementById('profil-email-display').textContent = session.user.email;
+
+  if (firstName) document.getElementById('p-firstname').value = firstName;
+  if (meta.last_name) document.getElementById('p-lastname').value = meta.last_name;
+  if (meta.birthday) document.getElementById('p-birthday').value = meta.birthday;
+
+  // Newsletter status
+  try {
+    const { data } = await sb.from('newsletter_subscribers')
+      .select('email')
+      .eq('email', session.user.email)
+      .maybeSingle();
+    document.getElementById('nl-toggle').checked = !!data;
+  } catch(e) {}
+})();
+
+// ===== DATEN SPEICHERN =====
+async function saveDaten() {
+  const firstName = document.getElementById('p-firstname').value.trim();
+  const lastName = document.getElementById('p-lastname').value.trim();
+  const birthday = document.getElementById('p-birthday').value;
+  const msg = document.getElementById('msg-daten');
+  try {
+    const { error } = await sb.auth.updateUser({
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+        full_name: (firstName + ' ' + lastName).trim(),
+        birthday: birthday
+      }
+    });
+    if (error) throw error;
+    if (birthday) localStorage.setItem('sp_birthday', birthday);
+    const h = new Date().getHours();
+    const greet = h < 12 ? 'Guten Morgen' : h < 17 ? 'Guten Tag' : 'Guten Abend';
+    const icon = h < 12 ? '☀️' : h < 17 ? '🌻' : '🌙';
+    if (firstName) document.getElementById('profil-greeting').textContent = greet + ', ' + firstName + '! ' + icon;
+    // Sync to Brevo
+    try {
+      if (currentUser?.email && firstName) {
+        await fetch('https://buowsgggbkpsssspewtk.supabase.co/functions/v1/dynamic-action', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1b3dzZ2dnYmtwc3Nzc3Bld3RrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3NTA1MDIsImV4cCI6MjA5NTMyNjUwMn0.KN_xiOMo5oz8NIzq1HTNXWW0UIurT7LpQWI1seJawyw' },
+          body: JSON.stringify({ email: currentUser.email, name: firstName })
+        });
+      }
+    } catch(e) {}
+    msg.textContent = '✓ Gespeichert! 🌸';
+    setTimeout(() => { msg.textContent = ''; }, 3000);
+  } catch(e) {
+    msg.textContent = 'Fehler: ' + (e.message || 'Bitte erneut versuchen.');
+  }
+}
+
+// ===== E-MAIL ÄNDERN =====
+async function saveEmail() {
+  const newEmail = document.getElementById('p-email').value.trim();
+  const msg = document.getElementById('msg-email');
+  if (!newEmail || !newEmail.includes('@')) {
+    msg.textContent = 'Bitte eine gültige E-Mail eingeben.';
+    return;
+  }
+  try {
+    const { error } = await sb.auth.updateUser({ email: newEmail });
+    if (error) throw error;
+    msg.textContent = '✓ Bestätigungs-E-Mail verschickt! Bitte prüfe dein Postfach. 📬';
+    document.getElementById('p-email').value = '';
+  } catch(e) {
+    msg.textContent = 'Fehler: ' + (e.message || 'Bitte erneut versuchen.');
+  }
+}
+
+// ===== NEWSLETTER =====
+async function toggleNewsletter(checked) {
+  const msg = document.getElementById('msg-nl');
+  if (!currentUser?.email) return;
+  try {
+    if (checked) {
+      await sb.from('newsletter_subscribers').upsert({ email: currentUser.email, source: 'profil' });
+      msg.textContent = '✓ Newsletter abonniert! 🌸';
+    } else {
+      await sb.from('newsletter_subscribers').delete().eq('email', currentUser.email);
+      msg.textContent = '✓ Newsletter abgemeldet.';
+    }
+    setTimeout(() => { msg.textContent = ''; }, 3000);
+  } catch(e) {
+    msg.textContent = 'Fehler beim Speichern.';
+    document.getElementById('nl-toggle').checked = !checked;
+  }
+}
+
+// ===== LOGOUT =====
+async function doLogout() {
+  try { await sb.auth.signOut(); } catch(e) {}
+  window.location.href = 'index.html';
+}
+</script>
+</body>
+</html>

@@ -1146,25 +1146,7 @@
     <li><a href="about.html">🪐 Über uns</a></li>
     <li><a href="newsletter.html">💌 Newsletter</a></li>
     <li id="nav-login-li"><a href="login.html" class="nav-cta">Einloggen ✨</a></li>
-    <li id="nav-profil-li" style="display:none;position:relative;">
-      <button id="nav-profil-btn" onclick="toggleProfilDropdown(event)" style="background:linear-gradient(135deg,var(--rose),var(--peach));color:#7A3030;padding:10px 22px;border-radius:50px;box-shadow:0 4px 14px rgba(232,144,144,0.3);border:none;cursor:pointer;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;">👤 Profil</button>
-      <div id="profil-dropdown" style="display:none;position:absolute;top:calc(100% + 12px);right:0;background:white;border-radius:20px;padding:24px;box-shadow:0 8px 40px rgba(180,100,140,0.22);border:1.5px solid rgba(247,197,197,0.4);min-width:290px;z-index:2000;">
-        <div id="pd-greeting" style="font-family:'Playfair Display',serif;font-size:17px;font-weight:900;color:var(--text);margin-bottom:16px;padding-bottom:14px;border-bottom:1.5px solid rgba(247,197,197,0.4);"></div>
-        <div style="display:grid;gap:10px;margin-bottom:14px;">
-          <div>
-            <label style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:5px;">Vorname</label>
-            <input id="pd-firstname" type="text" placeholder="Dein Vorname" style="width:100%;padding:10px 12px;border:2px solid var(--rose);border-radius:10px;font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);outline:none;background:var(--cream);box-sizing:border-box;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
-          </div>
-          <div>
-            <label style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--text-light);display:block;margin-bottom:5px;">Geburtsdatum</label>
-            <input id="pd-birthday" type="date" style="width:100%;padding:10px 12px;border:2px solid var(--rose);border-radius:10px;font-family:'Nunito',sans-serif;font-size:13px;color:var(--text);outline:none;background:var(--cream);box-sizing:border-box;transition:border-color 0.2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--rose)'">
-          </div>
-        </div>
-        <button onclick="savePdProfil()" style="width:100%;background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;border-radius:12px;padding:11px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;margin-bottom:8px;">✓ Speichern</button>
-        <div id="pd-msg" style="font-size:12px;font-weight:700;color:var(--accent);text-align:center;min-height:16px;margin-bottom:10px;"></div>
-        <button onclick="pdLogout()" style="width:100%;background:none;border:1.5px solid rgba(247,197,197,0.8);color:var(--text-light);border-radius:12px;padding:10px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;">↩ Ausloggen</button>
-      </div>
-    </li>
+    <li id="nav-profil-li" style="display:none;"><a href="profil.html" class="nav-cta">👤 Profil</a></li>
 </ul>
   <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()" title="Hell/Dunkel">🌙</button>
   <button class="hamburger" onclick="openMobileMenu()" aria-label="Menü öffnen"><span></span><span></span><span></span></button>
@@ -1182,16 +1164,7 @@
   <a href="about.html" onclick="closeMobileMenu()">🪐 Über uns</a>
   <a href="newsletter.html" onclick="closeMobileMenu()">💌 Newsletter</a>
   <a href="login.html" id="mob-login-link" class="mob-cta" onclick="closeMobileMenu()">Einloggen ✨</a>
-  <div id="mob-profil-wrap" style="display:none;width:100%;max-width:320px;text-align:left;">
-    <div id="mob-pd-greeting" style="font-family:'Playfair Display',serif;font-size:16px;font-weight:900;color:var(--text);text-align:center;margin-bottom:16px;padding-bottom:12px;border-bottom:1.5px solid rgba(247,197,197,0.4);"></div>
-    <div style="display:grid;gap:10px;margin-bottom:12px;">
-      <input id="mob-pd-firstname" type="text" placeholder="Vorname" style="padding:11px 14px;border:2px solid var(--rose);border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;background:var(--cream);width:100%;box-sizing:border-box;">
-      <input id="mob-pd-birthday" type="date" style="padding:11px 14px;border:2px solid var(--rose);border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;background:var(--cream);width:100%;box-sizing:border-box;">
-    </div>
-    <button onclick="saveMobProfil()" style="width:100%;background:linear-gradient(135deg,#C87090,#9070C8);color:white;border:none;border-radius:14px;padding:13px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:8px;">✓ Speichern</button>
-    <div id="mob-pd-msg" style="font-size:13px;font-weight:700;color:var(--accent);text-align:center;min-height:18px;margin-bottom:10px;"></div>
-    <button onclick="pdLogout()" style="width:100%;background:none;border:2px solid rgba(247,197,197,0.8);color:var(--text-light);border-radius:14px;padding:12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;cursor:pointer;">↩ Ausloggen</button>
-  </div>
+  <a href="profil.html" id="mob-profil-link" class="mob-cta" style="display:none;" onclick="closeMobileMenu()">👤 Profil</a>
 </div>
 
 <!-- HERO -->
@@ -2034,73 +2007,22 @@ document.addEventListener('click', function(e) {
     document.getElementById('nav-login-li').style.display = 'none';
     document.getElementById('nav-profil-li').style.display = 'block';
     document.getElementById('mob-login-link').style.display = 'none';
-    document.getElementById('mob-profil-wrap').style.display = 'block';
+    document.getElementById('mob-profil-link').style.display = 'block';
     const meta = session.user.user_metadata || {};
     const firstName = meta.first_name || meta.full_name?.split(' ')[0] || '';
     const h = new Date().getHours();
     const greet = h < 12 ? 'Guten Morgen' : h < 17 ? 'Guten Tag' : 'Guten Abend';
     const icon = h < 12 ? '☀️' : h < 17 ? '🌻' : '🌙';
     const greetText = greet + ', ' + (firstName || 'du') + '! ' + icon;
-    document.getElementById('pd-greeting').textContent = greetText;
-    document.getElementById('mob-pd-greeting').textContent = greetText;
     const gt = document.getElementById('ws-greeting-text');
     if (gt) { gt.textContent = greetText; gt.style.display = 'block'; }
-    if (firstName) {
-      document.getElementById('pd-firstname').value = firstName;
-      document.getElementById('mob-pd-firstname').value = firstName;
-    }
     const birthday = meta.birthday || localStorage.getItem('sp_birthday') || '';
     if (birthday) {
-      document.getElementById('pd-birthday').value = birthday;
-      document.getElementById('mob-pd-birthday').value = birthday;
       localStorage.setItem('sp_birthday', birthday);
       wsUpdatePlanet(birthday);
     }
   } catch(e) {}
 })();
-
-function toggleProfilDropdown(e) {
-  e.stopPropagation();
-  const dd = document.getElementById('profil-dropdown');
-  dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
-}
-document.addEventListener('click', function(e) {
-  const dd = document.getElementById('profil-dropdown');
-  const btn = document.getElementById('nav-profil-btn');
-  if (dd && dd.style.display !== 'none' && !dd.contains(e.target) && e.target !== btn) {
-    dd.style.display = 'none';
-  }
-});
-
-async function _saveProfil(firstNameId, birthdayId, msgId) {
-  const firstName = document.getElementById(firstNameId).value.trim();
-  const birthday = document.getElementById(birthdayId).value;
-  const msg = document.getElementById(msgId);
-  try {
-    const { error } = await sb.auth.updateUser({ data: { first_name: firstName, birthday: birthday } });
-    if (error) throw error;
-    if (birthday) { localStorage.setItem('sp_birthday', birthday); wsUpdatePlanet(birthday); }
-    if (firstName) {
-      const h = new Date().getHours();
-      const greet = h < 12 ? 'Guten Morgen' : h < 17 ? 'Guten Tag' : 'Guten Abend';
-      const icon = h < 12 ? '☀️' : h < 17 ? '🌻' : '🌙';
-      const greetText = greet + ', ' + firstName + '! ' + icon;
-      document.getElementById('pd-greeting').textContent = greetText;
-      document.getElementById('mob-pd-greeting').textContent = greetText;
-      const gt = document.getElementById('ws-greeting-text');
-      if (gt) gt.textContent = greetText;
-      try { const { data: { user } } = await sb.auth.getUser(); if (user?.email) await addToBrevo(user.email, firstName); } catch(e) {}
-    }
-    msg.textContent = '✓ Gespeichert! 🌸';
-    setTimeout(() => { msg.textContent = ''; }, 3000);
-  } catch(e) { msg.textContent = 'Fehler beim Speichern.'; }
-}
-function savePdProfil() { return _saveProfil('pd-firstname', 'pd-birthday', 'pd-msg'); }
-function saveMobProfil() { return _saveProfil('mob-pd-firstname', 'mob-pd-birthday', 'mob-pd-msg'); }
-async function pdLogout() {
-  try { await sb.auth.signOut(); } catch(e) {}
-  window.location.href = 'login.html';
-}
 
 function wsUpdatePlanet(birthdayStr) {
   const planetData = [
