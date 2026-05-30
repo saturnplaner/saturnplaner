@@ -23,7 +23,8 @@
       "Bash(python *)",
       "PowerShell(Stop-Process *)",
       "Bash(git restore *)",
-      "Bash(git log *)"
+      "Bash(git log *)",
+      "WebSearch"
     ]
   }
 }
