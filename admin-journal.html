@@ -56,13 +56,15 @@
 
 <div id="admin-wrap" style="display:none;">
 <div class="wrap">
-  <h1>📓 Journal Admin</h1>
-  <p class="subtitle">Einsendungen · Neue Beiträge · Veröffentlichtes</p>
+  <h1>🪐 Saturnplaner Admin</h1>
+  <p class="subtitle">Journal · Kommentare · Community</p>
 
-  <div class="tabs">
-    <button class="tab active" id="tab-btn-submissions" onclick="switchTab('submissions',this)">📬 Einsendungen <span id="sub-badge" class="badge" style="display:none;">0</span></button>
-    <button class="tab" id="tab-btn-new" onclick="switchTab('new',this)">✍️ Neuer Beitrag</button>
-    <button class="tab" id="tab-btn-published" onclick="switchTab('published',this)">📖 Veröffentlicht</button>
+  <div class="tabs" style="flex-wrap:wrap;">
+    <button class="tab active" onclick="switchTab('submissions',this)">📬 Einsendungen <span id="sub-badge" class="badge" style="display:none;">0</span></button>
+    <button class="tab" onclick="switchTab('new',this)">✍️ Neuer Beitrag</button>
+    <button class="tab" onclick="switchTab('published',this)">📖 Veröffentlicht</button>
+    <button class="tab" onclick="switchTab('comments',this)">💬 Kommentare <span id="com-badge" class="badge" style="display:none;">0</span></button>
+    <button class="tab" onclick="switchTab('community',this)">🌱 Community</button>
   </div>
 
   <!-- EINSENDUNGEN -->
@@ -86,6 +88,21 @@
   <!-- VERÖFFENTLICHT -->
   <div class="tab-panel" id="tab-published">
     <div id="pub-list"><div class="empty">Wird geladen... 🌸</div></div>
+  </div>
+
+  <!-- KOMMENTARE -->
+  <div class="tab-panel" id="tab-comments">
+    <div id="com-list"><div class="empty">Wird geladen... 🌸</div></div>
+  </div>
+
+  <!-- COMMUNITY -->
+  <div class="tab-panel" id="tab-community">
+    <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">❓ Frag mich</div>
+    <div id="qa-list"><div class="empty">Wird geladen... 🌸</div></div>
+    <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin:24px 0 12px;">🗳️ Abstimmungen</div>
+    <div id="votes-list"><div class="empty">Wird geladen... 🌸</div></div>
+    <div style="font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin:24px 0 12px;">✨ Wünsche</div>
+    <div id="wishes-list"><div class="empty">Wird geladen... 🌸</div></div>
   </div>
 </div>
 </div>
@@ -125,6 +142,8 @@ function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').
   document.getElementById('admin-wrap').style.display='block';
   loadSubmissions();
   loadPublished();
+  loadComments();
+  loadCommunity();
 })();
 
 function switchTab(name,btn){
@@ -311,6 +330,159 @@ async function deletePost(id){
   await sb.from('journal_posts').delete().eq('id',id);
   const card=document.getElementById('pub-'+id);
   if(card)card.remove();
+}
+
+// ===== KOMMENTARE =====
+async function loadComments(){
+  const {data}=await sb.from('journal_post_comments')
+    .select('*, journal_posts(title)')
+    .order('created_at',{ascending:false});
+  const list=document.getElementById('com-list');
+  const badge=document.getElementById('com-badge');
+  while(list.firstChild)list.removeChild(list.firstChild);
+  if(!data||data.length===0){
+    badge.style.display='none';
+    const e=document.createElement('div');e.className='empty';e.textContent='Noch keine Kommentare.';list.appendChild(e);
+    return;
+  }
+  badge.textContent=data.length;badge.style.display='inline-block';
+  for(const c of data){
+    const card=document.createElement('div');
+    card.className='card';card.id='com-'+c.id;
+
+    const meta=document.createElement('div');
+    meta.className='card-meta';
+    meta.textContent=new Date(c.created_at).toLocaleDateString('de-CH',{day:'numeric',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    card.appendChild(meta);
+
+    if(c.journal_posts?.title){
+      const post=document.createElement('div');
+      post.style.cssText='font-size:11px;font-weight:700;color:var(--accent);margin-bottom:6px;';
+      post.textContent='📓 Beitrag: '+c.journal_posts.title;
+      card.appendChild(post);
+    }
+
+    const name=document.createElement('div');
+    name.className='card-name';
+    name.textContent='🌸 '+(c.user_name||'Anonym');
+    card.appendChild(name);
+
+    if(c.user_email){
+      const email=document.createElement('div');
+      email.className='card-email';
+      email.textContent='✉️ '+c.user_email;
+      card.appendChild(email);
+    }
+
+    const content=document.createElement('div');
+    content.className='card-content';
+    content.textContent=c.content;
+    card.appendChild(content);
+
+    const actions=document.createElement('div');
+    actions.className='card-actions';
+
+    if(c.user_email){
+      const reply=document.createElement('a');
+      reply.className='btn btn-secondary';
+      reply.href='mailto:'+c.user_email+'?subject=Re: Dein Kommentar auf Saturnplaner';
+      reply.textContent='📧 Antworten';
+      actions.appendChild(reply);
+    }
+    const del=document.createElement('button');
+    del.className='btn btn-danger';
+    del.textContent='🗑️ Löschen';
+    del.onclick=()=>deleteComment(c.id);
+    actions.appendChild(del);
+    card.appendChild(actions);
+    list.appendChild(card);
+  }
+}
+
+async function deleteComment(id){
+  if(!confirm('Kommentar löschen?'))return;
+  await sb.from('journal_post_comments').delete().eq('id',id);
+  const card=document.getElementById('com-'+id);
+  if(card)card.remove();
+}
+
+// ===== COMMUNITY =====
+async function loadCommunity(){
+  // Fragen
+  const {data:qa}=await sb.from('community_questions').select('*').order('created_at',{ascending:false});
+  const qaList=document.getElementById('qa-list');
+  while(qaList.firstChild)qaList.removeChild(qaList.firstChild);
+  if(!qa||qa.length===0){
+    const e=document.createElement('div');e.className='empty';e.textContent='Noch keine Fragen.';qaList.appendChild(e);
+  } else {
+    for(const q of qa){
+      const card=document.createElement('div');card.className='card';
+      const meta=document.createElement('div');meta.className='card-meta';
+      meta.textContent=new Date(q.created_at).toLocaleDateString('de-CH',{day:'numeric',month:'long',year:'numeric'});
+      card.appendChild(meta);
+      const name=document.createElement('div');name.className='card-name';
+      name.textContent='🌸 '+(q.name||'Anonym');
+      card.appendChild(name);
+      const content=document.createElement('div');content.className='card-content';
+      content.textContent=q.question;
+      card.appendChild(content);
+      qaList.appendChild(card);
+    }
+  }
+
+  // Abstimmungen — als Tally
+  const {data:votes}=await sb.from('community_votes').select('option_text');
+  const vList=document.getElementById('votes-list');
+  while(vList.firstChild)vList.removeChild(vList.firstChild);
+  if(!votes||votes.length===0){
+    const e=document.createElement('div');e.className='empty';e.textContent='Noch keine Stimmen.';vList.appendChild(e);
+  } else {
+    const tally={};
+    votes.forEach(v=>{const k=v.option_text||'?';tally[k]=(tally[k]||0)+1;});
+    const total=votes.length;
+    const sorted=Object.entries(tally).sort((a,b)=>b[1]-a[1]);
+    const card=document.createElement('div');card.className='card';
+    const tot=document.createElement('div');
+    tot.style.cssText='font-size:12px;font-weight:700;color:var(--text-light);margin-bottom:14px;';
+    tot.textContent='Gesamt: '+total+' Stimmen';
+    card.appendChild(tot);
+    for(const [opt,count] of sorted){
+      const row=document.createElement('div');
+      row.style.cssText='margin-bottom:12px;';
+      const label=document.createElement('div');
+      label.style.cssText='display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;';
+      const lText=document.createElement('span');lText.textContent=opt;
+      const lCount=document.createElement('span');lCount.textContent=count+' ('+Math.round(count/total*100)+'%)';
+      label.appendChild(lText);label.appendChild(lCount);
+      const bar=document.createElement('div');
+      bar.style.cssText='height:8px;background:rgba(247,197,197,0.3);border-radius:8px;overflow:hidden;';
+      const fill=document.createElement('div');
+      fill.style.cssText='height:100%;background:linear-gradient(135deg,#C87090,#9070C8);border-radius:8px;width:'+Math.round(count/total*100)+'%;';
+      bar.appendChild(fill);
+      row.appendChild(label);row.appendChild(bar);
+      card.appendChild(row);
+    }
+    vList.appendChild(card);
+  }
+
+  // Wünsche
+  const {data:wishes}=await sb.from('community_wishes').select('*').order('created_at',{ascending:false});
+  const wList=document.getElementById('wishes-list');
+  while(wList.firstChild)wList.removeChild(wList.firstChild);
+  if(!wishes||wishes.length===0){
+    const e=document.createElement('div');e.className='empty';e.textContent='Noch keine Wünsche.';wList.appendChild(e);
+  } else {
+    for(const w of wishes){
+      const card=document.createElement('div');card.className='card';
+      const meta=document.createElement('div');meta.className='card-meta';
+      meta.textContent=new Date(w.created_at).toLocaleDateString('de-CH',{day:'numeric',month:'long',year:'numeric'});
+      card.appendChild(meta);
+      const content=document.createElement('div');content.className='card-content';
+      content.textContent=w.wishes;
+      card.appendChild(content);
+      wList.appendChild(card);
+    }
+  }
 }
 </script>
 </body>
